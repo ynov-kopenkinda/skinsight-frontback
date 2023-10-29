@@ -1,0 +1,35 @@
+{
+  "name": "@kopenkinda/env",
+  "private": true,
+  "version": "0.1.0",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "build": "tsup",
+    "clean": "rm -rf .turbo node_modules",
+    "dev": "tsup --watch",
+    "lint": "eslint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.22.4",
+    "dotenv": "^16.3.1",
+    "@t3-oss/env-nextjs": "^0.7.1"
+  },
+  "devDependencies": {
+    "@kopenkinda/eslint-config": "0.2.0",
+    "@kopenkinda/prettier-config": "workspace:*",
+    "@kopenkinda/tsconfig": "workspace:*",
+    "eslint": "^8.47.0",
+    "typescript": "^5.1.6",
+    "tsup": "^6.6.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@kopenkinda/eslint-config/base"
+    ]
+  },
+  "prettier": "@kopenkinda/prettier-config"
+}

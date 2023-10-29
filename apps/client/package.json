@@ -16,7 +16,7 @@
     "@kopenkinda/api": "workspace:*",
     "@kopenkinda/auth": "workspace:*",
     "@kopenkinda/db": "workspace:*",
-    "@t3-oss/env-nextjs": "^0.7.1",
+    "@kopenkinda/env": "workspace:*",
     "@tanstack/react-query": "^5.0.5",
     "@tanstack/react-query-devtools": "^5.4.2",
     "@tanstack/react-query-next-experimental": "5.0.5",
