@@ -1,5 +1,5 @@
 {
-  "name": "@acme/db",
+  "name": "@kopenkinda/db",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -18,9 +18,9 @@
     "drizzle-orm": "^0.28.6"
   },
   "devDependencies": {
-    "@acme/eslint-config": "^0.2.0",
-    "@acme/prettier-config": "^0.1.0",
-    "@acme/tsconfig": "^0.1.0",
+    "@kopenkinda/eslint-config": "workspace:*",
+    "@kopenkinda/prettier-config": "workspace:*",
+    "@kopenkinda/tsconfig": "workspace:*",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.52.0",
@@ -30,8 +30,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@acme/eslint-config/base"
+      "@kopenkinda/eslint-config/base"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@kopenkinda/prettier-config"
 }

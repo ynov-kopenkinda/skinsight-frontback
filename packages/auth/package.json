@@ -1,5 +1,5 @@
 {
-  "name": "@acme/auth",
+  "name": "@kopenkinda/auth",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/db": "^0.1.0",
+    "@kopenkinda/db": "workspace:*",
     "@auth/core": "^0.18.0",
     "@auth/drizzle-adapter": "^0.3.5",
     "@t3-oss/env-nextjs": "^0.7.1",
@@ -23,9 +23,9 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@acme/eslint-config": "^0.2.0",
-    "@acme/prettier-config": "^0.1.0",
-    "@acme/tsconfig": "^0.1.0",
+    "@kopenkinda/eslint-config": "workspace:*",
+    "@kopenkinda/prettier-config": "workspace:*",
+    "@kopenkinda/tsconfig": "workspace:*",
     "eslint": "^8.52.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
@@ -33,8 +33,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@acme/eslint-config/base"
+      "@kopenkinda/eslint-config/base"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@kopenkinda/prettier-config"
 }

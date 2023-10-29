@@ -9,19 +9,17 @@
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
-    "postinstall": "manypkg check",
     "db:push": "pnpm -F db push",
     "db:studio": "pnpm -F db studio",
     "dev": "turbo dev --parallel",
     "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache'",
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
-    "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
-    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
+    "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
+    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "typecheck": "turbo typecheck"
   },
   "dependencies": {
-    "@acme/prettier-config": "^0.1.0",
-    "@manypkg/cli": "^0.21.0",
+    "@kopenkinda/prettier-config": "workspace:*",
     "@turbo/gen": "^1.10.16",
     "prettier": "^3.0.3",
     "turbo": "^1.10.16",
@@ -32,5 +30,5 @@
       "@auth/core": "0.18.0"
     }
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@kopenkinda/prettier-config"
 }
