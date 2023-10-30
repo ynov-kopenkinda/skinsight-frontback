@@ -17,6 +17,7 @@
     "@kopenkinda/auth": "workspace:*",
     "@kopenkinda/db": "workspace:*",
     "@kopenkinda/env": "workspace:*",
+    "@radix-ui/themes": "^2.0.0",
     "@tanstack/react-query": "^5.0.5",
     "@tanstack/react-query-devtools": "^5.4.2",
     "@tanstack/react-query-next-experimental": "5.0.5",

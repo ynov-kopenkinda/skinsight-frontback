@@ -1,6 +1,10 @@
 "use client";
 
+import { use } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@radix-ui/themes";
+
+import { auth } from "@kopenkinda/auth";
 
 import { api } from "~/utils/api/react";
 
@@ -17,11 +21,14 @@ const contents = [
 ];
 
 export const CreateRandomPost = () => {
+  const session = api.auth.getSession.useQuery();
   const create = api.post.create.useMutation();
   const router = useRouter();
+  if (session.data == null) {
+    return null;
+  }
   return (
-    <button
-      className="container mx-auto mb-4 block border bg-stone-200 p-2 hover:bg-stone-300"
+    <Button
       onClick={() => {
         create.mutate(
           {
@@ -38,6 +45,6 @@ export const CreateRandomPost = () => {
       disabled={create.status === "pending"}
     >
       {create.status === "pending" ? "creating" : "Create random post"}
-    </button>
+    </Button>
   );
 };

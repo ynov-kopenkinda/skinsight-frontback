@@ -1,3 +1,5 @@
+import { Avatar, Button, Card, Flex, Text } from "@radix-ui/themes";
+
 import { auth, signIn, signOut } from "@kopenkinda/auth";
 
 export async function AuthShowcase() {
@@ -5,35 +7,38 @@ export async function AuthShowcase() {
 
   if (!session) {
     return (
-      <form
-        action={async () => {
-          "use server";
-          await signIn("discord");
-        }}
-      >
-        <button className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20">
-          Sign in with Discord
-        </button>
-      </form>
+      <Card>
+        <form
+          action={async () => {
+            "use server";
+            await signIn("discord");
+          }}
+        >
+          <Button>Sign in with Discord</Button>
+        </form>
+      </Card>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {session && <span>Logged in as {session.user.name}</span>}
-      </p>
-
+    <Card>
+      {session && (
+        <Flex align="center" gap="2" mb="2">
+          <Avatar
+            src={session.user.image ?? ""}
+            fallback={<>{session.user.name?.slice(0, 2)}</>}
+          />
+          <Text>Logged in as {session.user.name}</Text>
+        </Flex>
+      )}
       <form
         action={async () => {
           "use server";
           await signOut();
         }}
       >
-        <button className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20">
-          Sign out
-        </button>
+        <Button color="red">Sign out</Button>
       </form>
-    </div>
+    </Card>
   );
 }

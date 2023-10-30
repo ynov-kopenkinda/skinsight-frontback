@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import "~/styles/globals.css";
+import "@radix-ui/themes/styles.css";
 
 import { headers } from "next/headers";
+import { Theme } from "@radix-ui/themes";
 
 import { TRPCReactProvider } from "./providers";
 
@@ -40,7 +42,7 @@ export default function Layout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body className={["font-sans", fontSans.variable].join(" ")}>
         <TRPCReactProvider headers={headers()}>
-          {props.children}
+          <Theme appearance="dark">{props.children}</Theme>
         </TRPCReactProvider>
       </body>
     </html>
