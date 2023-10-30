@@ -26,6 +26,8 @@ export const env = createEnv({
     ),
     DATABASE_URL: z.string().url(),
     DATABASE_PREFIX: z.string().default(""),
+    STEAM_BOT_PORT: z.coerce.number().default(3001),
+    STEAM_BOT_AUTHTOKEN: z.string(),
   },
   shared: {
     VERCEL_URL: z
@@ -43,6 +45,8 @@ export const env = createEnv({
     PORT: process.env.PORT,
     DATABASE_URL: process.env.DATABASE_URL,
     DATABASE_PREFIX: process.env.DATABASE_PREFIX,
+    STEAM_BOT_PORT: process.env.STEAM_BOT_PORT,
+    STEAM_BOT_AUTHTOKEN: process.env.STEAM_BOT_AUTHTOKEN,
   },
   skipValidation:
     !!process.env.CI ||
