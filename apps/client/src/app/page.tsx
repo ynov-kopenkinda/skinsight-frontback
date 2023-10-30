@@ -1,36 +1,27 @@
-import { Suspense } from "react";
+import { RouterOutputs } from "@kopenkinda/api";
 
-import { AuthShowcase } from "./_components/auth-showcase";
-import {
-  CreatePostForm,
-  PostCardSkeleton,
-  PostList,
-} from "./_components/posts";
+import { api } from "~/utils/api/server";
+import { AuthShowcase } from "./auth";
+import { CreateRandomPost } from "./create-post";
 
-export default function HomePage() {
+const Post = (post: RouterOutputs["post"]["all"][0]) => {
   return (
-    <main className="flex h-screen flex-col items-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container mt-12 flex flex-col items-center justify-center gap-4 py-8">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          Create <span className="text-pink-400">T3</span> Turbo
-        </h1>
-        <AuthShowcase />
+    <div className="container mx-auto mb-4 border p-2">
+      <h3 className="font-bold">{post.title}</h3>
+      <p>{post.content}</p>
+    </div>
+  );
+};
 
-        <CreatePostForm />
-        <div className="h-[40vh] w-full max-w-2xl overflow-y-scroll">
-          <Suspense
-            fallback={
-              <div className="flex w-full flex-col gap-4">
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-              </div>
-            }
-          >
-            <PostList />
-          </Suspense>
-        </div>
-      </div>
-    </main>
+export default async function HomePage() {
+  const data = await api.post.all.query();
+  return (
+    <div>
+      <AuthShowcase />
+      {data.map((post) => (
+        <Post {...post} key={post.id} />
+      ))}
+      <CreateRandomPost />
+    </div>
   );
 }

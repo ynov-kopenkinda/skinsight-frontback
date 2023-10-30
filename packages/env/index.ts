@@ -11,8 +11,8 @@ if (process.env.DATABASE_URL === undefined) {
 export const env = createEnv({
   client: {},
   server: {
-    DISCORD_CLIENT_ID: z.string().min(1),
-    DISCORD_CLIENT_SECRET: z.string().min(1),
+    AUTH_DISCORD_ID: z.string().min(1),
+    AUTH_DISCORD_SECRET: z.string().min(1),
     NEXTAUTH_SECRET:
       process.env.NODE_ENV === "production"
         ? z.string().min(1)
@@ -35,8 +35,8 @@ export const env = createEnv({
     PORT: z.coerce.number().default(3000),
   },
   runtimeEnv: {
-    DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
-    DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+    AUTH_DISCORD_ID: process.env.AUTH_DISCORD_ID,
+    AUTH_DISCORD_SECRET: process.env.AUTH_DISCORD_SECRET,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     VERCEL_URL: process.env.VERCEL_URL,

@@ -9,7 +9,7 @@ import superjson from "superjson";
 
 import { env } from "@kopenkinda/env";
 
-import { api } from "~/utils/api";
+import { api } from "~/utils/api/react";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
