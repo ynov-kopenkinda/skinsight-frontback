@@ -1,10 +1,10 @@
 import { sql } from "@kopenkinda/db";
 import { items } from "@kopenkinda/db/schema/item";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const libraryRouter = createTRPCRouter({
-  getItemsCount: publicProcedure.query(async ({ ctx }) => {
+  getItemsCount: protectedProcedure.query(async ({ ctx }) => {
     const [result] = await ctx.db
       .select({
         count: sql`COUNT(*)`,
