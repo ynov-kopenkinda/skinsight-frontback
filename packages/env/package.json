@@ -19,7 +19,7 @@
     "@t3-oss/env-nextjs": "^0.7.1"
   },
   "devDependencies": {
-    "@kopenkinda/eslint-config": "0.2.0",
+    "@kopenkinda/eslint-config": "workspace:*",
     "@kopenkinda/prettier-config": "workspace:*",
     "@kopenkinda/tsconfig": "workspace:*",
     "eslint": "^8.47.0",

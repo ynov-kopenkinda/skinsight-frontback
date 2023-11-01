@@ -28,6 +28,9 @@ export const env = createEnv({
     DATABASE_PREFIX: z.string().default(""),
     STEAM_BOT_PORT: z.coerce.number().default(3001),
     STEAM_BOT_AUTHTOKEN: z.string(),
+    STEAM_ACCOUNT_NAME: z.string(),
+    STEAM_ACCOUNT_PWD: z.string(),
+    STEAM_ACCOUNT_SHARED_SECRET: z.string(),
   },
   shared: {
     VERCEL_URL: z
@@ -47,6 +50,9 @@ export const env = createEnv({
     DATABASE_PREFIX: process.env.DATABASE_PREFIX,
     STEAM_BOT_PORT: process.env.STEAM_BOT_PORT,
     STEAM_BOT_AUTHTOKEN: process.env.STEAM_BOT_AUTHTOKEN,
+    STEAM_ACCOUNT_NAME: process.env.STEAM_ACCOUNT_NAME,
+    STEAM_ACCOUNT_PWD: process.env.STEAM_ACCOUNT_PWD,
+    STEAM_ACCOUNT_SHARED_SECRET: process.env.STEAM_ACCOUNT_SHARED_SECRET,
   },
   skipValidation:
     !!process.env.CI ||

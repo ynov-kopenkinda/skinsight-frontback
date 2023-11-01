@@ -11,7 +11,7 @@
 - run `pnpm db:push` to push the db schema to the db
 - run `pnpm dev` to start the server
 
-## Other
+## Other ~
 
 - generate a lib `pnpx turbo gen`
 - project generation is manual
