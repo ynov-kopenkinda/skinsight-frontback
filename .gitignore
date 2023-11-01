@@ -46,4 +46,4 @@ yarn-error.log*
 .turbo
 
 # generated
-packages/api-server-client/src
+packages/steam-server/src

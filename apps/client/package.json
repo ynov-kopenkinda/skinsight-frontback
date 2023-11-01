@@ -15,6 +15,7 @@
   "dependencies": {
     "@kopenkinda/api": "workspace:*",
     "@kopenkinda/auth": "workspace:*",
+    "@kopenkinda/steam-server": "workspace:*",
     "@kopenkinda/db": "workspace:*",
     "@kopenkinda/env": "workspace:*",
     "@radix-ui/themes": "^2.0.0",

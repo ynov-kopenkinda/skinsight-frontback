@@ -10,9 +10,10 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { auth } from "@kopenkinda/auth";
 import type { Session } from "@kopenkinda/auth";
+import { auth } from "@kopenkinda/auth";
 import { db } from "@kopenkinda/db";
+import { SteamApi } from "@kopenkinda/steam-server";
 
 /**
  * 1. CONTEXT
@@ -25,6 +26,7 @@ import { db } from "@kopenkinda/db";
  */
 interface CreateContextOptions {
   session: Session | null;
+  steam: SteamApi;
 }
 
 /**
@@ -38,6 +40,7 @@ interface CreateContextOptions {
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
+    steam: opts.steam.default,
     session: opts.session,
     db,
   };
@@ -55,10 +58,19 @@ export const createTRPCContext = async (opts: {
   const session = opts.auth ?? (await auth());
   const source = opts.req?.headers.get("x-trpc-source") ?? "unknown";
 
+  const steam = new SteamApi();
+
+  steam.default.httpRequest.config.BASE = "http://localhost:3001";
+  steam.default.httpRequest.config.TOKEN = process.env.STEAM_BOT_AUTHTOKEN;
+  steam.default.httpRequest.config.HEADERS = {
+    Authorization: `Bearer ${process.env.STEAM_BOT_AUTHTOKEN}`,
+  };
+
   console.log(">>> tRPC Request from", source, "by", session?.user);
 
   return createInnerTRPCContext({
     session,
+    steam,
   });
 };
 

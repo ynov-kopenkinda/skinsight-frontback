@@ -15,6 +15,7 @@
     "@kopenkinda/auth": "workspace:*",
     "@kopenkinda/db": "workspace:*",
     "@kopenkinda/env": "workspace:*",
+    "@kopenkinda/steam-server": "workspace:*",
     "@trpc/client": "next",
     "@trpc/server": "next",
     "superjson": "1.13.1",

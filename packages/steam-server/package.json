@@ -1,33 +1,28 @@
 {
-  "name": "@kopenkinda/api-server-client",
+  "name": "@kopenkinda/steam-server",
   "private": true,
   "version": "0.1.0",
-  "exports": {
-    ".": "./index.ts"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
-  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "license": "MIT",
   "scripts": {
+    "build": "tsup",
     "clean": "rm -rf .turbo node_modules",
+    "dev": "tsup --watch",
     "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit",
     "postinstall": "pnpm run generate",
-    "generate": "openapi --useOptions --useUnionTypes --indent=2 --input=../../apps/api-server/openapi.json --output=./src"
+    "generate": "openapi --useOptions --useUnionTypes --indent=2 --input=../../apps/api-server/swagger.json --output=./src --name SteamApi"
   },
   "devDependencies": {
-    "@kopenkinda/eslint-config": "0.2.0",
+    "@kopenkinda/eslint-config": "workspace:*",
     "@kopenkinda/prettier-config": "workspace:*",
     "@kopenkinda/tsconfig": "workspace:*",
     "eslint": "^8.47.0",
     "openapi-typescript-codegen": "^0.25.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "tsup": "^6.6.0"
   },
   "eslintConfig": {
     "extends": [

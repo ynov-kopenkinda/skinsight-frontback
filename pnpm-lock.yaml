@@ -129,6 +129,9 @@ importers:
       '@kopenkinda/env':
         specifier: workspace:*
         version: link:../../packages/env
+      '@kopenkinda/steam-server':
+        specifier: workspace:*
+        version: link:../../packages/steam-server
       '@radix-ui/themes':
         specifier: ^2.0.0
         version: 2.0.0(@types/react-dom@18.2.14)(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
@@ -217,6 +220,9 @@ importers:
       '@kopenkinda/env':
         specifier: workspace:*
         version: link:../env
+      '@kopenkinda/steam-server':
+        specifier: workspace:*
+        version: link:../steam-server
       '@trpc/client':
         specifier: next
         version: 11.0.0-alpha-next-2023-10-26-15-15-56.93(@trpc/server@11.0.0-alpha-next-2023-10-26-15-15-56.93)
@@ -247,27 +253,6 @@ importers:
         version: 3.0.3
       typescript:
         specifier: ^5.2.2
-        version: 5.2.2
-
-  packages/api-server-client:
-    devDependencies:
-      '@kopenkinda/eslint-config':
-        specifier: 0.2.0
-        version: link:../../tooling/eslint
-      '@kopenkinda/prettier-config':
-        specifier: workspace:*
-        version: link:../../tooling/prettier
-      '@kopenkinda/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.47.0
-        version: 8.52.0
-      openapi-typescript-codegen:
-        specifier: ^0.25.0
-        version: 0.25.0
-      typescript:
-        specifier: ^5.1.6
         version: 5.2.2
 
   packages/auth:
@@ -374,6 +359,30 @@ importers:
       eslint:
         specifier: ^8.47.0
         version: 8.52.0
+      tsup:
+        specifier: ^6.6.0
+        version: 6.7.0(typescript@5.2.2)
+      typescript:
+        specifier: ^5.1.6
+        version: 5.2.2
+
+  packages/steam-server:
+    devDependencies:
+      '@kopenkinda/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
+      '@kopenkinda/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
+      '@kopenkinda/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.47.0
+        version: 8.52.0
+      openapi-typescript-codegen:
+        specifier: ^0.25.0
+        version: 0.25.0
       tsup:
         specifier: ^6.6.0
         version: 6.7.0(typescript@5.2.2)
@@ -3127,7 +3136,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 18.18.7
+      '@types/node': 20.8.9
     dev: false
 
   /@types/http-errors@2.0.3:
@@ -3172,6 +3181,7 @@ packages:
     resolution: {integrity: sha512-bw+lEsxis6eqJYW8Ql6+yTqkE6RuFtsQPSe5JxXbqYRFQEER5aJA9a5UH9igqDWm3X4iLHIKOHlnAXLM4mi7uQ==}
     dependencies:
       undici-types: 5.26.5
+    dev: true
 
   /@types/node@20.8.9:
     resolution: {integrity: sha512-UzykFsT3FhHb1h7yD4CA4YhBHq545JC0YnEz41xkipN88eKQtL6rSgocL5tbAP6Ola9Izm/Aw4Ora8He4x0BHg==}
@@ -3282,7 +3292,7 @@ packages:
   /@types/through@0.0.32:
     resolution: {integrity: sha512-7XsfXIsjdfJM2wFDRAtEWp3zb2aVPk5QeyZxGlVK57q4u26DczMHhJmlhr0Jqv0THwxam/L8REXkj8M2I/lcvw==}
     dependencies:
-      '@types/node': 18.18.7
+      '@types/node': 20.8.9
     dev: false
 
   /@types/tinycolor2@1.4.5:
