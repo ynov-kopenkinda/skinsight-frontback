@@ -16,6 +16,18 @@ import { db } from "@kopenkinda/db";
 import { SteamApi } from "@kopenkinda/steam-server";
 
 /**
+ * 0. Steam API
+ */
+
+const steam = new SteamApi();
+
+steam.default.httpRequest.config.BASE = `${process.env.STEAM_BOT_BASEURL}:${process.env.STEAM_BOT_PORT}`;
+steam.default.httpRequest.config.TOKEN = process.env.STEAM_BOT_AUTHTOKEN;
+steam.default.httpRequest.config.HEADERS = {
+  Authorization: `Bearer ${process.env.STEAM_BOT_AUTHTOKEN}`,
+};
+
+/**
  * 1. CONTEXT
  *
  * This section defines the "contexts" that are available in the backend API
@@ -58,15 +70,13 @@ export const createTRPCContext = async (opts: {
   const session = opts.auth ?? (await auth());
   const source = opts.req?.headers.get("x-trpc-source") ?? "unknown";
 
-  const steam = new SteamApi();
-
-  steam.default.httpRequest.config.BASE = "http://localhost:3001";
-  steam.default.httpRequest.config.TOKEN = process.env.STEAM_BOT_AUTHTOKEN;
-  steam.default.httpRequest.config.HEADERS = {
-    Authorization: `Bearer ${process.env.STEAM_BOT_AUTHTOKEN}`,
-  };
-
-  console.log(">>> tRPC Request from", source, "by", session?.user);
+  console.log(
+    ">>> tRPC Request from",
+    source,
+    "by",
+    session?.user.email,
+    session?.user.authorized ? "{authorized}" : "{unauthorized}",
+  );
 
   return createInnerTRPCContext({
     session,
