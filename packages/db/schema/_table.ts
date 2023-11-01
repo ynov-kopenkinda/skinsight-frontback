@@ -6,6 +6,4 @@ import { mysqlTableCreator } from "drizzle-orm/mysql-core";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const mySqlTable = mysqlTableCreator(
-  (name) => `${process.env.DATABASE_PREFIX ?? "kopenkinda_"}${name}`,
-);
+export const mySqlTable = mysqlTableCreator((name) => `cs2-arbitrage_${name}`);

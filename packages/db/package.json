@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@planetscale/database": "^1.11.0",
-    "drizzle-orm": "^0.28.6"
+    "drizzle-orm": "^0.28.6",
+    "mysql2": "^3.6.2"
   },
   "devDependencies": {
     "@kopenkinda/eslint-config": "workspace:*",

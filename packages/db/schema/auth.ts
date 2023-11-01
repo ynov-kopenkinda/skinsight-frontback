@@ -1,6 +1,7 @@
 import type { AdapterAccount } from "@auth/core/adapters";
 import { relations, sql } from "drizzle-orm";
 import {
+  boolean,
   index,
   int,
   primaryKey,
@@ -20,6 +21,7 @@ export const users = mySqlTable("user", {
     fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 255 }),
+  authorized: boolean("authorized").notNull().default(false),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

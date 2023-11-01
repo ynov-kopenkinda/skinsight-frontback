@@ -15,5 +15,5 @@ export default {
   dbCredentials: {
     connectionString: process.env.DATABASE_URL,
   },
-  tablesFilter: [`${process.env.DATABASE_PREFIX ?? "kopenkinda_"}*`],
+  tablesFilter: ["cs2-arbitrage_*"],
 } satisfies Config;
