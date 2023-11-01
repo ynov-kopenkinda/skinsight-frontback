@@ -6,7 +6,7 @@ export class AuthMiddleware implements NestMiddleware {
   async use(req: Request, res: Response, next: NextFunction) {
     const { env } = await import('@kopenkinda/env');
     const header = req.headers.authorization;
-    if (!header.startsWith('Bearer ')) {
+    if (header == null || !header.startsWith('Bearer ')) {
       return res.status(401).send('Unauthorized');
     }
     const token = header.slice('Bearer '.length);
