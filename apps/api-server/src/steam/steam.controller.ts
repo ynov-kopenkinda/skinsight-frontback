@@ -1,8 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { GetOffersDto } from './dto/get-offers.dto';
 import { SteamTradeoffersService } from './steam-tradeoffers.service';
 
+@ApiBearerAuth()
 @Controller('/steam')
 export class SteamApiController {
   constructor(
@@ -10,7 +11,7 @@ export class SteamApiController {
   ) {}
 
   @Get('/offers')
-  @ApiOkResponse({ description: 'Get all offers' })
+  @ApiOkResponse({ description: 'Get all offers', type: GetOffersDto })
   offers(): Promise<GetOffersDto> {
     return this.steamTradeoffersService.getOffers();
   }
