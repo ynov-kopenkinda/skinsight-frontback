@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import fs from 'fs/promises';
 
 async function bootstrap() {
   const { env } = await import('@kopenkinda/env');
@@ -14,7 +15,11 @@ async function bootstrap() {
       name: 'Authorization',
     })
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
+
+  await fs.writeFile('./swagger.json', JSON.stringify(document));
+
   SwaggerModule.setup('api', app, document);
 
   await app.listen(env.STEAM_BOT_PORT);

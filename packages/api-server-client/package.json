@@ -1,0 +1,38 @@
+{
+  "name": "@kopenkinda/api-server-client",
+  "private": true,
+  "version": "0.1.0",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "pnpm run generate",
+    "generate": "openapi --useOptions --useUnionTypes --indent=2 --input=../../apps/api-server/openapi.json --output=./src"
+  },
+  "devDependencies": {
+    "@kopenkinda/eslint-config": "0.2.0",
+    "@kopenkinda/prettier-config": "workspace:*",
+    "@kopenkinda/tsconfig": "workspace:*",
+    "eslint": "^8.47.0",
+    "openapi-typescript-codegen": "^0.25.0",
+    "typescript": "^5.1.6"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@kopenkinda/eslint-config/base"
+    ]
+  },
+  "prettier": "@kopenkinda/prettier-config"
+}
