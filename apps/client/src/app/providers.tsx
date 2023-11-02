@@ -7,7 +7,7 @@ import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experime
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
 import superjson from "superjson";
 
-import { env } from "@kopenkinda/env";
+import { env } from "@skinsight/env";
 
 import { api } from "~/utils/api/react";
 

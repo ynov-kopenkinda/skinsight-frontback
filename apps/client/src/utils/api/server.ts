@@ -5,7 +5,7 @@ import {
   unstable_httpBatchStreamLink,
 } from "@trpc/client";
 
-import type { AppRouter } from "@kopenkinda/api";
+import type { AppRouter } from "@skinsight/api";
 
 import { getUrl, transformer } from "./shared";
 

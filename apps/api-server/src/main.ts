@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import fs from 'fs/promises';
 
 async function bootstrap() {
-  const { env } = await import('@kopenkinda/env');
+  const { env } = await import('@skinsight/env');
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
@@ -22,6 +22,6 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(env.STEAM_BOT_PORT);
+  await app.listen(env.API_SERVER_PORT);
 }
 bootstrap();

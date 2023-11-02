@@ -1,5 +1,5 @@
 {
-  "name": "@kopenkinda/db",
+  "name": "@skinsight/db",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -19,9 +19,9 @@
     "mysql2": "^3.6.2"
   },
   "devDependencies": {
-    "@kopenkinda/eslint-config": "workspace:*",
-    "@kopenkinda/prettier-config": "workspace:*",
-    "@kopenkinda/tsconfig": "workspace:*",
+    "@skinsight/eslint-config": "workspace:*",
+    "@skinsight/prettier-config": "workspace:*",
+    "@skinsight/tsconfig": "workspace:*",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.52.0",
@@ -31,8 +31,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@kopenkinda/eslint-config/base"
+      "@skinsight/eslint-config/base"
     ]
   },
-  "prettier": "@kopenkinda/prettier-config"
+  "prettier": "@skinsight/prettier-config"
 }

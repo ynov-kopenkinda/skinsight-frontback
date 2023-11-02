@@ -10,21 +10,21 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import type { Session } from "@kopenkinda/auth";
-import { auth } from "@kopenkinda/auth";
-import { db } from "@kopenkinda/db";
-import { SteamApi } from "@kopenkinda/steam-server";
+import type { Session } from "@skinsight/auth";
+import { auth } from "@skinsight/auth";
+import { db } from "@skinsight/db";
+import { NestApi } from "@skinsight/nest-client";
 
 /**
  * 0. Steam API
  */
 
-const steam = new SteamApi();
+const nest = new NestApi();
 
-steam.default.httpRequest.config.BASE = `${process.env.STEAM_BOT_BASEURL}:${process.env.STEAM_BOT_PORT}`;
-steam.default.httpRequest.config.TOKEN = process.env.STEAM_BOT_AUTHTOKEN;
-steam.default.httpRequest.config.HEADERS = {
-  Authorization: `Bearer ${process.env.STEAM_BOT_AUTHTOKEN}`,
+nest.default.httpRequest.config.BASE = `${process.env.API_SERVER_BASEURL}:${process.env.API_SERVER_PORT}`;
+nest.default.httpRequest.config.TOKEN = process.env.API_SERVER_TOKEN;
+nest.default.httpRequest.config.HEADERS = {
+  Authorization: `Bearer ${process.env.API_SERVER_TOKEN}`,
 };
 
 /**
@@ -38,7 +38,7 @@ steam.default.httpRequest.config.HEADERS = {
  */
 interface CreateContextOptions {
   session: Session | null;
-  steam: SteamApi;
+  nest: NestApi;
 }
 
 /**
@@ -52,7 +52,7 @@ interface CreateContextOptions {
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
-    steam: opts.steam.default,
+    nest: opts.nest.default,
     session: opts.session,
     db,
   };
@@ -70,17 +70,11 @@ export const createTRPCContext = async (opts: {
   const session = opts.auth ?? (await auth());
   const source = opts.req?.headers.get("x-trpc-source") ?? "unknown";
 
-  console.log(
-    ">>> tRPC Request from",
-    source,
-    "by",
-    session?.user.email,
-    session?.user.authorized ? "{authorized}" : "{unauthorized}",
-  );
+  console.log(">>> tRPC Request from", source, "by", session?.user.email);
 
   return createInnerTRPCContext({
     session,
-    steam,
+    nest,
   });
 };
 
@@ -142,17 +136,6 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   });
 });
 
-const enforceUserIsAllowed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session?.user.authorized) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
-  return next({
-    ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
-    },
-  });
-});
 /**
  * Protected (authed) procedure
  *
@@ -162,6 +145,4 @@ const enforceUserIsAllowed = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure
-  .use(enforceUserIsAuthed)
-  .use(enforceUserIsAllowed);
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);

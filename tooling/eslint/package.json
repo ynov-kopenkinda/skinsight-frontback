@@ -1,5 +1,5 @@
 {
-  "name": "@kopenkinda/eslint-config",
+  "name": "@skinsight/eslint-config",
   "version": "0.2.0",
   "private": true,
   "license": "MIT",
@@ -27,8 +27,8 @@
     "eslint-plugin-react-hooks": "^4.6.0"
   },
   "devDependencies": {
-    "@kopenkinda/prettier-config": "workspace:*",
-    "@kopenkinda/tsconfig": "workspace:*",
+    "@skinsight/prettier-config": "workspace:*",
+    "@skinsight/tsconfig": "workspace:*",
     "eslint": "^8.52.0",
     "typescript": "^5.2.2"
   },
@@ -38,5 +38,5 @@
       "./base.js"
     ]
   },
-  "prettier": "@kopenkinda/prettier-config"
+  "prettier": "@skinsight/prettier-config"
 }

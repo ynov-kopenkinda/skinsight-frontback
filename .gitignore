@@ -46,4 +46,4 @@ yarn-error.log*
 .turbo
 
 # generated
-packages/steam-server/src
+packages/nest-client/src

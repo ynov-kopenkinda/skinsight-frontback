@@ -6,7 +6,7 @@
 ## Installation steps
 
 - install deps: `pnpm i`
-- find and replace all `@kopenkinda` by `@your_org_name`
+- find and replace all `@skinsight` by `@your_org_name`
 - copy `.env.example` to `.env` and fill in the required values
 - run `pnpm db:push` to push the db schema to the db
 - run `pnpm dev` to start the server

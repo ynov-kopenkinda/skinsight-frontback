@@ -1,5 +1,5 @@
 {
-  "extends": "@kopenkinda/tsconfig/base.json",
+  "extends": "@skinsight/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

@@ -1,5 +1,5 @@
 {
-  "name": "@kopenkinda/env",
+  "name": "@skinsight/env",
   "private": true,
   "version": "0.1.0",
   "main": "./dist/index.mjs",
@@ -19,17 +19,17 @@
     "@t3-oss/env-nextjs": "^0.7.1"
   },
   "devDependencies": {
-    "@kopenkinda/eslint-config": "workspace:*",
-    "@kopenkinda/prettier-config": "workspace:*",
-    "@kopenkinda/tsconfig": "workspace:*",
+    "@skinsight/eslint-config": "workspace:*",
+    "@skinsight/prettier-config": "workspace:*",
+    "@skinsight/tsconfig": "workspace:*",
     "eslint": "^8.47.0",
     "typescript": "^5.1.6",
     "tsup": "^6.6.0"
   },
   "eslintConfig": {
     "extends": [
-      "@kopenkinda/eslint-config/base"
+      "@skinsight/eslint-config/base"
     ]
   },
-  "prettier": "@kopenkinda/prettier-config"
+  "prettier": "@skinsight/prettier-config"
 }

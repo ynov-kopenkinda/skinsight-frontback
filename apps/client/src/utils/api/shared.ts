@@ -1,7 +1,7 @@
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import superjson from "superjson";
 
-import type { AppRouter } from "@kopenkinda/api";
+import type { AppRouter } from "@skinsight/api";
 
 export const transformer = superjson;
 

@@ -3,13 +3,13 @@ import type { PackageJson, PlopTypes } from "@turbo/gen";
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("init", {
-    description: "Generate a new package for the @kopenkinda Monorepo",
+    description: "Generate a new package for the @skinsight Monorepo",
     prompts: [
       {
         type: "input",
         name: "name",
         message:
-          "What is the name of the package? (You can skip the `@kopenkinda/` prefix)",
+          "What is the name of the package? (You can skip the `@skinsight/` prefix)",
       },
       {
         type: "input",
@@ -21,8 +21,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     actions: [
       (answers) => {
         if ("name" in answers && typeof answers.name === "string") {
-          if (answers.name.startsWith("@kopenkinda/")) {
-            answers.name = answers.name.replace("@kopenkinda/", "");
+          if (answers.name.startsWith("@skinsight/")) {
+            answers.name = answers.name.replace("@skinsight/", "");
           }
         }
         return "Config sanitized";

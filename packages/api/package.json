@@ -1,5 +1,5 @@
 {
-  "name": "@kopenkinda/api",
+  "name": "@skinsight/api",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -12,19 +12,19 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@kopenkinda/auth": "workspace:*",
-    "@kopenkinda/db": "workspace:*",
-    "@kopenkinda/env": "workspace:*",
-    "@kopenkinda/steam-server": "workspace:*",
+    "@skinsight/auth": "workspace:*",
+    "@skinsight/db": "workspace:*",
+    "@skinsight/env": "workspace:*",
+    "@skinsight/nest-client": "workspace:*",
     "@trpc/client": "next",
     "@trpc/server": "next",
     "superjson": "1.13.1",
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@kopenkinda/eslint-config": "workspace:*",
-    "@kopenkinda/prettier-config": "workspace:*",
-    "@kopenkinda/tsconfig": "workspace:*",
+    "@skinsight/eslint-config": "workspace:*",
+    "@skinsight/prettier-config": "workspace:*",
+    "@skinsight/tsconfig": "workspace:*",
     "eslint": "^8.52.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
@@ -32,8 +32,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@kopenkinda/eslint-config/base"
+      "@skinsight/eslint-config/base"
     ]
   },
-  "prettier": "@kopenkinda/prettier-config"
+  "prettier": "@skinsight/prettier-config"
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@kopenkinda/client",
+  "name": "@skinsight/client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,11 +13,11 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@kopenkinda/api": "workspace:*",
-    "@kopenkinda/auth": "workspace:*",
-    "@kopenkinda/db": "workspace:*",
-    "@kopenkinda/env": "workspace:*",
-    "@kopenkinda/steam-server": "workspace:*",
+    "@skinsight/api": "workspace:*",
+    "@skinsight/auth": "workspace:*",
+    "@skinsight/db": "workspace:*",
+    "@skinsight/env": "workspace:*",
+    "@skinsight/nest-client": "workspace:*",
     "@radix-ui/themes": "^2.0.0",
     "@tabler/icons-react": "^2.40.0",
     "@tanstack/react-query": "^5.0.5",
@@ -35,10 +35,10 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@kopenkinda/eslint-config": "workspace:*",
-    "@kopenkinda/prettier-config": "workspace:*",
-    "@kopenkinda/tailwind-config": "workspace:*",
-    "@kopenkinda/tsconfig": "workspace:*",
+    "@skinsight/eslint-config": "workspace:*",
+    "@skinsight/prettier-config": "workspace:*",
+    "@skinsight/tailwind-config": "workspace:*",
+    "@skinsight/tsconfig": "workspace:*",
     "@types/node": "^18.18.7",
     "@types/react": "^18.2.33",
     "@types/react-dom": "^18.2.14",
@@ -51,10 +51,10 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@kopenkinda/eslint-config/base",
-      "@kopenkinda/eslint-config/client",
-      "@kopenkinda/eslint-config/react"
+      "@skinsight/eslint-config/base",
+      "@skinsight/eslint-config/client",
+      "@skinsight/eslint-config/react"
     ]
   },
-  "prettier": "@kopenkinda/prettier-config"
+  "prettier": "@skinsight/prettier-config"
 }

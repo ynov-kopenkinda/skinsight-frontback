@@ -1,7 +1,7 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import { appRouter, createTRPCContext } from "@kopenkinda/api";
-import { auth } from "@kopenkinda/auth";
+import { appRouter, createTRPCContext } from "@skinsight/api";
+import { auth } from "@skinsight/auth";
 
 export const runtime = "edge";
 

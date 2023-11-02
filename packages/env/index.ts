@@ -26,12 +26,9 @@ export const env = createEnv({
     ),
     DATABASE_URL: z.string().url(),
     DATABASE_PREFIX: z.string().default(""),
-    STEAM_BOT_PORT: z.coerce.number().default(3001),
-    STEAM_BOT_BASEURL: z.string().url(),
-    STEAM_BOT_AUTHTOKEN: z.string(),
-    STEAM_ACCOUNT_NAME: z.string(),
-    STEAM_ACCOUNT_PWD: z.string(),
-    STEAM_ACCOUNT_SHARED_SECRET: z.string(),
+    API_SERVER_BASEURL: z.string().url(),
+    API_SERVER_PORT: z.coerce.number().default(3001),
+    API_SERVER_TOKEN: z.string().min(12),
   },
   shared: {
     VERCEL_URL: z
@@ -49,12 +46,9 @@ export const env = createEnv({
     PORT: process.env.PORT,
     DATABASE_URL: process.env.DATABASE_URL,
     DATABASE_PREFIX: process.env.DATABASE_PREFIX,
-    STEAM_BOT_BASEURL: process.env.STEAM_BOT_BASEURL,
-    STEAM_BOT_PORT: process.env.STEAM_BOT_PORT,
-    STEAM_BOT_AUTHTOKEN: process.env.STEAM_BOT_AUTHTOKEN,
-    STEAM_ACCOUNT_NAME: process.env.STEAM_ACCOUNT_NAME,
-    STEAM_ACCOUNT_PWD: process.env.STEAM_ACCOUNT_PWD,
-    STEAM_ACCOUNT_SHARED_SECRET: process.env.STEAM_ACCOUNT_SHARED_SECRET,
+    API_SERVER_BASEURL: process.env.API_SERVER_BASEURL,
+    API_SERVER_PORT: process.env.API_SERVER_PORT,
+    API_SERVER_TOKEN: process.env.API_SERVER_TOKEN,
   },
   skipValidation:
     !!process.env.CI ||

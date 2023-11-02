@@ -1,7 +1,7 @@
 import { Avatar, Button, Flex, IconButton } from "@radix-ui/themes";
 import { IconLogout } from "@tabler/icons-react";
 
-import { auth, Providers, signIn, signOut } from "@kopenkinda/auth";
+import { auth, Providers, signIn, signOut } from "@skinsight/auth";
 
 export async function LoginButton({ provider }: { provider: Providers }) {
   return (

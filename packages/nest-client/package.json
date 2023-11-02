@@ -1,5 +1,5 @@
 {
-  "name": "@kopenkinda/steam-server",
+  "name": "@skinsight/nest-client",
   "private": true,
   "version": "0.1.0",
   "main": "./dist/index.mjs",
@@ -13,12 +13,12 @@
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit",
     "postinstall": "pnpm run generate",
-    "generate": "openapi --useOptions --useUnionTypes --indent=2 --input=../../apps/api-server/swagger.json --output=./src --name SteamApi"
+    "generate": "openapi --useOptions --useUnionTypes --indent=2 --input=../../apps/api-server/swagger.json --output=./src --name NestApi"
   },
   "devDependencies": {
-    "@kopenkinda/eslint-config": "workspace:*",
-    "@kopenkinda/prettier-config": "workspace:*",
-    "@kopenkinda/tsconfig": "workspace:*",
+    "@skinsight/eslint-config": "workspace:*",
+    "@skinsight/prettier-config": "workspace:*",
+    "@skinsight/tsconfig": "workspace:*",
     "eslint": "^8.47.0",
     "openapi-typescript-codegen": "^0.25.0",
     "typescript": "^5.1.6",
@@ -26,8 +26,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "@kopenkinda/eslint-config/base"
+      "@skinsight/eslint-config/base"
     ]
   },
-  "prettier": "@kopenkinda/prettier-config"
+  "prettier": "@skinsight/prettier-config"
 }

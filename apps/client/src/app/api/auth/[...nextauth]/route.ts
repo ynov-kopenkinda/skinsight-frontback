@@ -1,3 +1,3 @@
-export { GET, POST } from "@kopenkinda/auth";
+export { GET, POST } from "@skinsight/auth";
 
 export const runtime = "edge";

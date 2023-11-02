@@ -7,7 +7,7 @@ import "@radix-ui/themes/styles.css";
 import { headers } from "next/headers";
 import { Flex, Text, Theme } from "@radix-ui/themes";
 
-import { auth } from "@kopenkinda/auth";
+import { auth } from "@skinsight/auth";
 
 import { LoginButton } from "./auth";
 import { TRPCReactProvider } from "./providers";
@@ -17,11 +17,6 @@ const fontSans = Inter({
   variable: "--font-sans",
 });
 
-export const metadata: Metadata = {
-  title: "Starter repo",
-  description: "Simple monorepo with shared backend for web",
-};
-
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await auth();
   return (
@@ -29,17 +24,12 @@ export default async function Layout(props: { children: React.ReactNode }) {
       <body className={["font-sans", fontSans.variable].join(" ")}>
         <TRPCReactProvider headers={headers()}>
           <Theme appearance="dark">
-            {session == null && (
+            {session == null ? (
               <Flex align="center" justify="center" className="h-screen">
                 <LoginButton provider="discord" />
               </Flex>
-            )}
-            {session != null && session.user.authorized ? (
-              props.children
             ) : (
-              <Flex align="center" justify="center" className="h-screen">
-                <Text>Not authorized</Text>
-              </Flex>
+              props.children
             )}
           </Theme>
         </TRPCReactProvider>

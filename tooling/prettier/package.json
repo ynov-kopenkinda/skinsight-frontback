@@ -1,5 +1,5 @@
 {
-  "name": "@kopenkinda/prettier-config",
+  "name": "@skinsight/prettier-config",
   "private": true,
   "version": "0.1.0",
   "main": "index.mjs",
@@ -14,8 +14,8 @@
     "prettier-plugin-tailwindcss": "^0.5.6"
   },
   "devDependencies": {
-    "@kopenkinda/tsconfig": "workspace:*",
+    "@skinsight/tsconfig": "workspace:*",
     "typescript": "^5.2.2"
   },
-  "prettier": "@kopenkinda/prettier-config"
+  "prettier": "@skinsight/prettier-config"
 }
