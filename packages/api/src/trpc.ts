@@ -16,7 +16,7 @@ import { db } from "@skinsight/db";
 import { NestApi } from "@skinsight/nest-client";
 
 /**
- * 0. Steam API
+ * 0. Nest API
  */
 
 const nest = new NestApi();
