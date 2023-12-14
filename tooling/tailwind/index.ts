@@ -9,6 +9,7 @@ export default {
       colors: {
         'primary': '#5861E2',
         'secondary': '#D1F6DB',
+        'gray': '#F2F2F7'
       },
       fontFamily: {
         'sans': ['"Inter"', ...defaultTheme.fontFamily.sans],
