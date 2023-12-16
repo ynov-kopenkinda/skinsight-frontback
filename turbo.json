@@ -34,6 +34,7 @@
   },
   "globalEnv": [
     "DATABASE_URL",
+    "DATABASE_SECURE_URL",
     "DISCORD_CLIENT_ID",
     "DISCORD_CLIENT_SECRET",
     "NEXTAUTH_SECRET",

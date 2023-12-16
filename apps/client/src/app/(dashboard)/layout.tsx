@@ -10,7 +10,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Flex direction="column" p="2" gap="2" className="min-h-screen">
+    <Flex direction="column" p="2" gap="2" className="h-screen min-h-screen">
       <AppHeader />
       {children}
       <AppFooter className="mt-auto" />

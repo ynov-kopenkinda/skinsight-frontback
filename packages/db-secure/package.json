@@ -1,5 +1,5 @@
 {
-  "name": "@skinsight/api",
+  "name": "@skinsight/db-secure",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -9,23 +9,21 @@
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "push": "drizzle-kit push:mysql",
+    "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@skinsight/auth": "workspace:*",
-    "@skinsight/db": "workspace:*",
-    "@skinsight/db-secure": "workspace:*",
-    "@skinsight/env": "workspace:*",
-    "@skinsight/nest-client": "workspace:*",
-    "@trpc/client": "next",
-    "@trpc/server": "next",
-    "superjson": "1.13.1",
-    "zod": "^3.22.2"
+    "@planetscale/database": "^1.11.0",
+    "drizzle-orm": "^0.28.6",
+    "mysql2": "^3.6.2"
   },
   "devDependencies": {
     "@skinsight/eslint-config": "workspace:*",
     "@skinsight/prettier-config": "workspace:*",
     "@skinsight/tsconfig": "workspace:*",
+    "dotenv-cli": "^7.3.0",
+    "drizzle-kit": "^0.19.13",
     "eslint": "^8.52.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"

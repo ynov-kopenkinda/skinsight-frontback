@@ -13,6 +13,7 @@ import { ZodError } from "zod";
 import type { Session } from "@skinsight/auth";
 import { auth } from "@skinsight/auth";
 import { db } from "@skinsight/db";
+import { db as dbSecure } from "@skinsight/db-secure";
 import { NestApi } from "@skinsight/nest-client";
 
 /**
@@ -55,6 +56,7 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
     nest: opts.nest.default,
     session: opts.session,
     db,
+    dbSecure,
   };
 };
 

@@ -20,7 +20,7 @@ const fontSans = Inter({
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await auth();
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={["font-sans", fontSans.variable].join(" ")}>
         <TRPCReactProvider headers={headers()}>
           <Theme appearance="dark">
