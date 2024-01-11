@@ -23,16 +23,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <body className={["font-sans", fontSans.variable].join(" ")}>
         <TRPCReactProvider headers={headers()}>
-          <Theme appearance="dark">
-            {session == null ? (
-          <Theme appearance="light">
-              <Flex align="center" justify="center" className="h-screen">
-                <LoginButton provider="discord" />
-              </Flex>
-            ) : (
-              props.children
-            )}
-          </Theme>
+          <Theme appearance="dark">{props.children}</Theme>
         </TRPCReactProvider>
       </body>
     </html>
