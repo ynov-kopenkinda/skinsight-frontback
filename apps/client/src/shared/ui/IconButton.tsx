@@ -12,15 +12,17 @@ interface IconButtonProps {
 
 const IconButton = ({ background, color, label, icon, link }: IconButtonProps) => {
   return (
-    <div className='flex flex-col gap-y-2 items-center'>
-      <Link href={link} className={`${background ?? 'bg-gray'} items-center justify-center w-12 h-12 rounded-lg flex flex-col`}>
-        <span className={`p-2 rounded-lg ${color ?? 'text-primary'}`}>
-          {icon}
-        </span>
+    <div className='group'>
+      <Link href={link} className='flex flex-col items-center space-y-2'>
+        <div className={`${background ?? 'bg-gray'} items-center justify-center w-12 h-12 rounded-lg flex flex-col`}>
+          <span className={`p-2 rounded-lg ${color ?? 'text-primary'}`}>
+            {icon}
+          </span>
+        </div>
+        {label ? (
+          <Text className='text-gray-strong group-hover:text-black transition-all'>{label}</Text>
+        ): null}
       </Link>
-      {label ? (
-        <Text className='text-gray-strong'>{label}</Text>
-      ): null}
     </div>
   )
 }
