@@ -12,10 +12,10 @@ const HomeBanner = () => {
       </div>
       <div className="basis-1/2 flex flex-col gap-y-2 text-white">
         <Heading as='h2' className='text-sm'>Simple ways for healthy life</Heading>
-        <Text className='text-[11px]'>
+        <Text className='text-xs'>
           Check-up on your health of your skin with a click of a button
         </Text>
-        <Link className='mt-2 text-[11px] flex gap-x-2 items-center relative w-fit hover:after:opacity-100 after:transition-opacity after:opacity-0 after:absolute after:w-full after:bg-white after:left-0 after:bottom-[-6px] after:h-[1px] after:content-normal' href={'/'}>
+        <Link className='mt-2 text-xs flex gap-x-2 items-center relative w-fit hover:after:opacity-100 after:transition-opacity after:opacity-0 after:absolute after:w-full after:bg-white after:left-0 after:bottom-[-6px] after:h-[1px] after:content-normal' href={'/'}>
           Scan
           <span className='border border-white rounded-full'>
             <IconChevronRight size={16} />
