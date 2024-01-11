@@ -1,29 +1,38 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import "~/styles/globals.css";
 import "@radix-ui/themes/styles.css";
+import "~/styles/globals.css";
 
+import { Theme } from "@radix-ui/themes";
 import { headers } from "next/headers";
-import { Flex, Text, Theme } from "@radix-ui/themes";
 
 import { auth } from "@skinsight/auth";
 
-import { LoginButton } from "./auth";
 import { TRPCReactProvider } from "./providers";
+
+import { Toaster } from "sonner";
 
 const fontSans = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--default-font-family"
 });
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await auth();
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body className={["font-sans", fontSans.variable].join(" ")}>
         <TRPCReactProvider headers={headers()}>
-          <Theme appearance="dark">{props.children}</Theme>
+          <Theme appearance="light">
+            <Toaster position="top-right" />
+            {/* {session == null ? (
+              <Flex align="center" justify="center" className="h-screen">
+                <LoginButton provider="credentials" />
+              </Flex>
+            ) : ( */}
+              {props.children}
+            {/* )} */}
+          </Theme>
         </TRPCReactProvider>
       </body>
     </html>
