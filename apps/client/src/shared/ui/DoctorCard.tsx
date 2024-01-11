@@ -41,7 +41,7 @@ const DoctorCard = ({ doctor }: DoctorCardProps) => {
       </div>
       <div className='mt-4'>
         <Link className='block w-full' href={`/messages/${doctor.id}`}>
-          <Button size={'4'} className='w-full'>Messages</Button>
+          <Button size={'4'} className='w-full hover:cursor-pointer'>Messages</Button>
         </Link>
       </div>
     </div>
