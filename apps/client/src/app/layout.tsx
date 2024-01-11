@@ -21,7 +21,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
   const session = await auth();
   return (
     <html lang="en">
-      <body className={["font-sans", fontSans.variable].join(" ")}>
+      <body className={["font-sans", fontSans.variable].join(" ")} suppressHydrationWarning>
         <TRPCReactProvider headers={headers()}>
           <Theme appearance="light">
             <Toaster position="top-right" />
