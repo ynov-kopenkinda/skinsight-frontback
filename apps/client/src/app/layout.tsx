@@ -3,35 +3,29 @@ import { Inter } from "next/font/google";
 import "@radix-ui/themes/styles.css";
 import "~/styles/globals.css";
 
-import { Theme } from "@radix-ui/themes";
 import { headers } from "next/headers";
+import { Theme } from "@radix-ui/themes";
+import { Toaster } from "sonner";
 
 import { auth } from "@skinsight/auth";
 
 import { TRPCReactProvider } from "./providers";
 
-import { Toaster } from "sonner";
-
 const fontSans = Inter({
   subsets: ["latin"],
-  variable: "--default-font-family"
+  variable: "--inter-font",
 });
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await auth();
   return (
-    <html lang="en">
-      <body className={["font-sans", fontSans.variable].join(" ")}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={[fontSans.variable].join(" ")}>
         <TRPCReactProvider headers={headers()}>
           <Theme appearance="light">
             <Toaster position="top-right" />
-            {/* {session == null ? (
-              <Flex align="center" justify="center" className="h-screen">
-                <LoginButton provider="credentials" />
-              </Flex>
-            ) : ( */}
-              {props.children}
-            {/* )} */}
+            <div className={["h-12 w-12", "bg-red-400"].join(" ")}>Hi</div>
+            {props.children}
           </Theme>
         </TRPCReactProvider>
       </body>
