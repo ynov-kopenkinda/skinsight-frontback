@@ -1,5 +1,5 @@
 {
-  "name": "@skinsight/db",
+  "name": "@skinsight/db-secure",
   "version": "0.1.0",
   "private": true,
   "exports": {
@@ -23,7 +23,6 @@
   "dependencies": {
     "@planetscale/database": "^1.11.0",
     "drizzle-orm": "^0.28.6",
-    "tsup": "^8.0.1",
     "mysql2": "^3.6.2"
   },
   "devDependencies": {

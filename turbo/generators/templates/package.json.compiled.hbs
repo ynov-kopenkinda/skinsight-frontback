@@ -1,7 +1,7 @@
 {
-  "name": "@skinsight/db",
-  "version": "0.1.0",
+  "name": "@skinsight/{{ name }}",
   "private": true,
+  "version": "0.1.0",
   "exports": {
     "types": "./dist/index.d.ts",
     "import": "./dist/index.js",
@@ -12,32 +12,23 @@
   "license": "MIT",
   "scripts": {
     "build": "tsup",
-    "//dev": "tsup --watch",
-    "clean": "rm -rf .turbo node_modules",
+    "dev": "tsup --watch",
+    "clean": "rm -rf .turbo node_modules dist",
     "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "push": "drizzle-kit push:mysql",
-    "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@planetscale/database": "^1.11.0",
-    "drizzle-orm": "^0.28.6",
-    "tsup": "^8.0.1",
-    "mysql2": "^3.6.2"
   },
   "devDependencies": {
     "@skinsight/eslint-config": "workspace:*",
     "@skinsight/prettier-config": "workspace:*",
     "@skinsight/tsconfig": "workspace:*",
-    "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.19.13",
-    "eslint": "^8.52.0",
-    "prettier": "^3.0.3",
-    "typescript": "^5.2.2"
+    "eslint": "^8.47.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.1.6"
   },
   "eslintConfig": {
-    "root": true,
     "extends": [
       "@skinsight/eslint-config/base"
     ]

@@ -40,9 +40,6 @@ export const users = mySqlTable("user", {
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
-  createdChats: many(chat, { relationName: "initiator" }),
-  invitedToChats: many(chat, { relationName: "invitee" }),
-  chatEvents: many(chatEvent),
 }));
 
 export const accounts = mySqlTable(
@@ -101,51 +98,3 @@ export const verificationTokens = mySqlTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   }),
 );
-
-export const chat = mySqlTable("chat", {
-  id: varchar("id", { length: 255 }).notNull().primaryKey(),
-  initatorId: varchar("initatorId", { length: 255 }).notNull(),
-  inviteeId: varchar("inviteeId", { length: 255 }).notNull(),
-});
-
-export const chatRelations = relations(chat, ({ one, many }) => ({
-  initiator: one(users, {
-    fields: [chat.initatorId],
-    references: [users.id],
-    relationName: "initiator",
-  }),
-  invitee: one(users, {
-    fields: [chat.inviteeId],
-    references: [users.id],
-    relationName: "invitee",
-  }),
-  chatEvents: many(chatEvent),
-}));
-
-export const chatEvent = mySqlTable("chatEvent", {
-  id: varchar("id", { length: 255 }).notNull().primaryKey(),
-  chatId: varchar("chatId", { length: 255 }).notNull(),
-  user_id: varchar("user_id", { length: 255 }).notNull(),
-  reply_to_id: varchar("reply_to_id", { length: 255 }),
-  type: varchar("type", { length: 255 }).$type<ChatEventType>(),
-  data: text("data"),
-});
-
-export const chatEventRelations = relations(chatEvent, ({ one, many }) => ({
-  chat: one(chat, {
-    fields: [chatEvent.chatId],
-    references: [chat.id],
-  }),
-  user: one(users, {
-    fields: [chatEvent.user_id],
-    references: [users.id],
-  }),
-  replyTo: many(chatEvent, {
-    relationName: "chatEventsReplyTo",
-  }),
-  replyToId: one(chatEvent, {
-    fields: [chatEvent.reply_to_id],
-    references: [chatEvent.id],
-    relationName: "chatEventsReplyTo",
-  }),
-}));
