@@ -33,7 +33,7 @@ export const AppHeader = async () => {
           <div className="hidden sm:block">
             <TopMenu />
           </div>
-          <div className="block sm:hidden">
+          <div className="block sm:hidden bottom-2 fixed left-0 right-0 w-[96%] container mx-auto bg-white rounded-xl border-gray border-2 z-50 glassmorphism">
             <TapBar />
           </div>
       </Flex>
