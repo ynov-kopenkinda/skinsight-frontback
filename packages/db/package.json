@@ -2,10 +2,17 @@
   "name": "@skinsight/db",
   "version": "0.1.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js",
+    "node": "./dist/index.js",
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.js"
+  },
   "license": "MIT",
   "scripts": {
+    "build": "tsup",
+    "//dev": "tsup --watch",
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
@@ -16,7 +23,8 @@
   "dependencies": {
     "@planetscale/database": "^1.11.0",
     "drizzle-orm": "^0.28.6",
-    "mysql2": "^3.6.2"
+    "mysql2": "^3.6.2",
+    "tsup": "^8.0.1"
   },
   "devDependencies": {
     "@skinsight/eslint-config": "workspace:*",

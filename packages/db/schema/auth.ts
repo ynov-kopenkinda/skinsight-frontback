@@ -1,4 +1,3 @@
-import type { AdapterAccount } from "@auth/core/adapters";
 import { relations, sql } from "drizzle-orm";
 import {
   index,
@@ -11,6 +10,21 @@ import {
 
 import { mySqlTable } from "./_table";
 
+export enum UserRoles {
+  DOCTOR = "doctor",
+  PATIENT = "patient",
+}
+
+export enum ChatEventType {
+  CHAT_CREATED = "chat_created",
+  MESSAGE_SENT = "message_sent",
+  IMAGE_SENT = "image_sent",
+  FILE_SENT = "file_sent",
+  APOINTMENT_INVITE_SENT = "apointment_invite_sent",
+  APOINTMENT_INVITE_ACCEPTED = "apointment_invite_accepted",
+  APOINTMENT_INVITE_DENIED = "apointment_invite_denied",
+}
+
 export const users = mySqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),
@@ -20,10 +34,14 @@ export const users = mySqlTable("user", {
     fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 255 }),
+  role: varchar("role", { length: 255 }).$type<UserRoles>(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
+  createdChats: many(chat, { relationName: "initiator" }),
+  invitedToChats: many(chat, { relationName: "invitee" }),
+  chatEvents: many(chatEvent),
 }));
 
 export const accounts = mySqlTable(
@@ -31,7 +49,7 @@ export const accounts = mySqlTable(
   {
     userId: varchar("userId", { length: 255 }).notNull(),
     type: varchar("type", { length: 255 })
-      .$type<AdapterAccount["type"]>()
+      .$type<"oidc" | "oauth" | "email">()
       .notNull(),
     provider: varchar("provider", { length: 255 }).notNull(),
     providerAccountId: varchar("providerAccountId", { length: 255 }).notNull(),
@@ -82,3 +100,51 @@ export const verificationTokens = mySqlTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   }),
 );
+
+export const chat = mySqlTable("chat", {
+  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  initatorId: varchar("initatorId", { length: 255 }).notNull(),
+  inviteeId: varchar("inviteeId", { length: 255 }).notNull(),
+});
+
+export const chatRelations = relations(chat, ({ one, many }) => ({
+  initiator: one(users, {
+    fields: [chat.initatorId],
+    references: [users.id],
+    relationName: "initiator",
+  }),
+  invitee: one(users, {
+    fields: [chat.inviteeId],
+    references: [users.id],
+    relationName: "invitee",
+  }),
+  chatEvents: many(chatEvent),
+}));
+
+export const chatEvent = mySqlTable("chatEvent", {
+  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  chatId: varchar("chatId", { length: 255 }).notNull(),
+  user_id: varchar("user_id", { length: 255 }).notNull(),
+  reply_to_id: varchar("reply_to_id", { length: 255 }),
+  type: varchar("type", { length: 255 }).$type<ChatEventType>(),
+  data: text("data"),
+});
+
+export const chatEventRelations = relations(chatEvent, ({ one, many }) => ({
+  chat: one(chat, {
+    fields: [chatEvent.chatId],
+    references: [chat.id],
+  }),
+  user: one(users, {
+    fields: [chatEvent.user_id],
+    references: [users.id],
+  }),
+  replyTo: many(chatEvent, {
+    relationName: "chatEventsReplyTo",
+  }),
+  replyToId: one(chatEvent, {
+    fields: [chatEvent.reply_to_id],
+    references: [chatEvent.id],
+    relationName: "chatEventsReplyTo",
+  }),
+}));

@@ -11,6 +11,21 @@ import {
 
 import { mySqlTable } from "./_table";
 
+export enum UserRoles {
+  DOCTOR = "doctor",
+  PATIENT = "patient",
+}
+
+export enum ChatEventType {
+  CHAT_CREATED = "chat_created",
+  MESSAGE_SENT = "message_sent",
+  IMAGE_SENT = "image_sent",
+  FILE_SENT = "file_sent",
+  APOINTMENT_INVITE_SENT = "apointment_invite_sent",
+  APOINTMENT_INVITE_ACCEPTED = "apointment_invite_accepted",
+  APOINTMENT_INVITE_DENIED = "apointment_invite_denied",
+}
+
 export const users = mySqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),
@@ -20,6 +35,7 @@ export const users = mySqlTable("user", {
     fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 255 }),
+  role: varchar("role", { length: 255 }).$type<UserRoles>(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
