@@ -25,7 +25,6 @@ export default async function Layout(props: { children: React.ReactNode }) {
         <TRPCReactProvider headers={headers()}>
           <Theme appearance="dark">
             {session == null ? (
-          <Theme appearance="light">
               <Flex align="center" justify="center" className="h-screen">
                 <LoginButton provider="discord" />
               </Flex>

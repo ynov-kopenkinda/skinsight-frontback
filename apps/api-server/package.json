@@ -34,6 +34,7 @@
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
+    "@auth/core": "^0.18.0",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@skinsight/eslint-config": "workspace:*",

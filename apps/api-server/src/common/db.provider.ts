@@ -3,19 +3,17 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 export const DATABASE = 'DATABASE_PROVIDER';
 export const DATABASE_SECURE = 'DATABASE_SECURE_PROVIDER';
-import db from '@skinsight/db';
-import db_pd from '@skinsight/db-secure';
 
-type DbFactoryReturnType = Promise<typeof db>;
-type DbSecureFactoryReturnType = Promise<typeof db_pd>;
+type DbFactoryReturnType = Promise<typeof import('@skinsight/db')>;
+type DbSecureFactoryReturnType = Promise<typeof import('@skinsight/db-secure')>;
 
 export const dbFactory = async (): DbFactoryReturnType => {
-  const module = await db;
+  const module = await import('@skinsight/db');
   return module;
 };
 
 export const dbSecureFactory = async (): DbSecureFactoryReturnType => {
-  const module = await db_pd;
+  const module = await import('@skinsight/db-secure');
   return module;
 };
 
@@ -29,5 +27,5 @@ export const dbSecureProvider = {
   useFactory: dbFactory,
 };
 
-export type Database = typeof db;
-export type DatabaseSecure = typeof db_pd;
+export type Database = Awaited<ReturnType<typeof dbFactory>>;
+export type DatabaseSecure = Awaited<ReturnType<typeof dbSecureFactory>>;
