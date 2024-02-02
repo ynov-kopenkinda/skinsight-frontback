@@ -4,6 +4,16 @@ import "@skinsight/env";
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+        port: '',
+      }
+    ],
+    dangerouslyAllowSVG: true,
+  },
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
     "@skinsight/api",

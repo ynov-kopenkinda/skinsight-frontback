@@ -1,7 +1,6 @@
 import React from "react";
 import { Flex } from "@radix-ui/themes";
 
-import { AppFooter } from "./components/layout/footer";
 import { AppHeader } from "./components/layout/header";
 
 export default function DashboardLayout({
@@ -10,10 +9,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Flex direction="column" p="2" gap="6" className="min-h-screen">
+    <Flex direction="column" gap="6" className="min-h-screen pb-24 px-2">
       <AppHeader />
       {children}
-      <AppFooter className="mt-auto" />
     </Flex>
   );
 }

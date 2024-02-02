@@ -6,13 +6,8 @@ export default {
   content: [""],
   theme: {
     extend: {
-      colors: {
-        'primary': '#5861E2',
-        'secondary': '#D1F6DB',
-        'gray': '#F2F2F7'
-      },
       fontFamily: {
-        'sans': ['"Inter"', ...defaultTheme.fontFamily.sans],
+        'sans': ['"Inter"', ...defaultTheme.fontFamily.sans].flat(),
         'inter': ['"Inter"', ...defaultTheme.fontFamily.sans]
       }
     },
