@@ -28,15 +28,21 @@ export const {
 } = NextAuth({
   adapter: DrizzleAdapter(db, tableCreator),
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
-  providers: [CredentialsProvider({
-    name: 'Credentials',
-    credentials: {
-      email: { label: "Email", type: "text", placeholder: "Enter your email..." },
-      password: { label: "Password", type: "password" },
-    }
-  })],
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "Enter your email...",
+        },
+        password: { label: "Password", type: "password" },
+      },
+    }),
+  ],
   callbacks: {
     session: ({ session, user }) => {
       return {

@@ -10,6 +10,7 @@ import { Toaster } from "sonner";
 import { auth } from "@skinsight/auth";
 
 import { TRPCReactProvider } from "./providers";
+import { SessionProvider } from "./session-provider";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -22,11 +23,12 @@ export default async function Layout(props: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <body className={[fontSans.variable].join(" ")}>
         <TRPCReactProvider headers={headers()}>
-          <Theme appearance="light">
-            <Toaster position="top-right" />
-            <div className={["h-12 w-12", "bg-red-400"].join(" ")}>Hi</div>
-            {props.children}
-          </Theme>
+          <SessionProvider auth={session}>
+            <Theme appearance="light">
+              <Toaster position="top-right" />
+              {props.children}
+            </Theme>
+          </SessionProvider>
         </TRPCReactProvider>
       </body>
     </html>
