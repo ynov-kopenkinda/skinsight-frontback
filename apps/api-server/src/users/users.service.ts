@@ -1,7 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DATABASE, Database } from '../common/db.provider';
-import { uuid } from 'uuidv4';
-import { users } from 'node_modules/@skinsight/db/schema/auth';
 
 @Injectable()
 export class UsersService {
