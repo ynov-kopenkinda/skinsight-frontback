@@ -6,8 +6,6 @@ enum UserRoles {
 }
 export class userDto {
   @ApiProperty()
-  id: string;
-  @ApiProperty()
   email: string;
   @ApiProperty()
   name?: string;
