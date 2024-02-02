@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DATABASE, Database } from '../common/db.provider';
 
+export type newUser = Database['schema']['users']['$inferInsert'];
 @Injectable()
 export class UsersService {
   private db: Database['db'];
@@ -16,5 +17,16 @@ export class UsersService {
 
   findAll(): Promise<Database['schema']['users']['$inferSelect'][]> {
     return this.db.select().from(this.usersSchema);
+  }
+
+  findOneByAnonId(
+    anonId: string,
+  ): Promise<Database['schema']['users']['$inferSelect'][]> {
+    return this.db.select().from(this.usersSchema);
+  }
+
+  async createUser(data: newUser): Promise<newUser> {
+    const newUser = await this.db.insert(this.usersSchema).values(data);
+    return newUser[0];
   }
 }

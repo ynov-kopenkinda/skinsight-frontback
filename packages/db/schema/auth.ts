@@ -35,6 +35,7 @@ export const users = mySqlTable("user", {
   }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 255 }),
   role: varchar("role", { length: 255 }).$type<UserRoles>(),
+  anon_id: varchar("anon_id", { length: 255 }).notNull(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
