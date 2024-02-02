@@ -66,7 +66,9 @@ function PhotoWrapper() {
         Take a photo of your skin
       </Heading>
       {isError && (
-        <Text>You have to enabled the camera permission or upload a file.</Text>
+        <Text as="p" mb={"4"}>
+          You have to enabled the camera permission or upload a file.
+        </Text>
       )}
       {isLoading && <IconLoader size={32} className="animate-spin" />}
       <div className="relative">
