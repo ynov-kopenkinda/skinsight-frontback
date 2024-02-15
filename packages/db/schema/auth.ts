@@ -149,3 +149,23 @@ export const chatEventRelations = relations(chatEvent, ({ one, many }) => ({
     relationName: "chatEventsReplyTo",
   }),
 }));
+
+export const appointments = mySqlTable("appointment", {
+  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  doctorId: varchar("doctorId", { length: 255 }).notNull(),
+  patientId: varchar("patientId", { length: 255 }).notNull(),
+  date: timestamp("date", { mode: "date" }).notNull(),
+  status: varchar("status", { length: 255 }).notNull(),
+  reason: text("reason"),
+});
+
+export const appointmentsRelations = relations(appointments, ({ one }) => ({
+  doctor: one(users, {
+    fields: [appointments.doctorId],
+    references: [users.id],
+  }),
+  patient: one(users, {
+    fields: [appointments.patientId],
+    references: [users.id],
+  }),
+}));
