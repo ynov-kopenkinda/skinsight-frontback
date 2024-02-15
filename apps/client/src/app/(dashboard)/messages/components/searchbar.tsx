@@ -1,10 +1,8 @@
 "use client";
 
 import React, { ChangeEvent } from "react";
-import { Flex, IconButton, TextField } from "@radix-ui/themes";
+import { IconButton, TextField } from "@radix-ui/themes";
 import { IconSearch } from "@tabler/icons-react";
-
-import { MessageBoxProps } from "~/shared/ui/MessageBox";
 
 interface SearchbarProps {
   onSearch: (searchTerm: string) => void;
@@ -16,7 +14,7 @@ const Searchbar = ({ onSearch }: SearchbarProps) => {
   };
 
   return (
-    <div className="bg-primary -mx-4 -mt-2 mb-8 flex justify-center px-4 pb-10 pt-6 text-white md:-mx-16 md:px-16 lg:-mx-20 lg:px-20">
+    <div className="bg-primary -mx-4 -mt-2 mb-8 flex justify-center px-4 pb-10 text-white md:-mx-16 md:px-16 lg:-mx-20 lg:px-20">
       <TextField.Root className="w-full max-w-xl" size={"3"}>
         <TextField.Input
           onChange={handleInputChange}

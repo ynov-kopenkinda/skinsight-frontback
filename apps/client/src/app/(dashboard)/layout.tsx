@@ -12,7 +12,7 @@ export default function DashboardLayout({
     <Flex
       direction="column"
       gap="6"
-      className="min-h-screen px-4 pb-24 pt-2 md:px-16 lg:px-20"
+      className="min-h-screen overflow-hidden px-4 pb-24 pt-2 md:px-16 lg:px-20"
     >
       <AppHeader />
       {children}

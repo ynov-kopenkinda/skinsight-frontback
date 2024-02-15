@@ -4,6 +4,8 @@ import React, { useState } from "react";
 
 import MessageBox, { MessageBoxProps } from "~/shared/ui/MessageBox";
 import Searchbar from "./components/searchbar";
+import TapBar from "../components/TapBar";
+import HeaderMessage from "./components/header-message";
 
 function Messages() {
   const messages: MessageBoxProps[] = [
@@ -32,6 +34,7 @@ function Messages() {
 
   return (
     <div>
+      <HeaderMessage />
       <Searchbar onSearch={setSearchTerm} />
       {filteredMessage.length > 0
         ? filteredMessage.map((message) => (
@@ -46,6 +49,9 @@ function Messages() {
             />
           ))
         : "You don't have any messages for the moment."}
+      <div className="border-gray glassmorphism container fixed bottom-4 left-0 right-0 z-50 mx-auto block w-fit rounded-xl border-2 bg-white pl-4 pr-4">
+        <TapBar />
+      </div>
     </div>
   );
 }
