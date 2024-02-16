@@ -10,7 +10,7 @@
     "clean": "rm -rf .turbo node_modules",
     "dev": "tsup --watch",
     "lint": "eslint .",
-    "format": "prettier --write \"**/*.{mjs,ts,md,json}\"",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit",
     "postinstall": "pnpm run generate",
     "generate": "openapi --useOptions --useUnionTypes --indent=2 --input=../../apps/api-server/swagger.json --output=./src --name NestApi"

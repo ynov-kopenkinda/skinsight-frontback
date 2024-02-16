@@ -3,7 +3,7 @@
 "./dist/index.js", "require": "./dist/index.cjs", "default": "./dist/index.js"
 }, "license": "MIT", "scripts": { "build": "tsup", "dev": "tsup --watch",
 "clean": "rm -rf .turbo node_modules dist", "lint": "eslint .", "format":
-"prettier \"**/*.{mjs,ts,md,json}\"", "typecheck": "tsc --noEmit" },
+"prettier --check \"**/*.{mjs,ts,md,json}\"", "typecheck": "tsc --noEmit" },
 "dependencies": { }, "devDependencies": { "@skinsight/eslint-config":
 "workspace:*", "@skinsight/prettier-config": "workspace:*",
 "@skinsight/tsconfig": "workspace:*", "eslint": "^8.47.0", "tsup": "^8.0.1",
