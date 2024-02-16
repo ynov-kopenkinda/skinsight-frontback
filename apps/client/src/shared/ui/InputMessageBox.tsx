@@ -2,10 +2,8 @@ interface InputMessageBoxProps {
   placeholder?: string;
 }
 
-const InputMessageBox = ({ placeholder }: InputMessageBoxProps) => {
-  return (
-    <div>InputMessage</div>
-  )
-}
+const InputMessageBox: React.FC<InputMessageBoxProps> = () => {
+  return <div>InputMessage</div>;
+};
 
-export default InputMessageBox
+export default InputMessageBox;

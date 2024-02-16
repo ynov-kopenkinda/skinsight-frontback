@@ -1,9 +1,10 @@
 import { Avatar, Button, Flex, IconButton } from "@radix-ui/themes";
 import { IconLogout } from "@tabler/icons-react";
 
-import { auth, Providers, signIn, signOut } from "@skinsight/auth";
+import type { Providers } from "@skinsight/auth";
+import { auth, signIn, signOut } from "@skinsight/auth";
 
-export async function LoginButton({ provider }: { provider: Providers }) {
+export function LoginButton({ provider }: { provider: Providers }) {
   return (
     <form
       action={async () => {

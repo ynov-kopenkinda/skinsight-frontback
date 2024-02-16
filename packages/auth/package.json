@@ -8,11 +8,10 @@
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
-    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "format": "prettier --write \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@skinsight/db": "workspace:*",
     "@skinsight/env": "workspace:*",
     "@auth/core": "^0.18.0",
     "@auth/drizzle-adapter": "^0.3.5",

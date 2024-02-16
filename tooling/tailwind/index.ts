@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-
 import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
@@ -7,9 +6,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['"Inter"', ...defaultTheme.fontFamily.sans].flat(),
-        'inter': ['"Inter"', ...defaultTheme.fontFamily.sans]
-      }
+        sans: ['"Inter"', ...defaultTheme.fontFamily.sans].flat(),
+        inter: ['"Inter"', ...defaultTheme.fontFamily.sans],
+      },
     },
   },
   plugins: [],

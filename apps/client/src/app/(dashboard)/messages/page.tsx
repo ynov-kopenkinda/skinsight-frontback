@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 
 import MessageBox, { MessageBoxProps } from "~/shared/ui/MessageBox";
-import Searchbar from "./components/searchbar";
 import TapBar from "../components/TapBar";
 import HeaderMessage from "./components/header-message";
+import Searchbar from "./components/searchbar";
 
 function Messages() {
   const messages: MessageBoxProps[] = [

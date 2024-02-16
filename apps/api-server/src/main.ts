@@ -1,27 +1,40 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import fs from 'fs/promises';
+import fs from "fs/promises";
+import { INestApplication, ValidationPipe } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
-async function bootstrap() {
-  const { env } = await import('@skinsight/env');
-  const app = await NestFactory.create(AppModule);
+import { PrismaClient } from "@skinsight/database";
 
+import { AppModule } from "./app.module";
+
+const prisma = new PrismaClient();
+
+function setupSwagger(app: INestApplication) {
   const config = new DocumentBuilder()
-    .setTitle('Internal')
-    .setVersion('1.0')
-    .addBearerAuth({
-      type: 'http',
-      name: 'Authorization',
-    })
+    .setTitle("Web-Services API")
+    .setDescription("API du cours de web-services")
+    .setVersion("0.1")
     .build();
-
   const document = SwaggerModule.createDocument(app, config);
-
-  await fs.writeFile('./swagger.json', JSON.stringify(document));
-
-  SwaggerModule.setup('api', app, document);
-
-  await app.listen(env.API_SERVER_PORT);
+  SwaggerModule.setup("/", app, document);
+  return document;
 }
-bootstrap();
+
+async function main() {
+  const app = await NestFactory.create(AppModule);
+  console.log(process.env);
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  const document = setupSwagger(app);
+  await fs.writeFile("./swagger.json", JSON.stringify(document));
+  await app.listen(3001);
+}
+
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

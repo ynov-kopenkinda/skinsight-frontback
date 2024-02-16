@@ -8,13 +8,12 @@
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
-    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "format": "prettier --write \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@skinsight/auth": "workspace:*",
-    "@skinsight/db": "workspace:*",
-    "@skinsight/db-secure": "workspace:*",
+    "@skinsight/database": "workspace:*",
     "@skinsight/env": "workspace:*",
     "@skinsight/nest-client": "workspace:*",
     "@trpc/client": "next",

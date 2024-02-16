@@ -2,11 +2,8 @@
 /* @see https://github.com/nextauthjs/next-auth/pull/8932 */
 
 import type { DefaultSession } from "@auth/core/types";
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-import { db, tableCreator } from "@skinsight/db";
 
 export type { Session } from "next-auth";
 
@@ -26,17 +23,22 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
-  adapter: DrizzleAdapter(db, tableCreator),
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
-  providers: [CredentialsProvider({
-    name: 'Credentials',
-    credentials: {
-      email: { label: "Email", type: "text", placeholder: "Enter your email..." },
-      password: { label: "Password", type: "password" },
-    }
-  })],
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "Enter your email...",
+        },
+        password: { label: "Password", type: "password" },
+      },
+    }),
+  ],
   callbacks: {
     session: ({ session, user }) => {
       return {
