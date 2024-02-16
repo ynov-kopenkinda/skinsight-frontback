@@ -9,10 +9,8 @@
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
-    "db:push": "pnpm -F db push",
-    "db-secure:push": "pnpm -F db-secure push",
-    "db:studio": "pnpm -F db studio",
-    "db-secure:studio": "pnpm -F db-secure studio",
+    "db:push": "pnpm -F database push",
+    "db:studio": "pnpm -F database studio",
     "nest-client-api:generate": "pnpm -F nest-client generate",
     "dev": "turbo dev --parallel",
     "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache'",
@@ -33,5 +31,9 @@
       "@auth/core": "0.18.0"
     }
   },
-  "prettier": "@skinsight/prettier-config"
+  "prettier": "@skinsight/prettier-config",
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
+    "prettier-plugin-tailwindcss": "^0.5.6"
+  }
 }

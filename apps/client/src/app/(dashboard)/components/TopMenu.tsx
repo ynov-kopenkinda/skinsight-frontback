@@ -1,26 +1,31 @@
-'use client'
+"use client";
 
-import { IconCamera, IconMessageCircle, IconSearch, IconUserCircle } from '@tabler/icons-react'
-import Link from 'next/link'
-import React from 'react'
+import React from "react";
+import Link from "next/link";
+import {
+  IconCamera,
+  IconMessageCircle,
+  IconSearch,
+  IconUserCircle,
+} from "@tabler/icons-react";
 
 const TopMenu = () => {
   return (
     <div className="flex items-center space-x-1">
-      <Link href='/search' className='hover:opacity-60 transition-all p-2'>
+      <Link href="/search" className="p-2 transition-all hover:opacity-60">
         <IconSearch size={26} />
       </Link>
-      <Link href='/photo' className='hover:opacity-60 transition-all p-2'>
+      <Link href="/photo" className="p-2 transition-all hover:opacity-60">
         <IconCamera size={26} />
       </Link>
-      <Link href='/messages' className='hover:opacity-60 transition-all p-2'>
+      <Link href="/messages" className="p-2 transition-all hover:opacity-60">
         <IconMessageCircle size={26} />
       </Link>
-      <Link href='/profile' className='hover:opacity-60 transition-all p-2'>
+      <Link href="/profile" className="p-2 transition-all hover:opacity-60">
         <IconUserCircle size={26} />
       </Link>
     </div>
-  )
-}
+  );
+};
 
-export default TopMenu
+export default TopMenu;

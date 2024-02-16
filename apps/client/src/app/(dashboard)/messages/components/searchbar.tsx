@@ -1,6 +1,7 @@
 "use client";
 
-import React, { ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
+import React from "react";
 import { IconButton, TextField } from "@radix-ui/themes";
 import { IconSearch } from "@tabler/icons-react";
 

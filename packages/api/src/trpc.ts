@@ -12,21 +12,20 @@ import { ZodError } from "zod";
 
 import type { Session } from "@skinsight/auth";
 import { auth } from "@skinsight/auth";
-import { db } from "@skinsight/db";
-import { db as dbSecure } from "@skinsight/db-secure";
+import { PrismaClient } from "@skinsight/database";
 import { NestApi } from "@skinsight/nest-client";
 
 /**
  * 0. Nest API
  */
 
-const nest = new NestApi();
-
-nest.default.httpRequest.config.BASE = `${process.env.API_SERVER_BASEURL}:${process.env.API_SERVER_PORT}`;
-nest.default.httpRequest.config.TOKEN = process.env.API_SERVER_TOKEN;
-nest.default.httpRequest.config.HEADERS = {
-  Authorization: `Bearer ${process.env.API_SERVER_TOKEN}`,
-};
+const nest = new NestApi({
+  BASE: `${process.env.API_SERVER_BASEURL}:${process.env.API_SERVER_PORT}`,
+  TOKEN: process.env.API_SERVER_TOKEN,
+  HEADERS: {
+    Authorization: `Bearer ${process.env.API_SERVER_TOKEN}`,
+  },
+});
 
 /**
  * 1. CONTEXT
@@ -53,10 +52,9 @@ interface CreateContextOptions {
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
-    nest: opts.nest.default,
+    nest: opts.nest,
     session: opts.session,
-    db,
-    dbSecure,
+    db: new PrismaClient(),
   };
 };
 

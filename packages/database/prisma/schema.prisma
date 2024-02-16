@@ -1,0 +1,81 @@
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  DOCTOR
+  PATIENT
+}
+
+model User {
+  id              Int           @id @default(autoincrement())
+  email           String        @unique
+  password        String
+  firstName       String
+  lastName        String
+  phone           String
+  heightInCm      Float?
+  weightInKg      Float?
+  ssn             String
+  proDoctorNumber String        @default("NotADoctor")
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  userRole        UserRole      @default(PATIENT)
+  ChatEvent       ChatEvent[]
+  Appointment     Appointment[]
+}
+
+enum ChatEventType {
+  CHAT_CREATED
+  MESSAGE_SENT
+  IMAGE_SENT
+  FILE_SENT
+  APPOINTMENT_INVITE_SENT
+  APPOINTMENT_INVITE_ACCEPTED
+  APPOINTMENT_INVITE_DECLINED
+}
+
+model ChatEvent {
+  id            Int           @id @default(autoincrement())
+  chatId        Int
+  userId        Int
+  data          String
+  chatEventType ChatEventType
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  Chat          Chat          @relation(fields: [chatId], references: [id])
+  Users         User?         @relation(fields: [userId], references: [id])
+
+  @@index([chatId])
+  @@index([userId])
+}
+
+model Chat {
+  id        Int         @id @default(autoincrement())
+  invitorId Int
+  inviteeId Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  ChatEvent ChatEvent[]
+}
+
+model Appointment {
+  id                  Int      @id @default(autoincrement())
+  doctorId            Int
+  patientId           Int
+  isAcceptedByDoctor  Boolean  @default(false)
+  isAcceptedByPatient Boolean  @default(false)
+  location            String?  @default("Online")
+  date                DateTime
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  Users               User?    @relation(fields: [doctorId], references: [id])
+
+  @@index([doctorId])
+}

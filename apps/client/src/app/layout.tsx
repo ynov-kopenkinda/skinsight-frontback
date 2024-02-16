@@ -17,7 +17,7 @@ const fontSans = Inter({
 });
 
 export default async function Layout(props: { children: React.ReactNode }) {
-  const session = await auth();
+  const _session = await auth();
   return (
     <html lang="en" suppressHydrationWarning>
       <body

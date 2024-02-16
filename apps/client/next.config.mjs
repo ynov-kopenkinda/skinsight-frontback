@@ -7,10 +7,10 @@ const config = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'api.dicebear.com',
-        port: '',
-      }
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        port: "",
+      },
     ],
     dangerouslyAllowSVG: true,
   },
@@ -18,7 +18,7 @@ const config = {
   transpilePackages: [
     "@skinsight/api",
     "@skinsight/auth",
-    "@skinsight/db",
+    "@skinsight/database",
     "@skinsight/env",
   ],
   /** We already do linting and typechecking as separate tasks in CI */

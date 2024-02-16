@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function OnBoarding() {
-  return (
-    <div>OnBoarding</div>
-  )
+  return <div>OnBoarding</div>;
 }
 
-export default OnBoarding
+export default OnBoarding;

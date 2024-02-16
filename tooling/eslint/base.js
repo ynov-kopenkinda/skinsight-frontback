@@ -1,7 +1,6 @@
 /** @type {import("eslint").Linter.Config} */
 const config = {
   extends: [
-    "turbo",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
@@ -17,7 +16,6 @@ const config = {
   },
   plugins: ["@typescript-eslint", "import"],
   rules: {
-    "turbo/no-undeclared-env-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
