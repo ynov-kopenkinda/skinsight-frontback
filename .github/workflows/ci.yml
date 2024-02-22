@@ -1,11 +1,10 @@
 name: Build, Lint, Type-check
 
 on:
-  pull_request:
-    branches: ["*"]
-  push:
-    branches: ["main"]
-  merge_group:
+  workflow_run:
+    workflows: ["Setup Project"]
+    types:
+      - completed
 
 jobs:
   setup-project:
@@ -46,3 +45,22 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk.sarif
+
+  # run-snyk:
+  #   concurrency:
+  #     group: testing
+  #     cancel-in-progress: true
+  #   runs-on: ubuntu-latest
+  #   if: success()
+  #   steps:
+  #     - name: Run Snyk to check for vulnerabilities
+  #       uses: snyk/actions/node@master
+  #       continue-on-error: true
+  #       env:
+  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  #       with:
+  #         args: --sarif-file-output=snyk.sarif
+  #     - name: Upload result to GitHub Code Scanning
+  #       uses: github/codeql-action/upload-sarif@v2
+  #       with:
+  #         sarif_file: snyk.sarif
