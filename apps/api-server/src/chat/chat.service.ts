@@ -24,4 +24,19 @@ export class ChatService {
       where: { id },
     });
   }
+
+  async getChatByUserId(id: number) {
+    return this.prisma.chat.findMany({
+      where: {
+        OR: [
+          {
+            invitorId: id,
+          },
+          {
+            inviteeId: id,
+          },
+        ],
+      },
+    });
+  }
 }
