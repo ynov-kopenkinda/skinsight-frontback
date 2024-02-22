@@ -1,24 +1,25 @@
-//src/auth/auth.module.ts
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
-import { PrismaModule } from "src/prisma/prisma.module";
+import { UsersModule } from "src/users/users.module";
 
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
-
-export const jwtSecret = "zjP9h6ZI5LoSKCRj";
+import { jwtConstants } from "./constant";
+import { AccessTokenStrategy } from "./strategies/access-token.strategy";
+import { RefreshTokenStrategy } from "./strategies/refresh-token.strategy";
 
 @Module({
+  controllers: [AuthController],
   imports: [
-    PrismaModule,
     PassportModule,
     JwtModule.register({
-      secret: jwtSecret,
-      signOptions: { expiresIn: "5m" }, // e.g. 30s, 7d, 24h
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: "15m" },
     }),
+    UsersModule,
   ],
-  controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, AccessTokenStrategy, RefreshTokenStrategy],
+  exports: [AuthService],
 })
 export class AuthModule {}
