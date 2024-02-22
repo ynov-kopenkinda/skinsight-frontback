@@ -11,6 +11,7 @@ import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 
 import { ChatService } from "./chat.service";
 import { CreateChatDto } from "./dto/create-chat.dto";
+import { GetChatDto } from "./dto/get-chat.dto";
 import { ChatDto } from "./entity/chat.entity";
 
 @ApiTags("chat")
@@ -32,7 +33,7 @@ export class ChatController {
     return this.chatService.createChat(body);
   }
 
-  @ApiOkResponse({ type: [ChatDto] })
+  @ApiOkResponse({ type: [GetChatDto] })
   @ApiOperation({ summary: "Get chat(s) where an user appear" })
   @Get("/user/:id")
   async getChatByUserId(@Param("id", ParseIntPipe) id: number) {

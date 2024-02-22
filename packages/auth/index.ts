@@ -37,15 +37,34 @@ export const {
         },
         password: { label: "Password", type: "password" },
       },
+      async authorize(credentials) {
+        if (!credentials.email || !credentials.password) return null;
+        const { email, password } = credentials;
+        const res = await fetch('http://localhost:3001/auth/signin', {
+          method: 'POST',
+          body: JSON.stringify({
+            email,
+            password
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (res.status == 401) return null;
+
+        const user = await res.json();
+
+        return user;
+      }
     }),
   ],
   callbacks: {
-    session: ({ session, user }) => {
+    session: ({ session, token, user }) => {
+      console.log({ session, token ,user })
       return {
         ...session,
         user: {
           ...session.user,
-          id: user.id,
         },
       };
     },
