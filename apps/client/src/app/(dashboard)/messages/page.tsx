@@ -7,6 +7,7 @@ import { api } from "~/utils/api/react";
 import TapBar from "../components/TapBar";
 import HeaderMessage from "./components/header-message";
 import Searchbar from "./components/searchbar";
+import { api } from "~/utils/api/react";
 
 function Messages() {
   // TODO change by user ID
