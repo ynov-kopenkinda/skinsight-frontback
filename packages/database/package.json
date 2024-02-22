@@ -5,14 +5,17 @@
   "types": "./index.ts",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "db:generate": "prisma generate",
-    "push": "prisma db push",
-    "studio": "prisma studio"
+    "db:generate": "pnpm with-env prisma generate",
+    "push": "pnpm with-env prisma db push",
+    "studio": "pnpm with-env prisma studio",
+    "prisma": "pnpm with-env prisma",
+    "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@prisma/client": "^5.9.1"
   },
   "devDependencies": {
+    "dotenv-cli": "^7.3.0",
     "prisma": "^5.9.1"
   }
 }
