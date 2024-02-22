@@ -11,6 +11,14 @@ const prisma = new PrismaClient();
 
 function setupSwagger(app: INestApplication) {
   const config = new DocumentBuilder()
+    .addBearerAuth(
+      {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+      },
+      "acces-token",
+    )
     .setTitle("Web-Services API")
     .setDescription("API du cours de web-services")
     .setVersion("0.1")
@@ -22,7 +30,6 @@ function setupSwagger(app: INestApplication) {
 
 async function main() {
   const app = await NestFactory.create(AppModule);
-  console.log(process.env);
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   const document = setupSwagger(app);
   await fs.writeFile("./swagger.json", JSON.stringify(document));
