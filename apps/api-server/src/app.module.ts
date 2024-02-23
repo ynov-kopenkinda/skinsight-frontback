@@ -1,8 +1,10 @@
 import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 
+import { AiModule } from "./ai/ai.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { AppointmentModule } from "./appointment/appointment.module";
 import { AuthController } from "./auth/auth.controller";
 import { AuthModule } from "./auth/auth.module";
 import { AuthService } from "./auth/auth.service";
@@ -18,7 +20,15 @@ import { UsersModule } from "./users/users.module";
 import { UserService } from "./users/users.service";
 
 @Module({
-  imports: [UsersModule, ChatModule, ChatEventModule, AuthModule, JwtModule],
+  imports: [
+    UsersModule,
+    ChatModule,
+    ChatEventModule,
+    AuthModule,
+    JwtModule,
+    AiModule,
+    AppointmentModule,
+  ],
   controllers: [
     AppController,
     AuthController,
