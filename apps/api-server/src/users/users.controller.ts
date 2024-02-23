@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from "@nestjs/common";
 import {
   ApiCreatedResponse,
@@ -41,6 +42,13 @@ export class UsersController {
     const user = this.usersService.findOne({ where: { id } });
     if (!user) throw new NotFoundException();
     return user;
+  }
+
+  @ApiCreatedResponse({ type: User })
+  @Post("/doctor")
+  @ApiOperation({ summary: "Create a doctor" })
+  createDoctor(@Body() body: CreateUserDto): Promise<User> {
+    return this.usersService.createDoctor({ ...body, userRole: "DOCTOR" });
   }
 
   @ApiCreatedResponse({ type: User })
