@@ -6,11 +6,15 @@
       "dependsOn": ["^topo"]
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^db:generate", "^build"],
       "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
     },
     "dev": {
+      "dependsOn": ["^db:generate"],
       "persistent": true,
+      "cache": false
+    },
+    "db:generate": {
       "cache": false
     },
     "format": {

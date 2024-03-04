@@ -1,6 +1,6 @@
-import { Text } from '@radix-ui/themes';
-import Link from 'next/link';
-import React, { ReactNode } from 'react'
+import type { ReactNode } from "react";
+import Link from "next/link";
+import { Text } from "@radix-ui/themes";
 
 interface IconButtonProps {
   background?: string;
@@ -11,21 +11,36 @@ interface IconButtonProps {
   link: string;
 }
 
-const IconButton = ({ background, color, label, extraStyle, icon, link }: IconButtonProps) => {
+const IconButton = ({
+  background,
+  color,
+  label,
+  extraStyle,
+  icon,
+  link,
+}: IconButtonProps) => {
   return (
-    <div className='group'>
-      <Link href={link} className='flex flex-col items-center space-y-2'>
-        <div className={`${background ?? 'bg-gray'} items-center justify-center w-12 h-12 rounded-lg flex flex-col ${extraStyle ? extraStyle : ''}`}>
-          <span className={`p-2 rounded-lg ${color ?? 'text-primary'}`}>
+    <div className="group">
+      <Link href={link} className="flex flex-col items-center space-y-2">
+        <div
+          className={`${
+            background ?? "bg-gray"
+          } flex h-12 w-12 flex-col items-center justify-center rounded-lg ${
+            extraStyle ? extraStyle : ""
+          }`}
+        >
+          <span className={`rounded-lg p-2 ${color ?? "text-primary"}`}>
             {icon}
           </span>
         </div>
         {label ? (
-          <Text className='text-gray-strong group-hover:text-black transition-all'>{label}</Text>
-        ): null}
+          <Text className="text-gray-strong transition-all group-hover:text-black">
+            {label}
+          </Text>
+        ) : null}
       </Link>
     </div>
-  )
-}
+  );
+};
 
-export default IconButton
+export default IconButton;

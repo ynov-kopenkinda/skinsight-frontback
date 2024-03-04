@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@skinsight/tsconfig": "workspace:*",
+    "@types/node": "^20.11.19",
     "typescript": "^5.2.2"
   },
   "prettier": "@skinsight/prettier-config"

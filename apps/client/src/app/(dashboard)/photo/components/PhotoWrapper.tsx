@@ -1,6 +1,7 @@
 "use client";
 
-import React, { ChangeEvent, useCallback, useRef, useState } from "react";
+import type { ChangeEvent } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Button, Heading, Text } from "@radix-ui/themes";
 import {
   IconCamera,
@@ -84,11 +85,12 @@ function PhotoWrapper() {
           />
         )}
         {imgUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={imgUrl}
             className={`${facingMode === "user" ? "-scale-x-100" : ""}`}
-            alt="image"
             onLoad={handleImageLoaded}
+            alt="User uploaded file"
           />
         )}
         {isFileLoading && (
