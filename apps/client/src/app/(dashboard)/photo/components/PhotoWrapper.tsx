@@ -31,7 +31,7 @@ function PhotoWrapper() {
 
   const capture = useCallback(() => {
     if (imgUrl) {
-      console.log("toto");
+      console.log("toto", imgUrl);
     }
 
     if (!webcamRef.current) return;

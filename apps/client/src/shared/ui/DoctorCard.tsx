@@ -13,7 +13,7 @@ export interface DoctorCardProps {
 
 const DoctorCard = ({ doctor }: DoctorCardProps) => {
   return (
-    <div className="mb-6 rounded-xl p-4 shadow-lg last-of-type:mb-0 md:mb-0">
+    <div className="mb-6 rounded-xl p-4 border border-slate-100 shadow-lg last-of-type:mb-0 md:mb-0">
       <div className="flex shrink-0 gap-x-4">
         <div className="bg-green overflow-hidden rounded-xl">
           <Image
