@@ -10,6 +10,7 @@ import { Toaster } from "sonner";
 import { auth } from "@skinsight/auth";
 
 import { TRPCReactProvider } from "./providers";
+import { SessionProvider } from "next-auth/react";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -17,25 +18,26 @@ const fontSans = Inter({
 });
 
 export default async function Layout(props: { children: React.ReactNode }) {
-  const _session = await auth();
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={["font-sans", fontSans.variable].join(" ")}
         suppressHydrationWarning
       >
-        <TRPCReactProvider headers={headers()}>
-          <Theme appearance="light">
-            <Toaster position="top-right" />
-            {/* {session == null ? (
+        <SessionProvider>
+          <TRPCReactProvider headers={headers()}>
+            <Theme appearance="light">
+              <Toaster position="top-right" />
+              {/* {session == null ? (
               <Flex align="center" justify="center" className="h-screen">
                 <LoginButton provider="credentials" />
               </Flex>
             ) : ( */}
-            {props.children}
-            {/* )} */}
-          </Theme>
-        </TRPCReactProvider>
+              {props.children}
+              {/* )} */}
+            </Theme>
+          </TRPCReactProvider>
+        </SessionProvider>
       </body>
     </html>
   );
