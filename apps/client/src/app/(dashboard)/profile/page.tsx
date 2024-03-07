@@ -4,12 +4,10 @@ import Image from 'next/image';
 import React from 'react';
 import { api } from '~/utils/api/react';
 import BoxOptions from './components/box-options';
-import { IconDots, IconLock, IconLogout, IconQuestionMark, IconShield, IconUser } from '@tabler/icons-react';
+import { IconLock, IconLogout, IconQuestionMark, IconShield, IconUser } from '@tabler/icons-react';
 
 const Profile = () => {
   const user = api.user.getUserById.useQuery({ id: 1 });
-
-  console.log(user.data);
 
   if (user.isLoading) return <div>Loading...</div>;
 

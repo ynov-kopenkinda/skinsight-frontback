@@ -43,39 +43,39 @@ const TapBar = () => {
         icon={<IconCamera />}
         link="/photo"
         background={`${
-          currentRoute === "/photo" ? "bg-primary" : "bg-transparent"
+          currentRoute.startsWith('/photo') ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute === "/photo" ? "text-white" : "text-gray-strong"
+          currentRoute.startsWith('/photo') ? "text-white" : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute === "/photo" ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute.startsWith('/photo') ? "shadow-xl shadow-[#737ae0]" : ""
         }`}
       />
       <IconButton
         icon={<IconMessageCircle />}
         link="/messages"
         background={`${
-          currentRoute === "/messages" ? "bg-primary" : "bg-transparent"
+          currentRoute.startsWith('/messages') ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute === "/messages" ? "text-white" : "text-gray-strong"
+          currentRoute.startsWith('/messages') ? "text-white" : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute === "/messages" ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute.startsWith('/messages') ? "shadow-xl shadow-[#737ae0]" : ""
         }`}
       />
       <IconButton
         icon={<IconUserCircle />}
         link="/profile"
         background={`${
-          currentRoute === "/profile" ? "bg-primary" : "bg-transparent"
+          currentRoute.startsWith('/profile') ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute === "/profile" ? "text-white" : "text-gray-strong"
+          currentRoute.startsWith('/profile') ? "text-white" : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute === "/profile" ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute.startsWith('/profile') ? "shadow-xl shadow-[#737ae0]" : ""
         }`}
       />
     </div>
