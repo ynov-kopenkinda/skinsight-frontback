@@ -2,9 +2,14 @@ import { z } from "zod"
 import { createTRPCRouter, publicProcedure } from "../trpc"
 
 export const appointmentRouter = createTRPCRouter({
-  getAppointmentForUser: publicProcedure.input(z.object({
+  getAppointmentForPatient: publicProcedure.input(z.object({
     id: z.number(),
   })).query(({ input, ctx }) => {
-    return ctx.nest.appointments.appointmentControllerFindAllForUser(input)
+    return ctx.nest.appointments.appointmentControllerFindAllForPatient(input)
+  }),
+  getAppointmentForDoctor: publicProcedure.input(z.object({
+    id: z.number(),
+  })).query(({ input, ctx }) => {
+    return ctx.nest.appointments.appointmentControllerFindAllForDoctor(input)
   }),
 })
