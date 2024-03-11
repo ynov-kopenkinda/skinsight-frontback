@@ -1,9 +1,9 @@
 "use client";
 
+import React from "react";
 import { differenceInHours } from "date-fns/differenceInHours";
 
 import { useUser } from "~/shared/hooks/useUser";
-import InputMessageBox from "~/shared/ui/InputMessageBox";
 import { api } from "~/utils/api/react";
 import TapBar from "../../components/TapBar";
 import ChatHeader from "./components/ChatHeader";
@@ -77,7 +77,7 @@ function Chat({ params: _params }: { params: { id: number } }) {
             />
           );
         })}
-      <InputMessageBox />
+      {/* <InputMessageBox /> */}
       <div className="border-gray glassmorphism container fixed bottom-4 left-0 right-0 z-50 mx-auto block w-fit rounded-xl border-2 bg-white pl-4 pr-4">
         <TapBar />
       </div>
