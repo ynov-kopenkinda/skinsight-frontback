@@ -29,6 +29,9 @@ export class ChatService {
   async getChatById(id: number) {
     return this.prisma.chat.findUnique({
       where: { id },
+      include: {
+        ChatEvent: true,
+      },
     });
   }
 

@@ -1,6 +1,6 @@
 datasource db {
   provider     = "mysql"
-  url          = "mysql://yydlbanzhzvplc59ymug:pscale_pw_s5JvxYoqwHEFOr3qwpABQzqaQKteSIOv8zZSSJIL3a@aws.connect.psdb.cloud/projects?sslaccept=strictx "
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 

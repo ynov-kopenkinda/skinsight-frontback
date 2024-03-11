@@ -6,5 +6,10 @@ export const chatRouter = createTRPCRouter({
     id: z.number(),
   })).query(({ input, ctx }) => {
     return ctx.nest.chat.chatControllerGetChatByUserId(input)
-  })
+  }),
+  getChatEventByChatId: publicProcedure.input(z.object({
+    id: z.number(),
+  })).query(({ input, ctx }) => {
+    return ctx.nest.chat.chatControllerGetChat(input)
+  }),
 })
