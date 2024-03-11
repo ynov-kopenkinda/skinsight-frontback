@@ -5,19 +5,17 @@ import "~/styles/globals.css";
 
 import { headers } from "next/headers";
 import { Theme } from "@radix-ui/themes";
+import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 
-import { auth } from "@skinsight/auth";
-
 import { TRPCReactProvider } from "./providers";
-import { SessionProvider } from "next-auth/react";
 
 const fontSans = Inter({
   subsets: ["latin"],
   variable: "--default-font-family",
 });
 
-export default async function Layout(props: { children: React.ReactNode }) {
+export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body

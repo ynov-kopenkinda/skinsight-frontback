@@ -7,6 +7,8 @@ import { JwtService } from "@nestjs/jwt";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
 import { UserService } from "src/users/users.service";
 
+import { UserRole } from "@skinsight/database";
+
 import { jwtConstants } from "./constant";
 import { loginUserDTO } from "./dto/login-user.dto";
 
@@ -19,18 +21,20 @@ export class AuthService {
     private usersService: UserService,
     private jwtService: JwtService,
   ) {
-    // init bcrypt salt
     this.bcrypt.genSaltSync(this.saltOrRounds);
   }
 
   async signUp(createUser: CreateUserDto): Promise<any> {
     const newUser = await this.usersService.createUser(createUser);
-    const tokens = await this.getTokens(newUser.email);
+    const tokens = await this.getTokens(
+      newUser.id,
+      newUser.email,
+      newUser.userRole,
+    );
     return tokens;
   }
 
   async signIn(data: loginUserDTO) {
-    // Check if user exists
     const email = data.email;
     const user = await this.usersService.findOne({ where: { email } });
 
@@ -38,7 +42,7 @@ export class AuthService {
       throw new BadRequestException("Password is incorrect");
     }
 
-    const tokens = await this.getTokens(user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.userRole);
     return tokens;
   }
 
@@ -46,11 +50,13 @@ export class AuthService {
     return this.bcrypt.hashSync(data);
   }
 
-  async getTokens(email: string) {
+  async getTokens(id: number, email: string, role: UserRole) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {
+          id: id,
           email: email,
+          role: role,
         },
         {
           secret: jwtConstants.secret,
@@ -77,7 +83,7 @@ export class AuthService {
     if (!user) {
       throw new ForbiddenException("Access Denied");
     }
-    const tokens = await this.getTokens(user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.userRole);
     return tokens;
   }
 }

@@ -1,10 +1,10 @@
 name: Build, Lint, Type-check
 
 on:
-  workflow_run:
-    workflows: ["Setup Project"]
-    types:
-      - completed
+  pull_request:
+    branches: ["*"]
+  push:
+    branches: ["main"]
   workflow_dispatch:
     inputs:
       branch:

@@ -27,6 +27,15 @@ export class UserService {
     });
   }
 
+  async createDoctor(dto) {
+    return this.prisma.user.create({
+      data: {
+        ...dto,
+        password: await hash(dto.password, 10),
+      },
+    });
+  }
+
   async createUser(dto: CreateUserDto) {
     return this.prisma.user.create({
       data: {

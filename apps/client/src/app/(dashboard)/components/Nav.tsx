@@ -13,7 +13,7 @@ const Nav = () => {
     <div className="mt-12 flex justify-center gap-x-6 sm:gap-x-12">
       <IconButton
         icon={<IconSearch size={20} />}
-        link="/search"
+        link="/appointments"
         label="Find doctor"
       />
       <IconButton

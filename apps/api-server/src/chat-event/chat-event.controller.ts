@@ -11,7 +11,7 @@ import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ChatEventService } from "./chat-event.service";
 import { CreateChatEventDto } from "./dto/create-chat-event.dto";
 
-@ApiTags("chat-event")
+@ApiTags("ChatEvent")
 @Controller("chat-event")
 export class ChatEventController {
   constructor(private readonly chatEventService: ChatEventService) {}

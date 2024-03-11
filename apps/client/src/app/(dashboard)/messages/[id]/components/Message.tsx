@@ -2,23 +2,58 @@ import type { ChatEvent } from "../page";
 
 interface MessageProps {
   message: ChatEvent;
+  userID: number;
+  otherUserFirstName: string;
+  firstOfSeries?: boolean;
+  showDate?: boolean;
 }
 
-const Message = ({ message }: MessageProps) => {
-  const sessionId = 1;
+function getFormatter() {
+  return new Intl.DateTimeFormat("fr-FR", {
+    dateStyle: "short",
+    timeStyle: "short",
+  });
+}
 
-  const isSender = message.user_id === sessionId ? true : false;
+const Message = ({
+  message,
+  userID,
+  otherUserFirstName,
+  firstOfSeries,
+  showDate,
+}: MessageProps) => {
+  const date = new Date(message.createdAt);
+  const formattedDate = getFormatter().format(date);
+
+  const isOther = message.userId !== userID;
 
   return (
-    <div
-      className={`${
-        isSender ? "bg-primary text-white" : "ml-auto bg-white"
-      } border-gray relative mb-12 w-fit rounded-lg border p-3 last-of-type:mb-0`}
-    >
-      {message.data}
-      <span className="text-gray-strong absolute -bottom-7 left-0 text-sm">
-        {message.createdAt}
-      </span>
+    <div className={`flex flex-col gap-y-1 ${showDate ? "mb-4" : "mb-1"}`}>
+      {firstOfSeries && (
+        <p
+          className={`text-gray-strong text-sm ${
+            isOther ? "text-left" : "text-right"
+          }`}
+        >
+          {isOther ? otherUserFirstName : "You"}
+        </p>
+      )}
+      <p
+        className={`${
+          isOther ? "bg-white" : "bg-primary ml-auto text-white"
+        } border-gray relative w-fit rounded-lg border p-3 last-of-type:mb-0`}
+      >
+        {message.data}
+      </p>
+      {showDate && (
+        <p
+          className={`text-gray-strong text-sm ${
+            isOther ? "text-left" : "text-right"
+          }`}
+        >
+          {formattedDate}
+        </p>
+      )}
     </div>
   );
 };

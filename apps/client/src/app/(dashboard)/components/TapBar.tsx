@@ -3,10 +3,10 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import {
+  IconCalendarCheck,
   IconCamera,
   IconHome,
   IconMessageCircle,
-  IconSearch,
   IconUserCircle,
 } from "@tabler/icons-react";
 
@@ -27,55 +27,63 @@ const TapBar = () => {
         }`}
       />
       <IconButton
-        icon={<IconSearch />}
-        link="/search"
+        icon={<IconCalendarCheck />}
+        link="/appointments"
         background={`${
-          currentRoute === "/search" ? "bg-primary" : "bg-transparent"
+          currentRoute === "/appointments" ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute === "/search" ? "text-white" : "text-gray-strong"
+          currentRoute === "/appointments" ? "text-white" : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute === "/search" ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute === "/appointments" ? "shadow-xl shadow-[#737ae0]" : ""
         }`}
       />
       <IconButton
         icon={<IconCamera />}
         link="/photo"
         background={`${
-          currentRoute === "/photo" ? "bg-primary" : "bg-transparent"
+          currentRoute.startsWith("/photo") ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute === "/photo" ? "text-white" : "text-gray-strong"
+          currentRoute.startsWith("/photo") ? "text-white" : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute === "/photo" ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute.startsWith("/photo") ? "shadow-xl shadow-[#737ae0]" : ""
         }`}
       />
       <IconButton
         icon={<IconMessageCircle />}
         link="/messages"
         background={`${
-          currentRoute === "/messages" ? "bg-primary" : "bg-transparent"
+          currentRoute.startsWith("/messages") ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute === "/messages" ? "text-white" : "text-gray-strong"
+          currentRoute.startsWith("/messages")
+            ? "text-white"
+            : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute === "/messages" ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute.startsWith("/messages")
+            ? "shadow-xl shadow-[#737ae0]"
+            : ""
         }`}
       />
       <IconButton
         icon={<IconUserCircle />}
         link="/profile"
         background={`${
-          currentRoute === "/profile" ? "bg-primary" : "bg-transparent"
+          currentRoute.startsWith("/profile") ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute === "/profile" ? "text-white" : "text-gray-strong"
+          currentRoute.startsWith("/profile")
+            ? "text-white"
+            : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute === "/profile" ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute.startsWith("/profile")
+            ? "shadow-xl shadow-[#737ae0]"
+            : ""
         }`}
       />
     </div>

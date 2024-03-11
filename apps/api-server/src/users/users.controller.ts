@@ -44,6 +44,13 @@ export class UsersController {
   }
 
   @ApiCreatedResponse({ type: User })
+  @Post("/doctor")
+  @ApiOperation({ summary: "Create a doctor" })
+  createDoctor(@Body() body: CreateUserDto): Promise<User> {
+    return this.usersService.createDoctor({ ...body, userRole: "DOCTOR" });
+  }
+
+  @ApiCreatedResponse({ type: User })
   @Post("")
   @ApiOperation({ summary: "Create a user" })
   createUser(@Body() body: CreateUserDto): Promise<User> {

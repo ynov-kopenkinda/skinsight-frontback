@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import {
   IsAlphanumeric,
   IsEmail,
@@ -6,57 +6,49 @@ import {
   IsOptional,
   IsString,
   MaxLength,
-  MinLength,
 } from "class-validator";
 
 export class PatchUserDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsEmail()
   @MaxLength(100)
   @IsOptional()
-  email: string;
+  email?: string;
 
-  @ApiProperty()
-  @IsAlphanumeric()
-  @MaxLength(25)
-  @MinLength(8)
-  @IsOptional()
-  password: string;
-
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsAlphanumeric()
   @MaxLength(50)
   @IsOptional()
-  firstName: string;
+  firstName?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsAlphanumeric()
   @MaxLength(50)
   @IsOptional()
-  lastName: string;
+  lastName?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
   @IsOptional()
-  phone: string;
+  phone?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
-  heightInCm: number;
+  heightInCm?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
-  weightInKg: number;
+  weightInKg?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
   @IsOptional()
-  ssn: string;
+  ssn?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
   @IsOptional()
-  proDoctorNumber: string;
+  proDoctorNumber?: string;
 }

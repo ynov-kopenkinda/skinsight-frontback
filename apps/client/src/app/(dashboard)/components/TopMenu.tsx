@@ -12,7 +12,10 @@ import {
 const TopMenu = () => {
   return (
     <div className="flex items-center space-x-1">
-      <Link href="/search" className="p-2 transition-all hover:opacity-60">
+      <Link
+        href="/appointments"
+        className="p-2 transition-all hover:opacity-60"
+      >
         <IconSearch size={26} />
       </Link>
       <Link href="/photo" className="p-2 transition-all hover:opacity-60">
