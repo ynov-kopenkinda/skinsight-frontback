@@ -1,85 +1,82 @@
+"use client";
+
+import { differenceInHours } from "date-fns/differenceInHours";
+
+import { useUser } from "~/shared/hooks/useUser";
 import InputMessageBox from "~/shared/ui/InputMessageBox";
+import { api } from "~/utils/api/react";
+import TapBar from "../../components/TapBar";
 import ChatHeader from "./components/ChatHeader";
 import Message from "./components/Message";
-import TapBar from "../../components/TapBar";
 
 export interface ChatEvent {
   id: number;
-  chat_id: number;
-  user_id: number;
-  reply_to_id: number;
+  chatId: number;
+  userId: number;
   data: string;
   createdAt: string;
+  chatEventType: string;
 }
 
 export interface Chat {
   id: number;
-  messages: ChatEvent[];
+  inviteeId: number;
+  invitorId: number;
+  createdAt: string;
+  ChatEvent: ChatEvent[];
 }
 
 function Chat({ params: _params }: { params: { id: number } }) {
-  const chat: Chat = {
-    id: 1,
-    messages: [
-      {
-        id: 1,
-        chat_id: 1,
-        user_id: 2,
-        reply_to_id: 1,
-        data: "Hello man, i've looked your picture",
-        createdAt: "12h10",
-      },
-      {
-        id: 2,
-        chat_id: 1,
-        user_id: 1,
-        reply_to_id: 2,
-        data: "Hello doctor, thanks you, what's your opinion so ?",
-        createdAt: "12h10",
-      },
-      {
-        id: 3,
-        chat_id: 1,
-        user_id: 2,
-        reply_to_id: 1,
-        data: "You're gonna die, i'm sorry about it",
-        createdAt: "12h10",
-      },
-      {
-        id: 4,
-        chat_id: 1,
-        user_id: 1,
-        reply_to_id: 2,
-        data: "Sadge but np i'm still a main Yorick !",
-        createdAt: "12h10",
-      },
-      {
-        id: 5,
-        chat_id: 1,
-        user_id: 2,
-        reply_to_id: 1,
-        data: "Hope you die soon, bye",
-        createdAt: "12h10",
-      },
-      {
-        id: 4,
-        chat_id: 1,
-        user_id: 1,
-        reply_to_id: 2,
-        data: "Bye have a good day !",
-        createdAt: "12h10",
-      },
-    ],
-  };
+  const user = useUser();
+  const chat = api.chat.getChatEventByChatId.useQuery({
+    id: Number(_params.id),
+  });
+  const otherUserId =
+    chat.data?.invitorId === user.data?.id
+      ? chat.data?.inviteeId
+      : chat.data?.invitorId;
+  const otherUser = api.user.getUserById.useQuery(
+    { id: otherUserId! },
+    { enabled: !!otherUserId },
+  );
+
+  if (!chat.data) {
+    return <div>No chat founded</div>;
+  }
+
+  if (!otherUser.data || !user.data) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="mt-6">
-      <ChatHeader receptor={"Dr. Anna"} />
-      {chat &&
-        chat.messages.length > 0 &&
-        chat.messages.map((message) => (
-          <Message message={message} key={message.id} />
-        ))}
+      <ChatHeader receptor={otherUser.data.firstName} />
+      {chat.data &&
+        chat.data.ChatEvent.length > 0 &&
+        chat.data.ChatEvent.map((message, idx) => {
+          return (
+            <Message
+              message={message}
+              key={message.id}
+              userID={user.data!.id}
+              otherUserFirstName={otherUser.data.firstName}
+              firstOfSeries={
+                idx === 0 ||
+                chat.data.ChatEvent[idx - 1]!.userId !== message.userId
+              }
+              showDate={
+                idx === 0 ||
+                chat.data.ChatEvent[idx + 1]?.userId !== message.userId ||
+                Math.abs(
+                  differenceInHours(
+                    chat.data.ChatEvent[idx - 1]!.createdAt,
+                    message.createdAt,
+                  ),
+                ) > 2
+              }
+            />
+          );
+        })}
       <InputMessageBox />
       <div className="border-gray glassmorphism container fixed bottom-4 left-0 right-0 z-50 mx-auto block w-fit rounded-xl border-2 bg-white pl-4 pr-4">
         <TapBar />
