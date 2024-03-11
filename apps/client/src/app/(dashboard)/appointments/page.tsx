@@ -36,9 +36,9 @@ function Appointments() {
       </div>
       <Tabs.Root defaultValue="Accepted">
         <Tabs.List>
-          <Tabs.Trigger value='Accepted'>Accepted</Tabs.Trigger>
-          <Tabs.Trigger value='Pending'>Pending</Tabs.Trigger>
-          <Tabs.Trigger value='Previous'>Previous</Tabs.Trigger>
+          <Tabs.Trigger className='basis-1/3' value='Accepted'>Accepted</Tabs.Trigger>
+          <Tabs.Trigger className='basis-1/3' value='Pending'>Pending</Tabs.Trigger>
+          <Tabs.Trigger className='basis-1/3' value='Previous'>Previous</Tabs.Trigger>
         </Tabs.List>
         <Box px="4" py="4">
           <Tabs.Content value='Accepted'>
