@@ -7,11 +7,13 @@ import { ChatService } from './chat/chat.service';
 import { ChatController } from './chat/chat.controller';
 import { ChatModule } from './chat/chat.module';
 import { ChatEventModule } from './chat-event/chat-event.module';
+import { ChatEventController } from './chat-event/chat-event.controller';
+import { ChatEventService } from './chat-event/chat-event.service';
 
 @Module({
   imports: [UsersModule, ChatModule, ChatEventModule],
-  controllers: [AppController, ChatController],
-  providers: [AppService, ChatService],
+  controllers: [AppController, ChatController, ChatEventController],
+  providers: [AppService, ChatService, ChatEventService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
