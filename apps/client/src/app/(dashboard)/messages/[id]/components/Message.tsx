@@ -8,7 +8,7 @@ interface MessageProps {
   showDate?: boolean;
 }
 
-function getFormatter() {
+export function getFormatter() {
   return new Intl.DateTimeFormat("fr-FR", {
     dateStyle: "short",
     timeStyle: "short",
