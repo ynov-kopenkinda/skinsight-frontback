@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import MessageBox from "~/shared/ui/MessageBox";
 import TapBar from "../components/TapBar";
 import HeaderMessage from "./components/header-message";
-import Searchbar from "./components/searchbar";
 import { api } from "~/utils/api/react";
+import Searchbar from "./components/searchbar";
 
 function Messages() {
   // TODO change by user ID

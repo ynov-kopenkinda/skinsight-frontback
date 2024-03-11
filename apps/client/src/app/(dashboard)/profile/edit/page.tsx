@@ -1,6 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@radix-ui/themes';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
@@ -54,7 +55,6 @@ function EditProfilePage() {
 
   useEffect(() => {
     if (user.data === undefined) return;
-    setValue('requestBody.firstName', 'tt');
     setValue('requestBody.ssn', user.data.ssn);
     setValue('requestBody.proDoctorNumber', user.data.proDoctorNumber);
   }, [user.data]);
@@ -78,8 +78,8 @@ function EditProfilePage() {
         console.log(errors);
         handleSubmit(onSubmit, console.error)(e)
       }}>
-        <div className='flex flex-col'>
-          <label htmlFor='firstname' className='text-lg font-semibold mb-1'>Firstname</label>
+        <div className='flex flex-col mb-4'>
+          <label htmlFor='firstname' className='text-lg font-light mb-1'>Firstname</label>
           <input type="text" defaultValue={user.data?.firstName} {...register("requestBody.firstName")} className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm" disabled={isLoading} />
           {errors?.requestBody?.firstName?.message && (
             <p className='mt-2 text-sm text-red-600'>
@@ -87,8 +87,8 @@ function EditProfilePage() {
             </p>
           )}
         </div>
-        <div className='flex flex-col'>
-          <label htmlFor='lastname' className='text-lg font-semibold mb-1'>Lastname</label>
+        <div className='flex flex-col mb-4'>
+          <label htmlFor='lastname' className='text-lg font-light mb-1'>Lastname</label>
           <input type="text" defaultValue={user.data?.lastName} {...register("requestBody.lastName")} className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm" disabled={isLoading} />
           {errors?.requestBody?.lastName?.message && (
             <p className='mt-2 text-sm text-red-600'>
@@ -96,8 +96,8 @@ function EditProfilePage() {
             </p>
           )}
         </div>
-        <div className='flex flex-col'>
-          <label htmlFor='email' className='text-lg font-semibold mb-1'>Email</label>
+        <div className='flex flex-col mb-4'>
+          <label htmlFor='email' className='text-lg font-light mb-1'>Email</label>
           <input type="text" defaultValue={user.data?.email} {...register("requestBody.email")} className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm" disabled={isLoading} />
           {errors?.requestBody?.email?.message && (
             <p className='mt-2 text-sm text-red-600'>
@@ -105,8 +105,8 @@ function EditProfilePage() {
             </p>
           )}
         </div>
-        <div className='flex flex-col'>
-          <label htmlFor='phone' className='text-lg font-semibold mb-1'>Phone</label>
+        <div className='flex flex-col mb-4'>
+          <label htmlFor='phone' className='text-lg font-light mb-1'>Phone</label>
           <input type="text" defaultValue={user.data?.phone} {...register("requestBody.phone")} className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm" disabled={isLoading} />
           {errors?.requestBody?.phone?.message && (
             <p className='mt-2 text-sm text-red-600'>
@@ -114,8 +114,8 @@ function EditProfilePage() {
             </p>
           )}
         </div>
-        <div className='flex flex-col'>
-          <label htmlFor='lastname' className='text-lg font-semibold mb-1'>Height</label>
+        <div className='flex flex-col mb-4'>
+          <label htmlFor='lastname' className='text-lg font-light mb-1'>Height</label>
           <input type="number" defaultValue={user.data?.heightInCm} {...register("requestBody.heightInCm", { valueAsNumber: true })} className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm" disabled={isLoading} />
           {errors?.requestBody?.heightInCm?.message && (
             <p className='mt-2 text-sm text-red-600'>
@@ -123,8 +123,8 @@ function EditProfilePage() {
             </p>
           )}
         </div>
-        <div className='flex flex-col'>
-          <label htmlFor='lastname' className='text-lg font-semibold mb-1'>Weight</label>
+        <div className='flex flex-col mb-4'>
+          <label htmlFor='lastname' className='text-lg font-light mb-1'>Weight</label>
           <input type="text" defaultValue={user.data?.weightInKg} {...register("requestBody.weightInKg", { valueAsNumber: true })} className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm" disabled={isLoading} />
           {errors?.requestBody?.weightInKg?.message && (
             <p className='mt-2 text-sm text-red-600'>
@@ -132,7 +132,7 @@ function EditProfilePage() {
             </p>
           )}
         </div>
-        <button type="submit">Update</button>
+        <Button type='submit' size={"4"} className="w-full hover:cursor-pointer">Update</Button>
       </form>
     </div>
   )

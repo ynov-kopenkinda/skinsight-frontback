@@ -3,10 +3,10 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import {
+  IconCalendarCheck,
   IconCamera,
   IconHome,
   IconMessageCircle,
-  IconSearch,
   IconUserCircle,
 } from "@tabler/icons-react";
 
@@ -27,16 +27,16 @@ const TapBar = () => {
         }`}
       />
       <IconButton
-        icon={<IconSearch />}
-        link="/search"
+        icon={<IconCalendarCheck />}
+        link="/appointments"
         background={`${
-          currentRoute === "/search" ? "bg-primary" : "bg-transparent"
+          currentRoute === "/appointments" ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute === "/search" ? "text-white" : "text-gray-strong"
+          currentRoute === "/appointments" ? "text-white" : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute === "/search" ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute === "/appointments" ? "shadow-xl shadow-[#737ae0]" : ""
         }`}
       />
       <IconButton
