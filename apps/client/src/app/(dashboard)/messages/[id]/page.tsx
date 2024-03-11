@@ -1,6 +1,7 @@
 import InputMessageBox from "~/shared/ui/InputMessageBox";
 import ChatHeader from "./components/ChatHeader";
 import Message from "./components/Message";
+import TapBar from "../../components/TapBar";
 
 export interface ChatEvent {
   id: number;
@@ -80,6 +81,9 @@ function Chat({ params: _params }: { params: { id: number } }) {
           <Message message={message} key={message.id} />
         ))}
       <InputMessageBox />
+      <div className="border-gray glassmorphism container fixed bottom-4 left-0 right-0 z-50 mx-auto block w-fit rounded-xl border-2 bg-white pl-4 pr-4">
+        <TapBar />
+      </div>
     </div>
   );
 }

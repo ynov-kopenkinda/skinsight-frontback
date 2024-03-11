@@ -32,6 +32,15 @@ export class AppointmentController {
   findOneAppointment(@Param("id", ParseIntPipe) id: number) {
     return this.appointmentService.findOne(id);
   }
+  @Get("/doctor/:id")
+  findAllForDoctor(@Param("id", ParseIntPipe) id: number) {
+    return this.appointmentService.findAllForDoctor(id);
+  }
+
+  @Get("/patient/:id")
+  findAllForPatient(@Param("id", ParseIntPipe) id: number) {
+    return this.appointmentService.findAllForPatient(id);
+  }
 
   @Get("/user")
   @UseGuards(AccessTokenGuard)
