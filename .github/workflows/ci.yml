@@ -5,6 +5,12 @@ on:
     workflows: ["Setup Project"]
     types:
       - completed
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to run the workflow on"
+        required: true
+        default: "main"
 
 jobs:
   setup-project:
