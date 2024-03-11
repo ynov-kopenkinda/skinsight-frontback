@@ -45,7 +45,7 @@ export class AppointmentService {
       });
       appointmentsWithDoctor.push({
         ...appointment,
-        doctor_name: doctor.firstName + " " + doctor.lastName,
+        doctor_name: doctor.lastName,
       });
     }
 
@@ -65,7 +65,7 @@ export class AppointmentService {
       });
       appointmentsWithDoctor.push({
         ...appointment,
-        patient_name: patient.firstName + " " + patient.lastName,
+        patient_name: patient.lastName,
       });
     }
 
