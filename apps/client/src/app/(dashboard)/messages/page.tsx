@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 
 import MessageBox from "~/shared/ui/MessageBox";
+import { api } from "~/utils/api/react";
 import TapBar from "../components/TapBar";
 import HeaderMessage from "./components/header-message";
-import { api } from "~/utils/api/react";
 import Searchbar from "./components/searchbar";
 
 function Messages() {

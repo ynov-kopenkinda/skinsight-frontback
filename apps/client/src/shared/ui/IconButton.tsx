@@ -19,13 +19,23 @@ const IconButton = ({
   extraStyle,
   icon,
   link,
-  iconFullRounded
+  iconFullRounded,
 }: IconButtonProps) => {
   return (
     <div className="group">
       <Link href={link} className="flex flex-col items-center space-y-2">
-        <div className={`${background ?? "bg-gray"} ${extraStyle ? extraStyle : ""} flex h-12 w-12 flex-col items-center justify-center ${iconFullRounded ? 'rounded-full' : 'rounded-lg'}`}>
-          <span className={`${iconFullRounded ? 'rounded-full' : 'rounded-lg'} p-2 ${color ?? "text-primary"}`}>
+        <div
+          className={`${background ?? "bg-gray"} ${
+            extraStyle ? extraStyle : ""
+          } flex h-12 w-12 flex-col items-center justify-center ${
+            iconFullRounded ? "rounded-full" : "rounded-lg"
+          }`}
+        >
+          <span
+            className={`${
+              iconFullRounded ? "rounded-full" : "rounded-lg"
+            } p-2 ${color ?? "text-primary"}`}
+          >
             {icon}
           </span>
         </div>

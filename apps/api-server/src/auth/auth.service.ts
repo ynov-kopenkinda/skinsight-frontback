@@ -7,7 +7,7 @@ import { JwtService } from "@nestjs/jwt";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
 import { UserService } from "src/users/users.service";
 
-import { User, UserRole } from "@skinsight/database";
+import { UserRole } from "@skinsight/database";
 
 import { jwtConstants } from "./constant";
 import { loginUserDTO } from "./dto/login-user.dto";

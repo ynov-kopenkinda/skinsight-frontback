@@ -40,11 +40,11 @@ export const {
       async authorize(credentials) {
         if (!credentials.email || !credentials.password) return null;
         const { email, password } = credentials;
-        const res = await fetch('http://localhost:3001/auth/signin', {
-          method: 'POST',
+        const res = await fetch("http://localhost:3001/auth/signin", {
+          method: "POST",
           body: JSON.stringify({
             email,
-            password
+            password,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -52,15 +52,17 @@ export const {
         });
         if (res.status == 401) return null;
 
-        const user = await res.json();
+        const user = (await res.json()) as DefaultSession["user"] & {
+          id: string;
+        };
 
         return user;
-      }
+      },
     }),
   ],
   callbacks: {
     session: ({ session, token, user }) => {
-      console.log({ session, token ,user })
+      console.log({ session, token, user });
       return {
         ...session,
         user: {

@@ -7,40 +7,27 @@ import { IconX } from "@tabler/icons-react";
 import { useUser } from "~/shared/hooks/useUser";
 import { api } from "~/utils/api/react";
 import TapBar from "../components/TapBar";
-import { getFormatter } from "../messages/[id]/components/Message";
-
-interface Appointment {
-  id: number;
-  isAcceptedByDoctor: boolean;
-  isAcceptedByPatient: boolean;
-  location: string;
-  patientId: number;
-  doctorId: number;
-  date: Date;
-  doctor_name?: string;
-  patient_name?: string;
-}
 
 function Appointments() {
   const user = useUser();
+  // If user is a doctor, get all appointments for the doctor so api.appointment.getAppointmentForDoctor.useQuery({ id: 1 });
   // TODO - AJOUTER UN DIALOG POUR TOUT LES RDVS AU CLICK ET AJOUTER UN RAPPEL DE LA PRECONSULTATION
-
   const appointments = api.appointment.getAppointmentForPatient.useQuery({
     id: user.data!.id,
   });
 
   const pendingAppointments = appointments.data?.filter(
-    (appointment: Appointment) =>
+    (appointment) =>
       !appointment.isAcceptedByPatient &&
       new Date(appointment.date) > new Date(),
   );
   const acceptedAppointments = appointments.data?.filter(
-    (appointment: Appointment) =>
+    (appointment) =>
       appointment.isAcceptedByPatient &&
       new Date(appointment.date) > new Date(),
   );
   const previousAppointments = appointments.data?.filter(
-    (appointment: Appointment) => new Date(appointment.date) < new Date(),
+    (appointment) => new Date(appointment.date) < new Date(),
   );
 
   return (
@@ -65,10 +52,16 @@ function Appointments() {
         <Box px="4" py="4">
           <Tabs.Content value="Accepted">
             {acceptedAppointments && acceptedAppointments.length > 0
-              ? acceptedAppointments.map((appointment: Appointment) => {
+              ? acceptedAppointments.map((appointment) => {
                   const appointment_date = new Date(appointment.date);
-                  const appointment_date_formatted =
-                    getFormatter().format(appointment_date);
+                  const appointment_date_formatted = new Intl.DateTimeFormat(
+                    "fr-FR",
+                    {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    },
+                  ).format(appointment_date);
                   return (
                     <div
                       key={appointment.id}
@@ -77,14 +70,10 @@ function Appointments() {
                       <div className="flex flex-col">
                         <p className="text-sm">{appointment.location}</p>
                         <p className="text-sm font-bold">
-                          {appointment.doctorId === user.data?.id
-                            ? "Patient " + appointment.patient_name
-                            : "Dr. " + appointment.doctor_name}
+                          Dr.&nbsp;{appointment.doctor_name}
                         </p>
                       </div>
-                      <p className="ml-auto flex-shrink-0 text-sm">
-                        {appointment_date_formatted}
-                      </p>
+                      <p className="ml-auto">{appointment_date_formatted}</p>
                     </div>
                   );
                 })
@@ -92,10 +81,16 @@ function Appointments() {
           </Tabs.Content>
           <Tabs.Content value="Pending">
             {pendingAppointments && pendingAppointments.length > 0
-              ? pendingAppointments.map((appointment: Appointment) => {
+              ? pendingAppointments.map((appointment) => {
                   const appointment_date = new Date(appointment.date);
-                  const appointment_date_formatted =
-                    getFormatter().format(appointment_date);
+                  const appointment_date_formatted = new Intl.DateTimeFormat(
+                    "fr-FR",
+                    {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    },
+                  ).format(appointment_date);
                   return (
                     <Dialog.Root key={appointment.id}>
                       <Dialog.Trigger>
@@ -106,22 +101,17 @@ function Appointments() {
                           <div className="flex flex-col">
                             <p className="text-sm">{appointment.location}</p>
                             <p className="text-sm font-bold">
-                              {appointment.doctorId === user.data?.id
-                                ? "Patient " + appointment.patient_name
-                                : "Dr. " + appointment.doctor_name}
+                              Dr.&nbsp;{appointment.doctor_name}
                             </p>
                           </div>
-                          <p className="ml-auto flex-shrink-0 text-sm">
+                          <p className="ml-auto">
                             {appointment_date_formatted}
                           </p>
                         </div>
                       </Dialog.Trigger>
                       <Dialog.Content className="relative">
                         <Dialog.Title size={"4"} mb={"2"}>
-                          Appointment with
-                          {appointment.doctorId === user.data?.id
-                            ? "Patient " + appointment.patient_name
-                            : "Dr. " + appointment.doctor_name}
+                          Appointment with Dr.&nbsp;{appointment.doctor_name}
                         </Dialog.Title>
                         <Dialog.Description size={"2"}>
                           You have to accept or decline this appointment.
@@ -164,10 +154,16 @@ function Appointments() {
           </Tabs.Content>
           <Tabs.Content value="Previous">
             {previousAppointments && previousAppointments.length > 0
-              ? previousAppointments.map((appointment: Appointment) => {
+              ? previousAppointments.map((appointment) => {
                   const appointment_date = new Date(appointment.date);
-                  const appointment_date_formatted =
-                    getFormatter().format(appointment_date);
+                  const appointment_date_formatted = new Intl.DateTimeFormat(
+                    "fr-FR",
+                    {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    },
+                  ).format(appointment_date);
                   return (
                     <div
                       key={appointment.id}
@@ -176,14 +172,10 @@ function Appointments() {
                       <div className="flex flex-col">
                         <p className="text-sm">{appointment.location}</p>
                         <p className="text-sm font-bold">
-                          {appointment.doctorId === user.data?.id
-                            ? "Patient " + appointment.patient_name
-                            : "Dr. " + appointment.doctor_name}
+                          Dr.&nbsp;{appointment.doctor_name}
                         </p>
                       </div>
-                      <p className="ml-auto flex-shrink-0 text-sm">
-                        {appointment_date_formatted}
-                      </p>
+                      <p className="ml-auto">{appointment_date_formatted}</p>
                     </div>
                   );
                 })
