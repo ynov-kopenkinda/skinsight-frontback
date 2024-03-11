@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-
 export const updateUserSchema = z.object({
   id: z.number(),
   requestBody: z.object({
@@ -13,4 +12,4 @@ export const updateUserSchema = z.object({
     ssn: z.string(),
     proDoctorNumber: z.string(),
   }),
-})
+});

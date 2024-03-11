@@ -52,7 +52,9 @@ export const {
         });
         if (res.status == 401) return null;
 
-        const user = await res.json();
+        const user = (await res.json()) as DefaultSession["user"] & {
+          id: string;
+        };
 
         return user;
       },

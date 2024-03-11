@@ -5,7 +5,7 @@ import { Injectable } from "@nestjs/common";
 export class AiService {
   constructor(private readonly httpService: HttpService) {}
 
-  async askMedOllama(message: string) {
-    return "This is not a cancer";
+  async askMedOllama(_message: string) {
+    return `This is not a cancer ${_message}`;
   }
 }

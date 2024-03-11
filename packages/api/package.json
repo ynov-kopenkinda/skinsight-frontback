@@ -10,7 +10,7 @@
     "./schemas": {
       "types": "./src/schemas/index.ts",
       "default": "./src/schemas/index.ts"
-     }
+    }
   },
   "license": "MIT",
   "scripts": {

@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
-import { CreateUserDto } from "src/users/dto/create-user.dto";
 
 import { RefreshTokenGuard } from "../guards/refresh-token.guard";
+import { CreateUserDto } from "../users/dto/create-user.dto";
 import { AuthService } from "./auth.service";
 import { loginUserDTO } from "./dto/login-user.dto";
 

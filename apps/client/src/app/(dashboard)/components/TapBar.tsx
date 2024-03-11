@@ -43,39 +43,47 @@ const TapBar = () => {
         icon={<IconCamera />}
         link="/photo"
         background={`${
-          currentRoute.startsWith('/photo') ? "bg-primary" : "bg-transparent"
+          currentRoute.startsWith("/photo") ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute.startsWith('/photo') ? "text-white" : "text-gray-strong"
+          currentRoute.startsWith("/photo") ? "text-white" : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute.startsWith('/photo') ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute.startsWith("/photo") ? "shadow-xl shadow-[#737ae0]" : ""
         }`}
       />
       <IconButton
         icon={<IconMessageCircle />}
         link="/messages"
         background={`${
-          currentRoute.startsWith('/messages') ? "bg-primary" : "bg-transparent"
+          currentRoute.startsWith("/messages") ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute.startsWith('/messages') ? "text-white" : "text-gray-strong"
+          currentRoute.startsWith("/messages")
+            ? "text-white"
+            : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute.startsWith('/messages') ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute.startsWith("/messages")
+            ? "shadow-xl shadow-[#737ae0]"
+            : ""
         }`}
       />
       <IconButton
         icon={<IconUserCircle />}
         link="/profile"
         background={`${
-          currentRoute.startsWith('/profile') ? "bg-primary" : "bg-transparent"
+          currentRoute.startsWith("/profile") ? "bg-primary" : "bg-transparent"
         }`}
         color={`${
-          currentRoute.startsWith('/profile') ? "text-white" : "text-gray-strong"
+          currentRoute.startsWith("/profile")
+            ? "text-white"
+            : "text-gray-strong"
         }`}
         extraStyle={`${
-          currentRoute.startsWith('/profile') ? "shadow-xl shadow-[#737ae0]" : ""
+          currentRoute.startsWith("/profile")
+            ? "shadow-xl shadow-[#737ae0]"
+            : ""
         }`}
       />
     </div>

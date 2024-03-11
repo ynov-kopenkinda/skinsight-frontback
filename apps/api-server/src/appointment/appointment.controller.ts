@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -10,13 +9,17 @@ import {
   Request,
   UseGuards,
 } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
-import { AuthUser } from "src/auth/decorators/user.decorator";
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 import { AccessTokenGuard } from "src/guards/access-token.guard";
 
 import { AppointmentService } from "./appointment.service";
 import { CreateAppointmentDto } from "./dto/create-appointment.dto";
+import { Appointment } from "./entities/appointment.entity";
 
 @ApiTags("Appointments")
 @Controller("appointment")
@@ -29,15 +32,18 @@ export class AppointmentController {
   }
 
   @Get("/:id")
+  @ApiResponse({ status: 200, type: Appointment })
   findOneAppointment(@Param("id", ParseIntPipe) id: number) {
     return this.appointmentService.findOne(id);
   }
   @Get("/doctor/:id")
+  @ApiResponse({ status: 200, type: [Appointment] })
   findAllForDoctor(@Param("id", ParseIntPipe) id: number) {
     return this.appointmentService.findAllForDoctor(id);
   }
 
   @Get("/patient/:id")
+  @ApiResponse({ status: 200, type: [Appointment] })
   findAllForPatient(@Param("id", ParseIntPipe) id: number) {
     return this.appointmentService.findAllForPatient(id);
   }
@@ -46,6 +52,7 @@ export class AppointmentController {
   @UseGuards(AccessTokenGuard)
   @ApiBearerAuth("acces-token")
   @ApiOperation({ summary: "Get all appointment for the user logged" })
+  @ApiResponse({ status: 200, type: [Appointment] })
   findAllForOneUser(@Request() request) {
     return this.appointmentService.findAllForOneUser(request);
   }
@@ -53,6 +60,7 @@ export class AppointmentController {
   @Patch("/accept/:appointmentId")
   @UseGuards(AccessTokenGuard)
   @ApiBearerAuth("acces-token")
+  @ApiResponse({ status: 200, type: String })
   acceptAppointment(
     @Request() request,
     @Param("appointmentId", ParseIntPipe) appointmentId: number,
@@ -63,6 +71,7 @@ export class AppointmentController {
   @Patch("/decline/:appointmentId")
   @UseGuards(AccessTokenGuard)
   @ApiBearerAuth("acces-token")
+  @ApiResponse({ status: 200, type: String })
   declineAppointment(
     @Request() request,
     @Param("appointmentId", ParseIntPipe) appointmentId: number,
