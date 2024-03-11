@@ -7,10 +7,10 @@ import { IconX } from "@tabler/icons-react";
 import { useUser } from "~/shared/hooks/useUser";
 import { api } from "~/utils/api/react";
 import TapBar from "../components/TapBar";
+import { getFormatter } from "../messages/[id]/components/Message";
 
 function Appointments() {
   const user = useUser();
-  // If user is a doctor, get all appointments for the doctor so api.appointment.getAppointmentForDoctor.useQuery({ id: 1 });
   // TODO - AJOUTER UN DIALOG POUR TOUT LES RDVS AU CLICK ET AJOUTER UN RAPPEL DE LA PRECONSULTATION
   const appointments = api.appointment.getAppointmentForPatient.useQuery({
     id: user.data!.id,
@@ -54,14 +54,8 @@ function Appointments() {
             {acceptedAppointments && acceptedAppointments.length > 0
               ? acceptedAppointments.map((appointment) => {
                   const appointment_date = new Date(appointment.date);
-                  const appointment_date_formatted = new Intl.DateTimeFormat(
-                    "fr-FR",
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    },
-                  ).format(appointment_date);
+                  const appointment_date_formatted =
+                    getFormatter().format(appointment_date);
                   return (
                     <div
                       key={appointment.id}
@@ -70,10 +64,14 @@ function Appointments() {
                       <div className="flex flex-col">
                         <p className="text-sm">{appointment.location}</p>
                         <p className="text-sm font-bold">
-                          Dr.&nbsp;{appointment.doctor_name}
+                          {appointment.doctorId === user.data?.id
+                            ? "Patient " + appointment.patient_name
+                            : "Dr " + appointment.doctor_name}
                         </p>
                       </div>
-                      <p className="ml-auto">{appointment_date_formatted}</p>
+                      <p className="ml-auto flex-shrink-0 text-sm">
+                        {appointment_date_formatted}
+                      </p>
                     </div>
                   );
                 })
@@ -83,14 +81,8 @@ function Appointments() {
             {pendingAppointments && pendingAppointments.length > 0
               ? pendingAppointments.map((appointment) => {
                   const appointment_date = new Date(appointment.date);
-                  const appointment_date_formatted = new Intl.DateTimeFormat(
-                    "fr-FR",
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    },
-                  ).format(appointment_date);
+                  const appointment_date_formatted =
+                    getFormatter().format(appointment_date);
                   return (
                     <Dialog.Root key={appointment.id}>
                       <Dialog.Trigger>
@@ -101,10 +93,12 @@ function Appointments() {
                           <div className="flex flex-col">
                             <p className="text-sm">{appointment.location}</p>
                             <p className="text-sm font-bold">
-                              Dr.&nbsp;{appointment.doctor_name}
+                              {appointment.doctorId === user.data?.id
+                                ? "Patient " + appointment.patient_name
+                                : "Dr. " + appointment.doctor_name}
                             </p>
                           </div>
-                          <p className="ml-auto">
+                          <p className="ml-auto flex-shrink-0 text-sm">
                             {appointment_date_formatted}
                           </p>
                         </div>
@@ -156,14 +150,8 @@ function Appointments() {
             {previousAppointments && previousAppointments.length > 0
               ? previousAppointments.map((appointment) => {
                   const appointment_date = new Date(appointment.date);
-                  const appointment_date_formatted = new Intl.DateTimeFormat(
-                    "fr-FR",
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    },
-                  ).format(appointment_date);
+                  const appointment_date_formatted =
+                    getFormatter().format(appointment_date);
                   return (
                     <div
                       key={appointment.id}
@@ -172,10 +160,14 @@ function Appointments() {
                       <div className="flex flex-col">
                         <p className="text-sm">{appointment.location}</p>
                         <p className="text-sm font-bold">
-                          Dr.&nbsp;{appointment.doctor_name}
+                          {appointment.doctorId === user.data?.id
+                            ? "Patient " + appointment.patient_name
+                            : "Dr. " + appointment.doctor_name}
                         </p>
                       </div>
-                      <p className="ml-auto">{appointment_date_formatted}</p>
+                      <p className="ml-auto flex-shrink-0 text-sm">
+                        {appointment_date_formatted}
+                      </p>
                     </div>
                   );
                 })
@@ -183,10 +175,6 @@ function Appointments() {
           </Tabs.Content>
         </Box>
       </Tabs.Root>
-
-      {/* <div className="flex gap-x-4 p-4 shadow-lg border border-slate-100 rounded-xl items-center">
-
-      </div> */}
       <div className="border-gray glassmorphism container fixed bottom-4 left-0 right-0 z-50 mx-auto block w-fit rounded-xl border-2 bg-white pl-4 pr-4">
         <TapBar />
       </div>
