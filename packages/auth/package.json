@@ -12,9 +12,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@skinsight/env": "workspace:*",
     "@auth/core": "^0.18.0",
     "@auth/drizzle-adapter": "^0.3.5",
+    "@skinsight/env": "workspace:*",
+    "jwt-decode": "^4.0.0",
     "next": "^14.0.0",
     "next-auth": "5.0.0-beta.3",
     "react": "18.2.0",

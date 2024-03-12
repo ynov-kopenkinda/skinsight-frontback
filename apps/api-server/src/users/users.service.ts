@@ -20,6 +20,14 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
+  async findDoctors() {
+    return this.prisma.user.findMany({
+      where: {
+        userRole: "DOCTOR",
+      },
+    });
+  }
+
   async findOne(params: { where: Prisma.UserWhereUniqueInput }) {
     const { where } = params;
     return this.prisma.user.findUnique({

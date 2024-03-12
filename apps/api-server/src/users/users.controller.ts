@@ -8,7 +8,6 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  UseGuards,
 } from "@nestjs/common";
 import {
   ApiCreatedResponse,
@@ -33,6 +32,13 @@ export class UsersController {
   @Get()
   async getUsers(): Promise<User[]> {
     return this.usersService.findAll();
+  }
+
+  @ApiOkResponse({ type: User, isArray: true })
+  @ApiNotFoundResponse()
+  @Get("doctors")
+  async getDoctors(): Promise<User[]> {
+    return this.usersService.findDoctors();
   }
 
   @ApiOkResponse({ type: User })

@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconSend } from "@tabler/icons-react";
-import { useQueryClient } from "@tanstack/react-query";
+import { flushSync } from "react-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -10,7 +9,7 @@ import { api } from "~/utils/api/react";
 interface InputMessageBoxProps {
   chatId: number;
   userId: number;
-  refetch: () => void;
+  refetch: () => Promise<void>;
 }
 
 const sendMessageSchema = z.object({
@@ -24,13 +23,13 @@ const InputMessageBox: React.FC<InputMessageBoxProps> = ({
   userId,
   refetch,
 }: InputMessageBoxProps) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const query = useQueryClient();
   const { register, handleSubmit, reset } = useForm<SendMessageFormParameters>({
     mode: "onSubmit",
     resolver: zodResolver(sendMessageSchema),
   });
-  const { mutateAsync } = api.chatEvent.createChatEvent.useMutation({});
+  const { mutateAsync, isPending } = api.chatEvent.createChatEvent.useMutation(
+    {},
+  );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -40,18 +39,27 @@ const InputMessageBox: React.FC<InputMessageBoxProps> = ({
   };
 
   const onSubmit = async (data: SendMessageFormParameters) => {
-    setIsLoading(true);
-    const result = await mutateAsync({
-      chatId: Number(chatId),
-      userId: Number(userId),
+    await mutateAsync({
+      chatId: chatId,
+      userId: userId,
       data: data.data,
     });
-    console.log(result);
-    reset();
-    setIsLoading(false);
-    refetch();
-    void query.invalidateQueries({ queryKey: ["chat"] });
+    console.log({
+      chatId: chatId,
+      userId: userId,
+      data: data.data,
+    });
+    await flushSync(() =>
+      refetch()
+        .then(() => {
+          reset();
+          console.log("refetch");
+        })
+        .catch(console.error),
+    );
   };
+
+  const isLoading = isPending;
 
   return (
     <form

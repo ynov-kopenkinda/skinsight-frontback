@@ -1,10 +1,9 @@
-import { HttpService } from "@nestjs/axios";
 import { Injectable } from "@nestjs/common";
 import Replicate from "replicate";
 
 @Injectable()
 export class AiService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor() {}
   replicate = new Replicate({
     auth: process.env.REPLICATE_API_TOKEN,
   });

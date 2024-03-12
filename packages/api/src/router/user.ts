@@ -14,6 +14,10 @@ export const userRouter = createTRPCRouter({
       return ctx.nest.users.usersControllerGetUserById(input);
     }),
 
+  getDoctors: publicProcedure.query(({ ctx }) => {
+    return ctx.nest.users.usersControllerGetDoctors();
+  }),
+
   updateUserById: publicProcedure
     .input(updateUserSchema)
     .mutation(({ input, ctx }) => {

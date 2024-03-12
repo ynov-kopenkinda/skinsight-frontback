@@ -1,7 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsAlphanumeric, IsEmail, MaxLength, MinLength } from "class-validator";
+import {
+  IsAlphanumeric,
+  IsEmail,
+  IsNumber,
+  MaxLength,
+  MinLength,
+} from "class-validator";
 
 export class User {
+  @ApiProperty()
+  @IsNumber()
+  id: number;
+
   @ApiProperty()
   @IsEmail()
   @MaxLength(100)

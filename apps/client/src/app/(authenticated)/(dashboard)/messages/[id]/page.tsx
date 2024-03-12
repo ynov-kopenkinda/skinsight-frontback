@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { differenceInHours } from "date-fns/differenceInHours";
 
 import { useUser } from "~/shared/hooks/useUser";
@@ -29,8 +29,14 @@ export interface Chat {
 }
 
 function Chat({ params: _params }: { params: { id: number } }) {
+  const endOfMessagesRef = useRef<HTMLDivElement>(null);
+
   const user = useUser();
-  const { data: chat, refetch } = api.chat.getChatEventByChatId.useQuery({
+  const {
+    data: chat,
+    refetch,
+    isFetched,
+  } = api.chat.getChatEventByChatId.useQuery({
     id: Number(_params.id),
   });
   const otherUserId =
@@ -40,11 +46,16 @@ function Chat({ params: _params }: { params: { id: number } }) {
     { enabled: !!otherUserId },
   );
 
-  const endOfMessagesRef = useRef<HTMLDivElement>(null);
+  const scrollToEnd = useCallback(() => {
+    if (!isFetched) return;
+    if (!endOfMessagesRef.current) return;
+    console.log("scrolling");
+    endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [isFetched]);
 
   useEffect(() => {
-    endOfMessagesRef.current!.scrollIntoView({ behavior: "smooth" });
-  }, []);
+    scrollToEnd();
+  }, [scrollToEnd]);
 
   if (!chat) {
     return <div>No chat founded</div>;
@@ -85,7 +96,10 @@ function Chat({ params: _params }: { params: { id: number } }) {
       <InputMessageBox
         chatId={_params.id}
         userId={fakeUser.id}
-        refetch={refetch}
+        refetch={async () => {
+          await refetch();
+          scrollToEnd();
+        }}
       />
       <div ref={endOfMessagesRef} />
       <div className="border-gray glassmorphism container fixed bottom-4 left-0 right-0 z-50 mx-auto block w-fit rounded-xl border-2 bg-white pl-4 pr-4">
