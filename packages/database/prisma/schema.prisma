@@ -65,6 +65,15 @@ model Chat {
   ChatEvent ChatEvent[]
 }
 
+model PreAppointment {
+  id        Int      @id @default(autoincrement())
+  message   String  @default("No extra information")
+  doctorId  Int
+  patientId Int
+  createdAt DateTime @default(now())
+  image     String
+}
+
 model Appointment {
   id                  Int      @id @default(autoincrement())
   doctorId            Int
