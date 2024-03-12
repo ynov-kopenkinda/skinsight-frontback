@@ -19,4 +19,14 @@ export const userRouter = createTRPCRouter({
     .mutation(({ input, ctx }) => {
       return ctx.nest.users.usersControllerUpdateUser(input);
     }),
+
+  deleteUserById: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+      }),
+    )
+    .mutation(({ input, ctx }) => {
+      return ctx.nest.users.usersControllerDeleteUser(input);
+    }),
 });

@@ -7,6 +7,7 @@ import {
   IconLogout,
   IconQuestionMark,
   IconShield,
+  IconTrash,
   IconUser,
 } from "@tabler/icons-react";
 
@@ -78,8 +79,15 @@ const Profile = () => {
             icon={<IconLogout width={24} />}
             title="Logout"
             subtitle="Disconnect from your account"
-            link="/logout"
+            link="/login"
             isLogOutButton={true}
+          />
+          <BoxOptions
+            icon={<IconTrash width={24} color="#ef4444" />}
+            title="Delete account"
+            subtitle="Remove your account and the data associated"
+            link="/login"
+            isDeleteAccountButton={true}
           />
         </div>
       </div>
