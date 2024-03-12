@@ -11,6 +11,6 @@ export class AiController {
 
   @Post()
   sendMessage(@Body() dto: CreateAiDto) {
-    return this.aiService.askMedOllama(dto.message);
+    return this.aiService.askIfAppointmentNeeded(dto.image_url);
   }
 }

@@ -22,10 +22,13 @@
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/jwt": "^10.2.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-socket.io": "^10.3.3",
     "@nestjs/swagger": "^7.1.14",
     "@nestjs/testing": "^10.3.3",
+    "@nestjs/websockets": "^10.3.3",
     "@skinsight/auth": "workspace:*",
     "@skinsight/database": "workspace:*",
     "@skinsight/env": "workspace:*",
@@ -38,7 +41,10 @@
     "ollama": "^0.4.6",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "replicate": "^0.28.0",
+    "rxjs": "^7.8.1",
+    "socket-io": "^1.0.0",
+    "socket.io": "^4.7.4"
   },
   "prettier": "@skinsight/prettier-config",
   "devDependencies": {
