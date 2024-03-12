@@ -5,7 +5,10 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
 
 import { CreatePreAppointmentDto } from "./dto/create-pre-appointment.dto";
@@ -18,8 +21,12 @@ export class PreAppointmentController {
   constructor(private readonly preAppointmentService: PreAppointmentService) {}
 
   @Post()
-  create(@Body() createPreAppointmentDto: CreatePreAppointmentDto) {
-    return this.preAppointmentService.create(createPreAppointmentDto);
+  @UseInterceptors(FileInterceptor("image"))
+  create(
+    @UploadedFile() image: Express.Multer.File,
+    @Body() createPreAppointmentDto: CreatePreAppointmentDto,
+  ) {
+    return this.preAppointmentService.create(createPreAppointmentDto, image);
   }
 
   @Get("/patient/:id")
