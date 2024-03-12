@@ -1,11 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { differenceInHours } from "date-fns/differenceInHours";
 
 import { useUser } from "~/shared/hooks/useUser";
+import InputMessageBox from "~/shared/ui/InputMessageBox";
 import { api } from "~/utils/api/react";
 import TapBar from "../../components/TapBar";
+import { fakeUser } from "../../tpmUser";
 import ChatHeader from "./components/ChatHeader";
 import Message from "./components/Message";
 
@@ -28,19 +30,23 @@ export interface Chat {
 
 function Chat({ params: _params }: { params: { id: number } }) {
   const user = useUser();
-  const chat = api.chat.getChatEventByChatId.useQuery({
+  const { data: chat, refetch } = api.chat.getChatEventByChatId.useQuery({
     id: Number(_params.id),
   });
   const otherUserId =
-    chat.data?.invitorId === user.data?.id
-      ? chat.data?.inviteeId
-      : chat.data?.invitorId;
+    chat?.invitorId === user.data?.id ? chat?.inviteeId : chat?.invitorId;
   const otherUser = api.user.getUserById.useQuery(
     { id: otherUserId! },
     { enabled: !!otherUserId },
   );
 
-  if (!chat.data) {
+  const endOfMessagesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    endOfMessagesRef.current!.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
+  if (!chat) {
     return <div>No chat founded</div>;
   }
 
@@ -51,9 +57,9 @@ function Chat({ params: _params }: { params: { id: number } }) {
   return (
     <div className="mt-6">
       <ChatHeader receptor={otherUser.data.firstName} />
-      {chat.data &&
-        chat.data.ChatEvent.length > 0 &&
-        chat.data.ChatEvent.map((message, idx) => {
+      {chat &&
+        chat.ChatEvent.length > 0 &&
+        chat.ChatEvent.map((message, idx) => {
           return (
             <Message
               message={message}
@@ -61,15 +67,14 @@ function Chat({ params: _params }: { params: { id: number } }) {
               userID={user.data!.id}
               otherUserFirstName={otherUser.data.firstName}
               firstOfSeries={
-                idx === 0 ||
-                chat.data.ChatEvent[idx - 1]!.userId !== message.userId
+                idx === 0 || chat.ChatEvent[idx - 1]!.userId !== message.userId
               }
               showDate={
                 idx === 0 ||
-                chat.data.ChatEvent[idx + 1]?.userId !== message.userId ||
+                chat.ChatEvent[idx + 1]?.userId !== message.userId ||
                 Math.abs(
                   differenceInHours(
-                    chat.data.ChatEvent[idx - 1]!.createdAt,
+                    chat.ChatEvent[idx - 1]!.createdAt,
                     message.createdAt,
                   ),
                 ) > 2
@@ -77,7 +82,12 @@ function Chat({ params: _params }: { params: { id: number } }) {
             />
           );
         })}
-      {/* <InputMessageBox /> */}
+      <InputMessageBox
+        chatId={_params.id}
+        userId={fakeUser.id}
+        refetch={refetch}
+      />
+      <div ref={endOfMessagesRef} />
       <div className="border-gray glassmorphism container fixed bottom-4 left-0 right-0 z-50 mx-auto block w-fit rounded-xl border-2 bg-white pl-4 pr-4">
         <TapBar />
       </div>
