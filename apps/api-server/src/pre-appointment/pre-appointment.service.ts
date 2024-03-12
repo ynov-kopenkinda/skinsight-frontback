@@ -31,7 +31,9 @@ export class PreAppointmentService {
   }
 
   async findByPatientId(id: number) {
-    return this.prisma.preAppointment.findMany({ where: { patientId: id } });
+    return this.prisma.preAppointment.findMany({
+      where: { patientId: id },
+    });
   }
 
   async findByDoctorId(id: number) {

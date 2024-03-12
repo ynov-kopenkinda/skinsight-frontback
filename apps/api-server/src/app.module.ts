@@ -19,6 +19,7 @@ import { UsersController } from "./users/users.controller";
 import { UsersModule } from "./users/users.module";
 import { UserService } from "./users/users.service";
 import { PreAppointmentModule } from './pre-appointment/pre-appointment.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PreAppointmentModule } from './pre-appointment/pre-appointment.module';
     AppointmentModule,
     PreAppointmentModule
     MessagesModule,
+    ImagesModule,
   ],
   controllers: [
     AppController,
