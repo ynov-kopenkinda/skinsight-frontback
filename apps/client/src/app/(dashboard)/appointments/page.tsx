@@ -53,7 +53,7 @@ function Appointments() {
       {(appointments) => (
         <AppointmentList
           appointments={appointments}
-          role={user.data?.userRole === "PATIENT" ? "patient" : "doctor"}
+          role={user.data?.userRole === "PATIENT" ? "PATIENT" : "DOCTOR"}
         />
       )}
     </PreloadUser>

@@ -18,6 +18,7 @@ import { PrismaService } from "./prisma/prisma.service";
 import { UsersController } from "./users/users.controller";
 import { UsersModule } from "./users/users.module";
 import { UserService } from "./users/users.service";
+import { PreAppointmentModule } from './pre-appointment/pre-appointment.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UserService } from "./users/users.service";
     JwtModule,
     AiModule,
     AppointmentModule,
+    PreAppointmentModule,
   ],
   controllers: [
     AppController,

@@ -10,18 +10,18 @@ export const AppointmentList = ({
   role,
 }: {
   appointments: RouterOutputs["appointment"]["getAppointmentForPatient"];
-  role: "patient" | "doctor";
+  role: "PATIENT" | "DOCTOR";
 }) => {
   const pendingAppointments = appointments.filter(
     (appointment) =>
-      (role === "doctor"
+      (role === "DOCTOR"
         ? !appointment.isAcceptedByPatient
         : !appointment.isAcceptedByDoctor) &&
       new Date(appointment.date) > new Date(),
   );
   const acceptedAppointments = appointments.filter(
     (appointment) =>
-      (role === "doctor"
+      (role === "DOCTOR"
         ? appointment.isAcceptedByPatient
         : appointment.isAcceptedByDoctor) &&
       new Date(appointment.date) > new Date(),
@@ -64,7 +64,7 @@ export const AppointmentList = ({
                       <div className="flex flex-col">
                         <p className="text-sm">{appointment.location}</p>
                         <p className="text-sm font-bold">
-                          {role === "doctor"
+                          {role === "DOCTOR"
                             ? "Patient " + appointment.patient_name
                             : "Dr " + appointment.doctor_name}
                         </p>
@@ -93,7 +93,7 @@ export const AppointmentList = ({
                           <div className="flex flex-col">
                             <p className="text-sm">{appointment.location}</p>
                             <p className="text-sm font-bold">
-                              {role === "doctor"
+                              {role === "DOCTOR"
                                 ? "Patient " + appointment.patient_name
                                 : "Dr. " + appointment.doctor_name}
                             </p>
@@ -160,7 +160,7 @@ export const AppointmentList = ({
                       <div className="flex flex-col">
                         <p className="text-sm">{appointment.location}</p>
                         <p className="text-sm font-bold">
-                          {role === "doctor"
+                          {role === "DOCTOR"
                             ? "Patient " + appointment.patient_name
                             : "Dr. " + appointment.doctor_name}
                         </p>
