@@ -17,13 +17,13 @@ jobs:
     name: Setup & Test
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/composite/setup
+      - uses: ./.github/workflows/setup
   formatting:
     needs: setup-project
     name: Run Code Formatting Check
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/composite/setup
+      - uses: ./.github/workflows/setup
       - name: Run Prettier
         run: pnpm turbo format
   typechecking:
@@ -31,7 +31,7 @@ jobs:
     name: Run Typechecking Check
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/composite/setup
+      - uses: ./.github/workflows/setup
       - name: Run Typechecking
         run: pnpm turbo typecheck
   linting:
@@ -39,7 +39,7 @@ jobs:
     name: Run Code Quality Checks
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/composite/setup
+      - uses: ./.github/workflows/setup
       - name: Run ESLint
         run: pnpm turbo lint
   sonar:
@@ -47,7 +47,7 @@ jobs:
     name: Run SonarQube
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/composite/setup
+      - uses: ./.github/workflows/setup
       - name: Run sonarqube
         run: echo "Sonar impl here"
   build:
@@ -55,7 +55,7 @@ jobs:
     name: Run Build
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/composite/setup
+      - uses: ./.github/workflows/setup
       - name: Run build
         run: pnpm turbo build
   security:
@@ -63,7 +63,7 @@ jobs:
     name: Run Security Checks
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/composite/setup
+      - uses: ./.github/workflows/setup
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true
