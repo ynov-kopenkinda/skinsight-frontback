@@ -5,8 +5,10 @@ runs:
   steps:
     - name: Setup pnpm
       uses: pnpm/action-setup@v2.4.0
+      shell: bash
     - name: Setup Node 18
       uses: actions/setup-node@v4
+      shell: bash
       with:
         node-version: 18.18.2
     - name: Get pnpm store directory
@@ -15,6 +17,7 @@ runs:
         echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
     - name: Setup pnpm cache
       uses: actions/cache@v3
+      shell: bash
       with:
         path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
