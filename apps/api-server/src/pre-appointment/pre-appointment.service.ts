@@ -55,7 +55,7 @@ export class PreAppointmentService {
       },
     });
 
-    const chatEvent = await this.prisma.chatEvent.create({
+    await this.prisma.chatEvent.create({
       data: {
         chatId: chat.id,
         chatEventType: "MESSAGE_SENT",

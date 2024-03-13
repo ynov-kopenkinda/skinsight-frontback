@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@radix-ui/themes";
 import { IconClockHour4, IconStar } from "@tabler/icons-react";
 
-import type { Doctor } from "~/app/(dashboard)/components/RecommandedDoctor";
+import type { Doctor } from "~/app/(authenticated)/(dashboard)/components/RecommandedDoctor";
 
 export interface DoctorCardProps {
   doctor: Doctor;

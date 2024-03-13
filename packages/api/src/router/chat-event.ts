@@ -12,7 +12,7 @@ export const chatEventRouter = createTRPCRouter({
       }),
     )
     .mutation(({ input, ctx }) => {
-      ctx.nest.chatEvent.chatEventControllerCreateChatEvent({
+      return ctx.nest.chatEvent.chatEventControllerCreateChatEvent({
         requestBody: {
           chatEventType: 1,
           chatId: input.chatId,

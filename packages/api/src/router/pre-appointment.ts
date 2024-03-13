@@ -13,7 +13,7 @@ export const preAppointmentRouter = createTRPCRouter({
       }),
     )
     .mutation(({ input, ctx }) => {
-      ctx.nest.preAppointments.preAppointmentControllerCreate({
+      return ctx.nest.preAppointments.preAppointmentControllerCreate({
         requestBody: {
           message: input.message,
           doctorId: input.doctorId,

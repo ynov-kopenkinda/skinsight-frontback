@@ -18,10 +18,10 @@ import { AppLoggerMiddleware } from "./logger.middleware";
 import { MessagesModule } from "./messages/messages.module";
 import { PreAppointmentModule } from "./pre-appointment/pre-appointment.module";
 import { PrismaService } from "./prisma/prisma.service";
+import { S3Module } from "./s3/s3.module";
 import { UsersController } from "./users/users.controller";
 import { UsersModule } from "./users/users.module";
 import { UserService } from "./users/users.service";
-import { S3Module } from './s3/s3.module';
 
 @Module({
   imports: [
