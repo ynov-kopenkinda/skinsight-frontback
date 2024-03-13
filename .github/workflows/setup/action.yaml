@@ -4,20 +4,16 @@ runs:
   using: "composite"
   steps:
     - name: Setup pnpm
-      shell: bash
       uses: pnpm/action-setup@v2.4.0
     - name: Setup Node 18
-      shell: bash
       uses: actions/setup-node@v4
       with:
         node-version: 18.18.2
     - name: Get pnpm store directory
-      shell: bash
       id: pnpm-cache
       run: |
         echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
     - name: Setup pnpm cache
-      shell: bash
       uses: actions/cache@v3
       with:
         path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
@@ -25,5 +21,4 @@ runs:
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
     - name: Install deps (with cache)
-      shell: bash
       run: pnpm install

@@ -19,7 +19,25 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
   formatting:
     needs: setup-project
     name: Run Code Formatting Check
@@ -27,7 +45,25 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
       - name: Run Prettier
         run: pnpm turbo format
   typechecking:
@@ -37,7 +73,25 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
       - name: Run Typechecking
         run: pnpm turbo typecheck
   linting:
@@ -46,8 +100,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
+        uses: actions/checkout@v4      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
       - name: Run ESLint
         run: pnpm turbo lint
   sonar:
@@ -56,8 +127,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
+        uses: actions/checkout@v4      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
       - name: Run sonarqube
         run: echo "Sonar impl here"
   build:
@@ -66,8 +154,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
+        uses: actions/checkout@v4      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
       - name: Run build
         run: pnpm turbo build
   security:
@@ -76,8 +181,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
+        uses: actions/checkout@v4      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true
