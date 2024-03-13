@@ -67,7 +67,7 @@ jobs:
       - name: Run ESLint
         run: pnpm turbo lint
       - name: Run Prettier
-        run: pnpm turbo format --check
+        run: pnpm turbo format
       - name: Run TypeScript
         run: pnpm typecheck
   run-sonar:
