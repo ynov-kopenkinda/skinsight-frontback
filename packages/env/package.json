@@ -11,7 +11,8 @@
     "clean": "rm -rf .turbo node_modules",
     "dev": "tsup --watch",
     "lint": "eslint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "postinstall": "tsup"
   },
   "dependencies": {
     "zod": "^3.22.4",

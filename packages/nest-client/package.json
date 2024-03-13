@@ -11,7 +11,7 @@
     "dev": "tsup --watch",
     "format": "prettier --check \"index.ts\"",
     "typecheck": "tsc --noEmit",
-    "postinstall": "pnpm run generate",
+    "postinstall": "pnpm run generate && pnpm run build",
     "generate": "openapi --useOptions --useUnionTypes --indent=2 --input=../../apps/api-server/swagger.json --output=./src --name NestApi"
   },
   "devDependencies": {
