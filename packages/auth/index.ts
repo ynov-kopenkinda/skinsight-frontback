@@ -81,11 +81,11 @@ export const {
   ],
   callbacks: {
     session: ({ session, token, user }) => {
-      // console.log("callbacks.session", { session, token, user });
       return {
         ...session,
         user: {
           ...session.user,
+          id: Number(token.sub) as never,
         },
       };
     },

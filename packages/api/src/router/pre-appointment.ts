@@ -18,7 +18,6 @@ export const preAppointmentRouter = createTRPCRouter({
           message: input.message,
           doctorId: input.doctorId,
           patientId: input.patientId,
-          image: input.image,
         },
       });
     }),

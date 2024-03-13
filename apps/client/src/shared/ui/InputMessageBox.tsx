@@ -40,13 +40,13 @@ const InputMessageBox: React.FC<InputMessageBoxProps> = ({
 
   const onSubmit = async (data: SendMessageFormParameters) => {
     await mutateAsync({
-      chatId: chatId,
-      userId: userId,
+      chatId: Number(chatId),
+      userId: Number(userId),
       data: data.data,
     });
     console.log({
-      chatId: chatId,
-      userId: userId,
+      chatId: Number(chatId),
+      userId: Number(userId),
       data: data.data,
     });
     await flushSync(() =>

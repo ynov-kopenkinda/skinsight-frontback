@@ -58,6 +58,8 @@ function PhotoWrapper() {
     resolver: zodResolver(sendPreAppointmentSchema),
   });
 
+  const { mutateAsync: getUploadUrl } = api.s3.upload.useMutation();
+
   const { mutateAsync } = api.preAppointment.createPreAppointment.useMutation(
     {},
   );
@@ -75,9 +77,9 @@ function PhotoWrapper() {
       const response = await fetch(imageSrc);
       const blob = await response.blob();
       const formData = new FormData();
+
       formData.append("file", blob, formData.toString());
-      // console.log(formData);
-      // const upload = await api.s3.upload(formData);
+
       const result = await mutateAsync({
         message: "test",
         doctorId: 1,
@@ -93,16 +95,26 @@ function PhotoWrapper() {
     setImgUrl(imageSrc);
   }, [webcamRef, imgUrl]);
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
     const file = event.target.files[0];
-    if (file) {
-      setIsFileLoading(true);
-      const imageUrl = URL.createObjectURL(file);
-      setTimeout(() => {
-        setImgUrl(imageUrl);
-      }, 1000);
+    if (!file) {
+      return;
     }
+    setIsFileLoading(true);
+    const imageUrl = URL.createObjectURL(file);
+    const url = await getUploadUrl({ userid: 1 });
+    const result = await fetch(url.url, {
+      method: "PUT",
+      body: file,
+      headers: {
+        "Content-Type": file.type,
+      },
+    });
+    console.log(result);
+    setTimeout(() => {
+      setImgUrl(imageUrl);
+    }, 1000);
   };
 
   const triggerFileInputClick = () => {

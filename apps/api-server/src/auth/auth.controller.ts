@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { Request } from "express";
 
 import { RefreshTokenGuard } from "../guards/refresh-token.guard";
 import { CreateUserDto } from "../users/dto/create-user.dto";
@@ -25,9 +26,9 @@ export class AuthController {
 
   @ApiOperation({ summary: "Refresh token" })
   @UseGuards(RefreshTokenGuard)
-  @ApiBearerAuth("acces-token")
+  @ApiBearerAuth("access-token")
   @Get("refresh")
-  refreshTokens(@Req() req: any) {
+  refreshTokens(@Req() req: Request) {
     return this.authService.refreshTokens(req.user["email"]);
   }
 }

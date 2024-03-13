@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { differenceInHours } from "date-fns/differenceInHours";
 
 import { useUser } from "~/shared/hooks/useUser";
 import InputMessageBox from "~/shared/ui/InputMessageBox";
 import { api } from "~/utils/api/react";
 import TapBar from "../../components/TapBar";
-import { fakeUser } from "../../tpmUser";
 import ChatHeader from "./components/ChatHeader";
 import Message from "./components/Message";
 
@@ -95,7 +94,7 @@ function Chat({ params: _params }: { params: { id: number } }) {
         })}
       <InputMessageBox
         chatId={_params.id}
-        userId={fakeUser.id}
+        userId={user.data.id}
         refetch={async () => {
           await refetch();
           scrollToEnd();

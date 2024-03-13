@@ -21,6 +21,7 @@ import { PrismaService } from "./prisma/prisma.service";
 import { UsersController } from "./users/users.controller";
 import { UsersModule } from "./users/users.module";
 import { UserService } from "./users/users.service";
+import { S3Module } from './s3/s3.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { UserService } from "./users/users.service";
     AppointmentModule,
     PreAppointmentModule,
     MessagesModule,
+    S3Module,
   ],
   controllers: [
     AppController,
