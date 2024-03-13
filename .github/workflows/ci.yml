@@ -17,53 +17,13 @@ jobs:
     name: Setup & Test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
-      - name: Setup Node 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.18.2
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Install deps (with cache)
-        run: pnpm install
+      - uses: ./.github/workflows/composite/setup
   formatting:
     needs: setup-project
     name: Run Code Formatting Check
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
-      - name: Setup Node 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.18.2
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Install deps (with cache)
-        run: pnpm install
+      - uses: ./.github/workflows/composite/setup
       - name: Run Prettier
         run: pnpm turbo format
   typechecking:
@@ -71,55 +31,15 @@ jobs:
     name: Run Typechecking Check
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
-      - name: Setup Node 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.18.2
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Install deps (with cache)
-        run: pnpm install
-      - name: Run Prettier
+      - uses: ./.github/workflows/composite/setup
+      - name: Run Typechecking
         run: pnpm turbo typecheck
   linting:
     needs: setup-project
     name: Run Code Quality Checks
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
-      - name: Setup Node 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.18.2
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Install deps (with cache)
-        run: pnpm install
+      - uses: ./.github/workflows/composite/setup
       - name: Run ESLint
         run: pnpm turbo lint
   sonar:
@@ -127,8 +47,7 @@ jobs:
     name: Run SonarQube
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: ./.github/workflows/composite/setup
       - name: Run sonarqube
         run: echo "Sonar impl here"
   build:
@@ -136,27 +55,7 @@ jobs:
     name: Run Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
-      - name: Setup Node 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.18.2
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Install deps (with cache)
-        run: pnpm install
+      - uses: ./.github/workflows/composite/setup
       - name: Run build
         run: pnpm turbo build
   security:
@@ -164,27 +63,7 @@ jobs:
     name: Run Security Checks
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
-      - name: Setup Node 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.18.2
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Install deps (with cache)
-        run: pnpm install
+      - uses: ./.github/workflows/composite/setup
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true
