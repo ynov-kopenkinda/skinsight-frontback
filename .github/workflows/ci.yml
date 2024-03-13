@@ -100,7 +100,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4      - name: Setup pnpm
+        uses: actions/checkout@v4
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2.4.0
       - name: Setup Node 18
         uses: actions/setup-node@v4
@@ -127,7 +128,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4      - name: Setup pnpm
+        uses: actions/checkout@v4
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2.4.0
       - name: Setup Node 18
         uses: actions/setup-node@v4
@@ -154,7 +156,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4      - name: Setup pnpm
+        uses: actions/checkout@v4
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2.4.0
       - name: Setup Node 18
         uses: actions/setup-node@v4
@@ -181,7 +184,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4      - name: Setup pnpm
+        uses: actions/checkout@v4
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2.4.0
       - name: Setup Node 18
         uses: actions/setup-node@v4
