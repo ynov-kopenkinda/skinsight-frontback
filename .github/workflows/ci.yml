@@ -68,7 +68,7 @@ jobs:
         run: pnpm turbo format
   typechecking:
     needs: setup-project
-    name: Run Code Formatting Check
+    name: Run Typechecking Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
