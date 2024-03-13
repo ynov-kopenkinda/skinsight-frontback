@@ -42,9 +42,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pnpm-artifact
+          retention-days: 1
           path: |
             ~/.pnpm-store
-            node_modules
   run-codequal:
     needs: setup-project
     name: Run Code Quality Checks
@@ -58,7 +58,6 @@ jobs:
           name: pnpm-artifact
           path: |
             ~/.pnpm-store
-            node_modules
       - name: Run ESLint
         run: pnpm turbo lint
       - name: Run Prettier
@@ -67,7 +66,7 @@ jobs:
         run: pnpm typecheck
   run-build:
     needs: ["setup-project", "run-codequal"]
-    name: Run Tests
+    name: Run Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -78,11 +77,10 @@ jobs:
           name: pnpm-artifact
           path: |
             ~/.pnpm-store
-            node_modules
       - name: Run build
         run: pnpm turbo build
   run-security:
-    needs: ["setup-project", "run-build"]
+    needs: ["setup-project"]
     name: Run Security Checks
     runs-on: ubuntu-latest
     steps:
@@ -94,7 +92,6 @@ jobs:
           name: pnpm-artifact
           path: |
             ~/.pnpm-store
-            node_modules
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true
