@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 
 import { AiModule } from "./ai/ai.module";
@@ -14,7 +14,11 @@ import { ChatEventService } from "./chat-event/chat-event.service";
 import { ChatController } from "./chat/chat.controller";
 import { ChatModule } from "./chat/chat.module";
 import { ChatService } from "./chat/chat.service";
+import { AppLoggerMiddleware } from "./logger.middleware";
+import { MessagesModule } from "./messages/messages.module";
+import { PreAppointmentModule } from "./pre-appointment/pre-appointment.module";
 import { PrismaService } from "./prisma/prisma.service";
+import { S3Module } from "./s3/s3.module";
 import { UsersController } from "./users/users.controller";
 import { UsersModule } from "./users/users.module";
 import { UserService } from "./users/users.service";
@@ -28,6 +32,9 @@ import { UserService } from "./users/users.service";
     JwtModule,
     AiModule,
     AppointmentModule,
+    PreAppointmentModule,
+    MessagesModule,
+    S3Module,
   ],
   controllers: [
     AppController,
@@ -46,6 +53,9 @@ import { UserService } from "./users/users.service";
     JwtService,
   ],
 })
-export class AppModule {
+export class AppModule implements NestModule {
   constructor() {}
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(AppLoggerMiddleware).forRoutes("*");
+  }
 }

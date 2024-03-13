@@ -17,7 +17,7 @@ function setupSwagger(app: INestApplication) {
         scheme: "bearer",
         bearerFormat: "JWT",
       },
-      "acces-token",
+      "access-token",
     )
     .setTitle("Web-Services API")
     .setDescription("API du cours de web-services")

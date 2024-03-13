@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString } from "class-validator";
+import { IsUrl } from "class-validator";
 
 export class CreateAiDto {
   @ApiProperty()
-  @IsString()
-  message: string;
+  @IsUrl()
+  image_url: string;
 }

@@ -1,13 +1,26 @@
-import { fakeUser } from "~/app/(dashboard)/tpmUser";
+import { useSession } from "@skinsight/auth";
 
 export const useUser: () => {
-  data: typeof fakeUser | undefined;
+  data:
+    | {
+        id: number;
+        role: string;
+        name: string;
+      }
+    | undefined;
   isLoading: boolean;
   isError: boolean;
 } = () => {
+  const session = useSession();
   return {
-    data: fakeUser,
-    isLoading: false,
-    isError: false,
+    data:
+      session.data?.user !== undefined
+        ? {
+            ...session.data?.user,
+            name: session.data?.user?.name ?? "",
+          }
+        : undefined,
+    isLoading: session.status === "loading",
+    isError: session.status === "unauthenticated",
   };
 };

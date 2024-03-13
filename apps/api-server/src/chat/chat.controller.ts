@@ -7,14 +7,18 @@ import {
   ParseIntPipe,
   Post,
 } from "@nestjs/common";
-import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 
 import { ChatService } from "./chat.service";
 import { CreateChatDto } from "./dto/create-chat.dto";
-import { GetChatDto } from "./dto/get-chat.dto";
-import { ChatDto } from "./entity/chat.entity";
+import { ChatDto, GetChatByUserId } from "./entity/chat.entity";
 
-@ApiTags("chat")
+@ApiTags("Chat")
 @Controller("chat")
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
@@ -33,7 +37,7 @@ export class ChatController {
     return this.chatService.createChat(body);
   }
 
-  @ApiOkResponse({ type: [GetChatDto] })
+  @ApiResponse({ type: [GetChatByUserId] })
   @ApiOperation({ summary: "Get chat(s) where an user appear" })
   @Get("/user/:id")
   async getChatByUserId(@Param("id", ParseIntPipe) id: number) {

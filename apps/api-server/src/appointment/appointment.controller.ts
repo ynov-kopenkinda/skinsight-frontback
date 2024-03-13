@@ -50,7 +50,7 @@ export class AppointmentController {
 
   @Get("/user")
   @UseGuards(AccessTokenGuard)
-  @ApiBearerAuth("acces-token")
+  @ApiBearerAuth("access-token")
   @ApiOperation({ summary: "Get all appointment for the user logged" })
   @ApiResponse({ status: 200, type: [Appointment] })
   findAllForOneUser(@Request() request) {
@@ -59,7 +59,7 @@ export class AppointmentController {
 
   @Patch("/accept/:appointmentId")
   @UseGuards(AccessTokenGuard)
-  @ApiBearerAuth("acces-token")
+  @ApiBearerAuth("access-token")
   @ApiResponse({ status: 200, type: String })
   acceptAppointment(
     @Request() request,
@@ -70,7 +70,7 @@ export class AppointmentController {
 
   @Patch("/decline/:appointmentId")
   @UseGuards(AccessTokenGuard)
-  @ApiBearerAuth("acces-token")
+  @ApiBearerAuth("access-token")
   @ApiResponse({ status: 200, type: String })
   declineAppointment(
     @Request() request,

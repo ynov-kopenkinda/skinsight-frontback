@@ -6,12 +6,13 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "format": "prettier --check \"index.ts\"",
     "build": "tsup",
     "clean": "rm -rf .turbo node_modules",
     "dev": "tsup --watch",
     "lint": "eslint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "postinstall": "tsup"
   },
   "dependencies": {
     "zod": "^3.22.4",

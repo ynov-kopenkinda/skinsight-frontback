@@ -5,6 +5,7 @@
   "types": "./index.ts",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
+    "postinstall": "pnpm with-env prisma generate",
     "db:generate": "pnpm with-env prisma generate",
     "push": "pnpm with-env prisma db push",
     "studio": "pnpm with-env prisma studio",

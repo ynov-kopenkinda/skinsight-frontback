@@ -1,4 +1,4 @@
-name: Build, Lint, Type-check
+name: CI
 
 on:
   pull_request:
@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node 18
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 18.18.2
       - name: Get pnpm store directory
         id: pnpm-cache
         run: |
@@ -38,8 +38,172 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install deps (with cache)
         run: pnpm install
-      - name: Build, lint and type-check
-        run: pnpm turbo build lint format typecheck
+  formatting:
+    needs: setup-project
+    name: Run Code Formatting Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
+      - name: Run Prettier
+        run: pnpm turbo format
+  typechecking:
+    needs: setup-project
+    name: Run Typechecking Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
+      - name: Run Typechecking
+        run: pnpm turbo typecheck
+  linting:
+    needs: setup-project
+    name: Run Code Quality Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
+      - name: Run ESLint
+        run: pnpm turbo lint
+  sonar:
+    needs: ["linting"]
+    name: Run SonarQube
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
+      - name: Run sonarqube
+        run: echo "Sonar impl here"
+  build:
+    needs: ["linting", "security", "typechecking"]
+    name: Run Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
+      - name: Run build
+        run: pnpm turbo build
+  security:
+    needs: ["setup-project"]
+    name: Run Security Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true
@@ -48,25 +212,6 @@ jobs:
         with:
           args: --sarif-file-output=snyk.sarif
       - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk.sarif
-
-  # run-snyk:
-  #   concurrency:
-  #     group: testing
-  #     cancel-in-progress: true
-  #   runs-on: ubuntu-latest
-  #   if: success()
-  #   steps:
-  #     - name: Run Snyk to check for vulnerabilities
-  #       uses: snyk/actions/node@master
-  #       continue-on-error: true
-  #       env:
-  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-  #       with:
-  #         args: --sarif-file-output=snyk.sarif
-  #     - name: Upload result to GitHub Code Scanning
-  #       uses: github/codeql-action/upload-sarif@v2
-  #       with:
-  #         sarif_file: snyk.sarif

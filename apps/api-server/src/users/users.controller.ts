@@ -34,6 +34,13 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @ApiOkResponse({ type: User, isArray: true })
+  @ApiNotFoundResponse()
+  @Get("doctors")
+  async getDoctors(): Promise<User[]> {
+    return this.usersService.findDoctors();
+  }
+
   @ApiOkResponse({ type: User })
   @ApiOperation({ summary: "Get a user depending on passed id" })
   @Get(":id")
