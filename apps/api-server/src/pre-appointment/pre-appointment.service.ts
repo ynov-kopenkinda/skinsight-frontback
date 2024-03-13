@@ -1,32 +1,73 @@
-import crypto from "crypto";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
-import { s3 } from "src/s3";
+
+import { CreatePreAppointmentDto } from "./dto/create-pre-appointment.dto";
 
 @Injectable()
 export class PreAppointmentService {
   constructor(private readonly prisma: PrismaService) {}
-  async create(createPreAppointmentDto, image: Express.Multer.File) {
-    const random_image_name = crypto.randomBytes(32).toString("hex");
+  async create(createPreAppointmentDto: CreatePreAppointmentDto) {
+    console.log(createPreAppointmentDto);
 
-    const putParams = {
-      Bucket: process.env.S3_BUCKET_NAME,
-      Key: random_image_name,
-      Body: image.buffer,
-      ContentType: image.mimetype,
-    };
-
-    const putCommand = new PutObjectCommand(putParams);
-
-    const returnedImage = await s3.send(putCommand).catch((err) => {
-      throw new Error(err);
+    let chat = await this.prisma.chat.findFirst({
+      where: {
+        OR: [
+          {
+            AND: [
+              { invitorId: createPreAppointmentDto.patientId },
+              { inviteeId: 1 },
+            ],
+          },
+          {
+            AND: [
+              { invitorId: 1 },
+              { inviteeId: createPreAppointmentDto.patientId },
+            ],
+          },
+        ],
+      },
     });
 
-    console.log(returnedImage, "returnedImage");
+    if (!chat) {
+      chat = await this.prisma.chat.create({
+        data: {
+          inviteeId: createPreAppointmentDto.patientId,
+          invitorId: 1,
+        },
+      });
+    }
+
+    await this.prisma.chatEvent.create({
+      data: {
+        chatId: chat.id,
+        chatEventType: "MESSAGE_SENT",
+        userId: createPreAppointmentDto.patientId,
+        data: createPreAppointmentDto.message,
+      },
+    });
+
+    await this.prisma.chatEvent.create({
+      data: {
+        chatId: chat.id,
+        chatEventType: "IMAGE_SENT",
+        userId: createPreAppointmentDto.patientId,
+        data: createPreAppointmentDto.image,
+      },
+    });
+
+    const chatEvent = await this.prisma.chatEvent.create({
+      data: {
+        chatId: chat.id,
+        chatEventType: "MESSAGE_SENT",
+        userId: 1,
+        data: "You're picture is gonna be analyzed, please be patient.",
+      },
+    });
 
     return this.prisma.preAppointment.create({
-      data: { ...createPreAppointmentDto, image: random_image_name },
+      data: {
+        ...createPreAppointmentDto,
+      },
     });
   }
 

@@ -39,7 +39,7 @@ export const AppHeader = async () => {
               size="4"
             />
             <Text className="font-bold">
-              Hello, {session?.user.name ? session?.user.name : "Thomas"}
+              Hello, {session?.user.name ?? session?.user.name}
             </Text>
             <LogoutButton />
           </div>

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 
+import { useUser } from "~/shared/hooks/useUser";
 import MessageBox from "~/shared/ui/MessageBox";
 import { api } from "~/utils/api/react";
 import TapBar from "../components/TapBar";
@@ -9,13 +10,13 @@ import HeaderMessage from "./components/header-message";
 import Searchbar from "./components/searchbar";
 
 function Messages() {
-  // TODO change by user ID
-  // const { data } = useSession();
-
-  const messages = api.chat.getChatsByUserId.useQuery({ id: 1 });
+  const user = useUser();
+  const messages = api.chat.getChatsByUserId.useQuery(
+    { id: user.data!.id },
+    { enabled: !!user.data?.id },
+  );
 
   const [searchTerm, setSearchTerm] = useState("");
-
   const filteredMessage = messages.data?.filter((message) =>
     message.firstname.toLowerCase().includes(searchTerm.toLowerCase()),
   );
@@ -32,6 +33,7 @@ function Messages() {
               minute: "2-digit",
               hour12: false,
             }).format(lastMessageDate);
+
             return (
               <MessageBox
                 key={message.id}

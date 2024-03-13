@@ -1,3 +1,4 @@
+import { S3Image } from "~/shared/ui/S3Image";
 import type { ChatEvent } from "../page";
 
 interface MessageProps {
@@ -43,7 +44,11 @@ const Message = ({
           isOther ? "bg-white" : "bg-primary ml-auto text-white"
         } border-gray relative w-fit rounded-lg border p-3 last-of-type:mb-0`}
       >
-        {message.data}
+        {message.chatEventType === "IMAGE_SENT" ? (
+          <S3Image s3key={message.data} />
+        ) : (
+          message.data
+        )}
       </p>
       {showDate && (
         <p

@@ -11,33 +11,37 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 
+import { useUser } from "~/shared/hooks/useUser";
 import { api } from "~/utils/api/react";
 import BoxOptions from "./components/box-options";
 
 const Profile = () => {
-  const user = api.user.getUserById.useQuery({ id: 1 });
+  const user = useUser();
+  const { data: userData } = api.user.getUserById.useQuery(
+    { id: user.data!.id },
+    { enabled: !!user.data?.id },
+  );
 
   if (user.isLoading) return <div>Loading...</div>;
 
-  if (!user.data || user.isError || user.error)
-    return <div>Something went wrong</div>;
+  if (!user.data || user.isError) return <div>Something went wrong</div>;
 
-  if (user.data) {
+  if (userData) {
     return (
       <div>
         <div className="flex items-center gap-x-4 rounded-xl border border-slate-100 p-4 shadow-lg">
           <Image
             className="rounded-full"
-            src={`https://api.dicebear.com/7.x/initials/svg?seed=${user.data?.firstName}&backgroundColor=B9D8C1`}
+            src={`https://api.dicebear.com/7.x/initials/svg?seed=${userData.firstName}&backgroundColor=B9D8C1`}
             width={60}
             height={60}
-            alt={user.data?.firstName ?? "avatar"}
+            alt={userData.firstName ?? "avatar"}
           />
           <div className="flex flex-col gap-y-1">
             <p className="text-lg font-semibold">
-              {user.data.lastName} {user.data.firstName}
+              {userData.lastName} {userData.firstName}
             </p>
-            <p className="font-light">{user.data.email}</p>
+            <p className="font-light">{userData.email}</p>
           </div>
         </div>
 

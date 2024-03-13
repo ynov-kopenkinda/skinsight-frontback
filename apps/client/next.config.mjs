@@ -11,6 +11,11 @@ const config = {
         hostname: "api.dicebear.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "skinsight-ynov-dk.s3.eu-west-3.amazonaws.com",
+        port: "",
+      },
     ],
     dangerouslyAllowSVG: true,
   },

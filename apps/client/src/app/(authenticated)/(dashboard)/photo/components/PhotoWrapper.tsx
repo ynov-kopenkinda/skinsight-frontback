@@ -2,6 +2,7 @@
 
 import type { ChangeEvent } from "react";
 import React, { useCallback, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Heading, Text } from "@radix-ui/themes";
 import {
@@ -16,13 +17,13 @@ import { useForm } from "react-hook-form";
 import Webcam from "react-webcam";
 import { z } from "zod";
 
+import { useUser } from "~/shared/hooks/useUser";
 import useWebcam from "~/shared/hooks/useWebcam";
 import { api } from "~/utils/api/react";
 
 const sendPreAppointmentSchema = z.object({
   message: z.string().optional(),
   doctorId: z.number(),
-  patientId: z.number(),
   image: z.string(),
 });
 
@@ -30,13 +31,34 @@ type SendPreAppointmentFormParameters = z.infer<
   typeof sendPreAppointmentSchema
 >;
 
+export async function uploadFile(
+  file: File,
+  uploader: ReturnType<typeof api.s3.upload.useMutation>["mutateAsync"],
+) {
+  const url = await uploader({ userid: 1 });
+  const result = await fetch(url.url, {
+    method: "PUT",
+    body: file,
+    headers: {
+      "Content-Type": file.type,
+    },
+  });
+  if (result.ok) {
+    return url.key;
+  }
+  return null;
+}
+
 function PhotoWrapper() {
+  const user = useUser();
+  const router = useRouter();
   const webcamRef = useRef<Webcam>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imgUrl, setImgUrl] = useState("");
   const [facingMode, setFacingMode] = useState("environment");
   const [isFileLoading, setIsFileLoading] = useState(false);
   const { isError, isLoading } = useWebcam();
+
   const {
     data: doctors,
     isLoading: isDoctorsLoading,
@@ -52,9 +74,10 @@ function PhotoWrapper() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    setValue,
+    formState: { errors, isValid },
   } = useForm<SendPreAppointmentFormParameters>({
-    mode: "onSubmit",
+    mode: "onChange",
     resolver: zodResolver(sendPreAppointmentSchema),
   });
 
@@ -76,24 +99,20 @@ function PhotoWrapper() {
     try {
       const response = await fetch(imageSrc);
       const blob = await response.blob();
-      const formData = new FormData();
-
-      formData.append("file", blob, formData.toString());
-
-      const result = await mutateAsync({
-        message: "test",
-        doctorId: 1,
-        patientId: 1,
-        image: formData.toString(),
-      });
-
+      const file = new File([blob], "image.jpg", { type: blob.type });
+      const imageKey = await uploadFile(file, getUploadUrl);
+      console.log("imageKey", imageKey, file);
+      if (!imageKey) {
+        return;
+      }
+      setValue("image", imageKey);
       // Envoie de l'image psartek
     } catch (error) {
       console.error(error);
     }
 
     setImgUrl(imageSrc);
-  }, [webcamRef, imgUrl]);
+  }, [imgUrl, getUploadUrl, setValue]);
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
@@ -101,17 +120,15 @@ function PhotoWrapper() {
     if (!file) {
       return;
     }
+    setImgUrl("");
     setIsFileLoading(true);
     const imageUrl = URL.createObjectURL(file);
-    const url = await getUploadUrl({ userid: 1 });
-    const result = await fetch(url.url, {
-      method: "PUT",
-      body: file,
-      headers: {
-        "Content-Type": file.type,
-      },
-    });
-    console.log(result);
+    const imageKey = await uploadFile(file, getUploadUrl);
+    setIsFileLoading(false);
+    if (!imageKey) {
+      return;
+    }
+    setValue("image", imageKey);
     setTimeout(() => {
       setImgUrl(imageUrl);
     }, 1000);
@@ -127,12 +144,15 @@ function PhotoWrapper() {
   };
 
   const onSubmit = async (data: SendPreAppointmentFormParameters) => {
+    if (!user.data) return;
     await mutateAsync({
       message: data.message ?? "",
       doctorId: data.doctorId,
-      patientId: data.patientId,
+      patientId: Number(user.data.id),
       image: data.image,
     });
+
+    router.push("/messages");
   };
 
   if (isDoctorsLoading) return <p>Loading...</p>;
@@ -176,12 +196,14 @@ function PhotoWrapper() {
           </label>
 
           <select
-            {...register("doctorId", { valueAsNumber: true })}
-            name="doctors"
             className="focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary mb-6 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+            {...register("doctorId", { valueAsNumber: true })}
+            defaultValue={0}
             disabled={isLoading}
           >
-            <option defaultValue={0}>Select a doctor</option>
+            <option value={0} disabled>
+              Select a doctor
+            </option>
             {doctors?.map((doctor) => (
               <option key={doctor.id} value={doctor.id}>
                 {doctor.firstName} {doctor.lastName}
@@ -286,6 +308,15 @@ function PhotoWrapper() {
             )}
           </div>
         </div>
+        <Button
+          type="submit"
+          size="3"
+          mt={"4"}
+          className="mt-6"
+          disabled={isLoading}
+        >
+          Send
+        </Button>
       </form>
     </div>
   );

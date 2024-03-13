@@ -14,4 +14,7 @@ export class CreatePreAppointmentDto {
   @IsString()
   message: string;
 
+  @ApiProperty()
+  @IsString()
+  image: string;
 }
