@@ -40,7 +40,7 @@ const AppointmentsForDoctor = ({
 function Appointments() {
   const user = useUser();
   const PreloadUser =
-    user.data?.userRole === "PATIENT"
+    user.data?.role === "PATIENT"
       ? AppointmentsForPatient
       : AppointmentsForDoctor;
 
@@ -53,7 +53,7 @@ function Appointments() {
       {(appointments) => (
         <AppointmentList
           appointments={appointments}
-          role={user.data?.userRole === "PATIENT" ? "PATIENT" : "DOCTOR"}
+          role={user.data?.role === "PATIENT" ? "PATIENT" : "DOCTOR"}
         />
       )}
     </PreloadUser>

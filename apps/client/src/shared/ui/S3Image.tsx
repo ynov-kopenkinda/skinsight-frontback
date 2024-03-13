@@ -1,12 +1,16 @@
-import type { ComponentProps } from "react";
+import type { ComponentProps, ComponentRef } from "react";
 import { forwardRef } from "react";
 import Image from "next/image";
 
 import { api } from "~/utils/api/react";
 
 export const S3Image = forwardRef<
-  ComponentProps<typeof Image>,
-  { s3key: string }
+  ComponentRef<typeof Image>,
+  Omit<ComponentProps<typeof Image>, "alt" | "src"> & {
+    s3key: string;
+    src?: string;
+    alt?: string;
+  }
 >(function S3Image(props, ref) {
   const imageUrl = api.s3.get.useQuery({ key: props.s3key });
   if (imageUrl.isLoading) {
@@ -21,10 +25,10 @@ export const S3Image = forwardRef<
   return (
     <Image
       {...props}
-      width={400}
-      height={400}
+      width={props.width ?? 400}
+      height={props.height ?? 400}
       src={imageUrl.data}
-      alt="Image"
+      alt={props.alt ?? `Image ${props.s3key}`}
       ref={ref}
     />
   );
