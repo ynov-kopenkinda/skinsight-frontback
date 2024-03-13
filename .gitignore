@@ -44,6 +44,3 @@ yarn-error.log*
 
 # turbo
 .turbo
-
-# generated
-packages/nest-client/src

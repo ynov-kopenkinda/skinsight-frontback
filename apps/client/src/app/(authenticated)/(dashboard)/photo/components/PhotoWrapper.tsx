@@ -33,9 +33,10 @@ type SendPreAppointmentFormParameters = z.infer<
 
 export async function uploadFile(
   file: File,
+  userid: number,
   uploader: ReturnType<typeof api.s3.upload.useMutation>["mutateAsync"],
 ) {
-  const url = await uploader({ userid: 1 });
+  const url = await uploader({ userid });
   const result = await fetch(url.url, {
     method: "PUT",
     body: file,
@@ -75,7 +76,7 @@ function PhotoWrapper() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<SendPreAppointmentFormParameters>({
     mode: "onChange",
     resolver: zodResolver(sendPreAppointmentSchema),
@@ -100,7 +101,7 @@ function PhotoWrapper() {
       const response = await fetch(imageSrc);
       const blob = await response.blob();
       const file = new File([blob], "image.jpg", { type: blob.type });
-      const imageKey = await uploadFile(file, getUploadUrl);
+      const imageKey = await uploadFile(file, user.data!.id, getUploadUrl);
       console.log("imageKey", imageKey, file);
       if (!imageKey) {
         return;
@@ -112,7 +113,7 @@ function PhotoWrapper() {
     }
 
     setImgUrl(imageSrc);
-  }, [imgUrl, getUploadUrl, setValue]);
+  }, [imgUrl, user.data, getUploadUrl, setValue]);
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
@@ -123,7 +124,7 @@ function PhotoWrapper() {
     setImgUrl("");
     setIsFileLoading(true);
     const imageUrl = URL.createObjectURL(file);
-    const imageKey = await uploadFile(file, getUploadUrl);
+    const imageKey = await uploadFile(file, user.data!.id, getUploadUrl);
     setIsFileLoading(false);
     if (!imageKey) {
       return;

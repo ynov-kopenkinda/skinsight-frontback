@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 
 import { useUser } from "~/shared/hooks/useUser";
 import MessageBox from "~/shared/ui/MessageBox";
