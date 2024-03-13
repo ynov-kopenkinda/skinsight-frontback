@@ -38,7 +38,63 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install deps (with cache)
         run: pnpm install
-  run-linting:
+  formatting:
+    needs: setup-project
+    name: Run Code Formatting Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
+      - name: Run Prettier
+        run: pnpm turbo format
+  typechecking:
+    needs: setup-project
+    name: Run Code Formatting Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install deps (with cache)
+        run: pnpm install
+      - name: Run Prettier
+        run: pnpm turbo typecheck
+  linting:
     needs: setup-project
     name: Run Code Quality Checks
     runs-on: ubuntu-latest
@@ -66,12 +122,8 @@ jobs:
         run: pnpm install
       - name: Run ESLint
         run: pnpm turbo lint
-      - name: Run Prettier
-        run: pnpm turbo format
-      - name: Run TypeScript
-        run: pnpm typecheck
-  run-sonar:
-    needs: ["run-linting"]
+  sonar:
+    needs: ["linting"]
     name: Run SonarQube
     runs-on: ubuntu-latest
     steps:
@@ -79,8 +131,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Run sonarqube
         run: echo "Sonar impl here"
-  run-build:
-    needs: ["run-linting", "run-security"]
+  build:
+    needs: ["linting", "security", "typechecking"]
     name: Run Build
     runs-on: ubuntu-latest
     steps:
@@ -107,7 +159,7 @@ jobs:
         run: pnpm install
       - name: Run build
         run: pnpm turbo build
-  run-security:
+  security:
     needs: ["setup-project"]
     name: Run Security Checks
     runs-on: ubuntu-latest
