@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node 18
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 18.18.2
       - name: Get pnpm store directory
         id: pnpm-cache
         run: |
@@ -50,7 +50,7 @@ jobs:
       - name: Setup Node 18
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 18.18.2
       - name: Get pnpm store directory
         id: pnpm-cache
         run: |
@@ -91,7 +91,7 @@ jobs:
       - name: Setup Node 18
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 18.18.2
       - name: Get pnpm store directory
         id: pnpm-cache
         run: |
@@ -119,7 +119,7 @@ jobs:
       - name: Setup Node 18
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 18.18.2
       - name: Get pnpm store directory
         id: pnpm-cache
         run: |
