@@ -19,6 +19,13 @@ export const S3Image = forwardRef<
     return null;
   }
   return (
-    <Image {...props} width={400} height={400} src={imageUrl.data} ref={ref} />
+    <Image
+      {...props}
+      width={400}
+      height={400}
+      src={imageUrl.data}
+      alt="Image"
+      ref={ref}
+    />
   );
 });
