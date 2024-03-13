@@ -80,7 +80,7 @@ export const {
     }),
   ],
   callbacks: {
-    session: ({ session, token, user }) => {
+    session: ({ session, token }) => {
       return {
         ...session,
         user: {

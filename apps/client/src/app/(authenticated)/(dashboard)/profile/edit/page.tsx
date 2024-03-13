@@ -7,6 +7,7 @@ import { Button } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useUser } from "~/shared/hooks/useUser";
 import { api } from "~/utils/api/react";
 
 const updateUserSchema = z.object({
@@ -28,7 +29,11 @@ type EditProfileFormParameters = z.infer<typeof updateUserSchema>;
 
 function EditProfilePage() {
   const [isLoading, setIsLoading] = useState(false);
-  const user = api.user.getUserById.useQuery({ id: 1 });
+  const user = useUser();
+  const { data: userData } = api.user.getUserById.useQuery(
+    { id: user.data!.id },
+    { enabled: !!user.data?.id },
+  );
 
   const {
     register,
@@ -39,26 +44,26 @@ function EditProfilePage() {
     mode: "onSubmit",
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
-      id: 1,
+      id: user.data?.id,
       requestBody: {
-        email: user.data?.email,
-        firstName: user.data?.firstName,
-        lastName: user.data?.lastName,
-        phone: user.data?.phone,
-        heightInCm: user.data?.heightInCm,
-        weightInKg: user.data?.weightInKg,
-        password: user.data?.password,
-        ssn: user.data?.ssn,
-        proDoctorNumber: user.data?.proDoctorNumber,
+        email: userData?.email,
+        firstName: userData?.firstName,
+        lastName: userData?.lastName,
+        phone: userData?.phone,
+        heightInCm: userData?.heightInCm,
+        weightInKg: userData?.weightInKg,
+        password: userData?.password,
+        ssn: userData?.ssn,
+        proDoctorNumber: userData?.proDoctorNumber,
       },
     },
   });
 
   useEffect(() => {
-    if (user.data === undefined) return;
-    setValue("requestBody.ssn", user.data.ssn);
-    setValue("requestBody.proDoctorNumber", user.data.proDoctorNumber);
-  }, [user.data, setValue]);
+    if (!userData) return;
+    setValue("requestBody.ssn", userData.ssn);
+    setValue("requestBody.proDoctorNumber", userData.proDoctorNumber);
+  }, [user.data, setValue, userData]);
 
   const { mutateAsync } = api.user.updateUserById.useMutation({});
 
@@ -68,18 +73,17 @@ function EditProfilePage() {
     console.log("result", result);
   };
 
-  if (!user.data || user.isError || user.error)
-    return <div>Something went wrong</div>;
+  if (!userData || user.isError) return <div>Something went wrong</div>;
 
   return (
     <div>
       <div className="mb-10 flex items-center justify-center rounded-full">
         <Image
           className="rounded-full"
-          src={`https://api.dicebear.com/7.x/initials/svg?seed=${user.data?.firstName}&backgroundColor=B9D8C1`}
+          src={`https://api.dicebear.com/7.x/initials/svg?seed=${userData.firstName}&backgroundColor=B9D8C1`}
           width={150}
           height={150}
-          alt={user.data?.firstName ?? "avatar"}
+          alt={userData.firstName ?? "avatar"}
         />
       </div>
       <form
@@ -95,7 +99,7 @@ function EditProfilePage() {
           </label>
           <input
             type="text"
-            defaultValue={user.data?.firstName}
+            defaultValue={userData.firstName}
             {...register("requestBody.firstName")}
             className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
             disabled={isLoading}
@@ -112,7 +116,7 @@ function EditProfilePage() {
           </label>
           <input
             type="text"
-            defaultValue={user.data?.lastName}
+            defaultValue={userData.lastName}
             {...register("requestBody.lastName")}
             className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
             disabled={isLoading}
@@ -129,7 +133,7 @@ function EditProfilePage() {
           </label>
           <input
             type="text"
-            defaultValue={user.data?.email}
+            defaultValue={userData.email}
             {...register("requestBody.email")}
             className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
             disabled={isLoading}
@@ -146,7 +150,7 @@ function EditProfilePage() {
           </label>
           <input
             type="text"
-            defaultValue={user.data?.phone}
+            defaultValue={userData.phone}
             {...register("requestBody.phone")}
             className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
             disabled={isLoading}
@@ -163,7 +167,7 @@ function EditProfilePage() {
           </label>
           <input
             type="number"
-            defaultValue={user.data?.heightInCm}
+            defaultValue={userData.heightInCm}
             {...register("requestBody.heightInCm", { valueAsNumber: true })}
             className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
             disabled={isLoading}
@@ -180,7 +184,7 @@ function EditProfilePage() {
           </label>
           <input
             type="text"
-            defaultValue={user.data?.weightInKg}
+            defaultValue={userData.weightInKg}
             {...register("requestBody.weightInKg", { valueAsNumber: true })}
             className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
             disabled={isLoading}

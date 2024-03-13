@@ -2,7 +2,6 @@ import { Avatar, Flex, Text } from "@radix-ui/themes";
 
 import { auth } from "@skinsight/auth";
 
-import { LogoutButton } from "~/app/auth";
 import TapBar from "../TapBar";
 import TopMenu from "../TopMenu";
 import { HeaderWrapper } from "./header-wrapper";
@@ -39,9 +38,8 @@ export const AppHeader = async () => {
               size="4"
             />
             <Text className="font-bold">
-              Hello, {session?.user.name ? session?.user.name : "Thomas"}
+              Hello, {session?.user.name ?? session?.user.name}
             </Text>
-            <LogoutButton />
           </div>
           <div className="hidden sm:block">
             <TopMenu />

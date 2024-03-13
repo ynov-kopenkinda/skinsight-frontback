@@ -16,7 +16,7 @@ import {
 
 import { ChatService } from "./chat.service";
 import { CreateChatDto } from "./dto/create-chat.dto";
-import { ChatDto } from "./entity/chat.entity";
+import { ChatDto, GetChatByUserId } from "./entity/chat.entity";
 
 @ApiTags("Chat")
 @Controller("chat")
@@ -37,7 +37,7 @@ export class ChatController {
     return this.chatService.createChat(body);
   }
 
-  @ApiResponse({ type: [ChatDto] })
+  @ApiResponse({ type: [GetChatByUserId] })
   @ApiOperation({ summary: "Get chat(s) where an user appear" })
   @Get("/user/:id")
   async getChatByUserId(@Param("id", ParseIntPipe) id: number) {

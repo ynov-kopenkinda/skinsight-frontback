@@ -35,3 +35,18 @@ export class ChatDto {
   @ApiProperty({ type: [ChatEventDto] })
   ChatEvent: ChatEventDto[];
 }
+
+export class GetChatByUserId {
+  @ApiProperty()
+  id: number;
+  @ApiProperty()
+  invitorId: number;
+  @ApiProperty()
+  inviteeId: number;
+  @ApiProperty()
+  lastMessage: string;
+  @ApiProperty()
+  lastMessageDate: Date;
+  @ApiProperty()
+  firstname: string;
+}
