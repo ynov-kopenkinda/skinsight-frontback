@@ -38,8 +38,63 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install deps (with cache)
         run: pnpm install
-      - name: Build, lint and type-check
-        run: pnpm turbo build lint format typecheck
+      - name: Upload downloaded dependencies
+        uses: actions/upload-artifact@v4
+        with:
+          name: pnpm-artifact
+          path: |
+            ~/.pnpm-store
+            node_modules
+  run-codequal:
+    needs: setup-project
+    name: Run Code Quality Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Restore downloaded dependencies
+        uses: actions/download-artifact@v4
+        with:
+          name: pnpm-artifact
+          path: |
+            ~/.pnpm-store
+            node_modules
+      - name: Run ESLint
+        run: pnpm turbo lint
+      - name: Run Prettier
+        run: pnpm turbo format --check
+      - name: Run TypeScript
+        run: pnpm typecheck
+  run-build:
+    needs: ["setup-project", "run-codequal"]
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Restore downloaded dependencies
+        uses: actions/download-artifact@v4
+        with:
+          name: pnpm-artifact
+          path: |
+            ~/.pnpm-store
+            node_modules
+      - name: Run build
+        run: pnpm turbo build
+  run-security:
+    needs: ["setup-project", "run-build"]
+    name: Run Security Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Restore downloaded dependencies
+        uses: actions/download-artifact@v4
+        with:
+          name: pnpm-artifact
+          path: |
+            ~/.pnpm-store
+            node_modules
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true
@@ -48,25 +103,6 @@ jobs:
         with:
           args: --sarif-file-output=snyk.sarif
       - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk.sarif
-
-  # run-snyk:
-  #   concurrency:
-  #     group: testing
-  #     cancel-in-progress: true
-  #   runs-on: ubuntu-latest
-  #   if: success()
-  #   steps:
-  #     - name: Run Snyk to check for vulnerabilities
-  #       uses: snyk/actions/node@master
-  #       continue-on-error: true
-  #       env:
-  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-  #       with:
-  #         args: --sarif-file-output=snyk.sarif
-  #     - name: Upload result to GitHub Code Scanning
-  #       uses: github/codeql-action/upload-sarif@v2
-  #       with:
-  #         sarif_file: snyk.sarif
