@@ -58,6 +58,10 @@ jobs:
           name: pnpm-artifact
           path: |
             ~/.pnpm-store
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
       - name: Run ESLint
         run: pnpm turbo lint
       - name: Run Prettier
@@ -77,6 +81,10 @@ jobs:
           name: pnpm-artifact
           path: |
             ~/.pnpm-store
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
       - name: Run build
         run: pnpm turbo build
   run-security:
@@ -92,6 +100,10 @@ jobs:
           name: pnpm-artifact
           path: |
             ~/.pnpm-store
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true
