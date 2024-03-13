@@ -65,7 +65,7 @@ jobs:
       - name: Run TypeScript
         run: pnpm typecheck
   run-build:
-    needs: ["setup-project", "run-codequal"]
+    needs: ["setup-project", "run-codequal", "run-security"]
     name: Run Build
     runs-on: ubuntu-latest
     steps:
