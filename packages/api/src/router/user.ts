@@ -4,6 +4,22 @@ import { updateUserSchema } from "../schemas/user.schema";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const userRouter = createTRPCRouter({
+  registerUser: publicProcedure
+    .input(
+      z.object({
+        email: z.string(),
+        password: z.string(),
+        firstName: z.string(),
+        lastName: z.string(),
+        phone: z.string(),
+        heightInCm: z.number(),
+        weightInKg: z.number(),
+        ssn: z.string(),
+      }),
+    )
+    .mutation(({ input, ctx }) => {
+      return ctx.nest.users.usersControllerCreateUser({ requestBody: input });
+    }),
   getUserById: publicProcedure
     .input(
       z.object({

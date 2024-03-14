@@ -12,6 +12,4 @@ export type CreateUserDto = {
   heightInCm: number;
   weightInKg: number;
   ssn: string;
-  proDoctorNumber: string;
 };
-

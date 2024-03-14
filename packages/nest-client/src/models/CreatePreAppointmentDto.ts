@@ -9,4 +9,3 @@ export type CreatePreAppointmentDto = {
   message: string;
   image: string;
 };
-

@@ -16,4 +16,3 @@ export type User = {
   proDoctorNumber: string;
   userRole: string;
 };
-

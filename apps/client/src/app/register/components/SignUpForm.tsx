@@ -8,9 +8,17 @@ import { Button, Text } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { api } from "~/utils/api/react";
+
 const schema = z.object({
-  email: z.string().email("Email nécessaire"),
-  password: z.string().min(6, { message: "Mot de passe nécessaire" }),
+  email: z.string().email("Email needed"),
+  password: z.string().min(6, { message: "Password needed" }),
+  firstName: z.string().min(2, { message: "Firstname needed" }),
+  lastName: z.string().min(2, { message: "Lastname needed" }),
+  phone: z.string().min(10, { message: "Phone needed" }),
+  heightInCm: z.number().min(100, { message: "Height needed" }),
+  weightInKg: z.number().min(30, { message: "Weight needed" }),
+  ssn: z.string().min(9, { message: "SSN needed" }),
 });
 
 type SignUpFormParameters = z.infer<typeof schema>;
@@ -28,32 +36,12 @@ const SignUpForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = async (data: SignUpFormParameters) => {
+  const { mutateAsync } = api.user.registerUser.useMutation();
+
+  const onSubmit = (data: SignUpFormParameters) => {
     setIsLoading(true);
-
-    try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
-      });
-
-      if (response.ok) {
-        await response.json();
-        setIsLoading(false);
-        router.push("/onboarding");
-      } else {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    mutateAsync(data).catch(console.error);
+    router.push("/login");
   };
 
   return (
@@ -111,6 +99,126 @@ const SignUpForm = () => {
               {errors?.password?.message && (
                 <p className="mt-2 text-sm text-red-600">
                   {errors.password?.message?.toString()}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="firstName"
+                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Firstname
+              </label>
+              <input
+                type="text"
+                placeholder="Firstname"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                {...register("firstName")}
+                disabled={isLoading}
+              />
+              {errors?.firstName?.message && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.firstName?.message?.toString()}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="lastName"
+                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Lastname
+              </label>
+              <input
+                type="text"
+                placeholder="Lastname"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                {...register("lastName")}
+                disabled={isLoading}
+              />
+              {errors?.lastName?.message && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.lastName?.message?.toString()}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="phone"
+                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Phone
+              </label>
+              <input
+                type="text"
+                placeholder="Phone"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                {...register("phone")}
+                disabled={isLoading}
+              />
+              {errors?.phone?.message && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.phone?.message?.toString()}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="heightInCm"
+                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Height (in cm)
+              </label>
+              <input
+                type="number"
+                placeholder="Height (in cm)"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                {...register("heightInCm", { valueAsNumber: true })}
+                disabled={isLoading}
+              />
+              {errors?.heightInCm?.message && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.heightInCm?.message?.toString()}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="weightInKg"
+                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Weight (in kg)
+              </label>
+              <input
+                type="number"
+                placeholder="Weight (in kg)"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                {...register("weightInKg", { valueAsNumber: true })}
+                disabled={isLoading}
+              />
+              {errors?.weightInKg?.message && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.weightInKg?.message?.toString()}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="ssn"
+                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Security Social Number
+              </label>
+              <input
+                type="text"
+                placeholder="Security Social Number"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                {...register("ssn")}
+                disabled={isLoading}
+              />
+              {errors?.ssn?.message && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.ssn?.message?.toString()}
                 </p>
               )}
             </div>

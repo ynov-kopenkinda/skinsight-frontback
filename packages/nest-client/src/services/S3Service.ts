@@ -12,14 +12,14 @@ export class S3Service {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
-   * @returns SignedPostUrlResponse
+   * @returns SignedPostUrlResponse 
    * @throws ApiError
    */
   public s3ControllerGetSignedPostUrl({
-    userId,
-  }: {
-    userId: number,
-  }): CancelablePromise<SignedPostUrlResponse> {
+userId,
+}: {
+userId: number,
+}): CancelablePromise<SignedPostUrlResponse> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/s3/signed-post-url',
@@ -30,14 +30,14 @@ export class S3Service {
   }
 
   /**
-   * @returns string
+   * @returns string 
    * @throws ApiError
    */
   public s3ControllerGetSignedGetUrl({
-    s3Key,
-  }: {
-    s3Key: string,
-  }): CancelablePromise<string> {
+s3Key,
+}: {
+s3Key: string,
+}): CancelablePromise<string> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/s3/signed-get-url',

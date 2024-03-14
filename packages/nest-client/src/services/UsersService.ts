@@ -14,7 +14,7 @@ export class UsersService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
-   * @returns User
+   * @returns User 
    * @throws ApiError
    */
   public usersControllerGetUsers(): CancelablePromise<Array<User>> {
@@ -26,14 +26,14 @@ export class UsersService {
 
   /**
    * Create a user
-   * @returns User
+   * @returns User 
    * @throws ApiError
    */
   public usersControllerCreateUser({
-    requestBody,
-  }: {
-    requestBody: CreateUserDto,
-  }): CancelablePromise<User> {
+requestBody,
+}: {
+requestBody: CreateUserDto,
+}): CancelablePromise<User> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/users',
@@ -43,7 +43,7 @@ export class UsersService {
   }
 
   /**
-   * @returns User
+   * @returns User 
    * @throws ApiError
    */
   public usersControllerGetDoctors(): CancelablePromise<Array<User>> {
@@ -55,14 +55,14 @@ export class UsersService {
 
   /**
    * Get a user depending on passed id
-   * @returns User
+   * @returns User 
    * @throws ApiError
    */
   public usersControllerGetUserById({
-    id,
-  }: {
-    id: number,
-  }): CancelablePromise<User> {
+id,
+}: {
+id: number,
+}): CancelablePromise<User> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/users/{id}',
@@ -74,16 +74,16 @@ export class UsersService {
 
   /**
    * Update a user depending on passed id
-   * @returns User
+   * @returns User 
    * @throws ApiError
    */
   public usersControllerUpdateUser({
-    id,
-    requestBody,
-  }: {
-    id: number,
-    requestBody: PatchUserDto,
-  }): CancelablePromise<User> {
+id,
+requestBody,
+}: {
+id: number,
+requestBody: PatchUserDto,
+}): CancelablePromise<User> {
     return this.httpRequest.request({
       method: 'PATCH',
       url: '/users/{id}',
@@ -97,14 +97,14 @@ export class UsersService {
 
   /**
    * Delete a user depending on passed id
-   * @returns User
+   * @returns User 
    * @throws ApiError
    */
   public usersControllerDeleteUser({
-    id,
-  }: {
-    id: number,
-  }): CancelablePromise<User> {
+id,
+}: {
+id: number,
+}): CancelablePromise<User> {
     return this.httpRequest.request({
       method: 'DELETE',
       url: '/users/{id}',
@@ -116,14 +116,14 @@ export class UsersService {
 
   /**
    * Create a doctor
-   * @returns User
+   * @returns User 
    * @throws ApiError
    */
   public usersControllerCreateDoctor({
-    requestBody,
-  }: {
-    requestBody: CreateUserDto,
-  }): CancelablePromise<User> {
+requestBody,
+}: {
+requestBody: CreateUserDto,
+}): CancelablePromise<User> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/users/doctor',

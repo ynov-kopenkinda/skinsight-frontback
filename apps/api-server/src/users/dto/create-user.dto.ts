@@ -3,7 +3,6 @@ import {
   IsAlphanumeric,
   IsEmail,
   IsNumber,
-  IsOptional,
   IsString,
   MaxLength,
   MinLength,
@@ -46,9 +45,4 @@ export class CreateUserDto {
   @ApiProperty()
   @IsString()
   ssn: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsOptional()
-  proDoctorNumber: string;
 }
