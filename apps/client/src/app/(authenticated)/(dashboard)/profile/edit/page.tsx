@@ -9,6 +9,8 @@ import { z } from "zod";
 
 import { useUser } from "~/shared/hooks/useUser";
 import { api } from "~/utils/api/react";
+import TapBar from "../../components/TapBar";
+import ChatHeader from "./components/ChatHeader";
 
 const updateUserSchema = z.object({
   id: z.number(),
@@ -77,6 +79,7 @@ function EditProfilePage() {
 
   return (
     <div>
+      <ChatHeader />
       <div className="mb-10 flex items-center justify-center rounded-full">
         <Image
           className="rounded-full"
@@ -203,6 +206,9 @@ function EditProfilePage() {
           Update
         </Button>
       </form>
+      <div className="border-gray glassmorphism container fixed bottom-4 left-0 right-0 z-50 mx-auto block w-fit rounded-xl border-2 bg-white pl-4 pr-4">
+        <TapBar />
+      </div>
     </div>
   );
 }

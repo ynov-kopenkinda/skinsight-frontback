@@ -7,7 +7,8 @@ export const HeaderWrapper = ({ children }: PropsWithChildren) => {
   const pathname = usePathname();
   if (
     pathname.startsWith("/messages") ||
-    pathname.startsWith("/appointments")
+    pathname.startsWith("/appointments") ||
+    pathname.startsWith("/profile/edit")
   ) {
     return null;
   }

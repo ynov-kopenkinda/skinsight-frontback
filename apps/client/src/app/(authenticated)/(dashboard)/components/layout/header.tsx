@@ -1,45 +1,39 @@
+"use client";
+
 import { Avatar, Flex, Text } from "@radix-ui/themes";
 
-import { auth } from "@skinsight/auth";
-
+import { useUser } from "~/shared/hooks/useUser";
+import { api } from "~/utils/api/react";
 import TapBar from "../TapBar";
 import TopMenu from "../TopMenu";
 import { HeaderWrapper } from "./header-wrapper";
 
-export const AppHeader = async () => {
-  const session = await auth();
-
-  // TMP: session?. => session. | session.user.name never null
-
-  // if (!session) {
-  //   return;
-  // }
+export const AppHeader = () => {
+  const user = useUser();
+  const { data: userData } = api.user.getUserById.useQuery(
+    { id: user.data!.id },
+    { enabled: !!user.data?.id },
+  );
 
   return (
     <HeaderWrapper>
       <div>
         <Flex justify="between" align="center" gap="3">
-          <div>
+          <div className="flex items-center gap-x-2">
             <Avatar
               className="bg-red-50"
               radius="full"
-              src={
-                session?.user.image
-                  ? session?.user.image
-                  : "https://api.dicebear.com/7.x/adventurer/svg?seed=Molly"
-              }
+              src={"https://api.dicebear.com/7.x/adventurer/svg?seed=Molly"}
               fallback={
                 <>
-                  {session?.user.name
-                    ? session?.user.name?.slice(0, 2)
+                  {userData?.firstName
+                    ? userData.firstName.slice(0, 2)
                     : "Logo"}
                 </>
               }
               size="4"
             />
-            <Text className="font-bold">
-              Hello, {session?.user.name ?? session?.user.name}
-            </Text>
+            <Text className="ml-2 font-bold">Hello, {userData?.firstName}</Text>
           </div>
           <div className="hidden sm:block">
             <TopMenu />
