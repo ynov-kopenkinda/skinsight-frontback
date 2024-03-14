@@ -9,7 +9,7 @@ export class ChatEventService {
 
   async create(dto: CreateChatEventDto) {
     return this.prisma.chatEvent.create({
-      data: { ...dto, chatEventType: "MESSAGE_SENT" },
+      data: { ...dto, chatEventType: dto.chatEventType ?? "MESSAGE_SENT" },
     });
   }
 

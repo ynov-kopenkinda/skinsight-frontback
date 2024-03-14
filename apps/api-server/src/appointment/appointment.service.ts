@@ -13,7 +13,7 @@ export class AppointmentService {
   constructor(private readonly prisma: PrismaService) {}
   async create(createAppointmentDto: CreateAppointmentDto) {
     return this.prisma.appointment.create({
-      data: { ...createAppointmentDto },
+      data: { ...createAppointmentDto, isAcceptedByPatient: true },
     });
   }
 
@@ -139,5 +139,13 @@ export class AppointmentService {
 
   remove(id: number) {
     return `This action removes a #${id} appointment`;
+  }
+
+  async checkIfAppointmentExist(patientId: number, doctorId: number) {
+    const appointment = await this.prisma.appointment.findFirst({
+      where: { patientId, doctorId },
+    });
+
+    return appointment;
   }
 }

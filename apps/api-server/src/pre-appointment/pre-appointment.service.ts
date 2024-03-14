@@ -80,6 +80,7 @@ export class PreAppointmentService {
         preappointment,
         chat.id,
         createPreAppointmentDto.patientId,
+        createPreAppointmentDto.doctorId,
       ),
     );
 

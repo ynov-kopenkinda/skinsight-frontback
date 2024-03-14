@@ -7,5 +7,5 @@ export type CreateChatEventDto = {
   chatId: number;
   userId: number;
   data: string;
-  chatEventType: number;
+  chatEventType: string;
 };

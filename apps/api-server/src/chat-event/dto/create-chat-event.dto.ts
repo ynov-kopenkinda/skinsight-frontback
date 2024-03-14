@@ -1,15 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsNumber, IsString } from "class-validator";
 
-export enum ChatEventType {
-  CHAT_CREATED,
-  MESSAGE_SENT,
-  IMAGE_SENT,
-  FILE_SENT,
-  APPOINTMENT_INVITE_SENT,
-  APPOINTMENT_INVITE_ACCEPTED,
-  APPOINTMENT_INVITE_DECLINED,
-}
+import { ChatEventType } from "@skinsight/database";
+
 export class CreateChatEventDto {
   @ApiProperty()
   @IsNumber()

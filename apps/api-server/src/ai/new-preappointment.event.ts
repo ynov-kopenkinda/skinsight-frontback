@@ -5,5 +5,6 @@ export class PreAppointmentCreatedEvent {
     readonly preAppointment: PreAppointment,
     readonly chatId: Chat["id"],
     readonly userId: User["id"],
+    readonly doctorId: User["id"],
   ) {}
 }

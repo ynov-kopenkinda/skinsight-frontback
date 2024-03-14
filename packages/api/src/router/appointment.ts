@@ -47,4 +47,35 @@ export const appointmentRouter = createTRPCRouter({
         input,
       );
     }),
+
+  createAppointment: publicProcedure
+    .input(
+      z.object({
+        doctorId: z.number(),
+        patientId: z.number(),
+        date: z.string(),
+        location: z.string(),
+      }),
+    )
+    .mutation(({ input, ctx }) => {
+      return ctx.nest.appointments.appointmentControllerCreate({
+        requestBody: input,
+      });
+    }),
+
+  checkIfAppointmentExists: publicProcedure
+    .input(
+      z.object({
+        doctorId: z.number(),
+        patientId: z.number(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const data =
+        await ctx.nest.appointments.appointmentControllerCheckIfAppointmentExists(
+          input,
+        );
+      console.log(data);
+      return data;
+    }),
 });

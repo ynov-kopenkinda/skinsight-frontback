@@ -74,4 +74,13 @@ export class AppointmentController {
   ) {
     return this.appointmentService.declineAppointment(userId, appointmentId);
   }
+
+  @Get("/checkIfAppointmentExists/:doctorId/:patientId")
+  @ApiResponse({ status: 200, type: Appointment })
+  checkIfAppointmentExists(
+    @Param("patientId", ParseIntPipe) patientId: number,
+    @Param("doctorId", ParseIntPipe) doctorId: number,
+  ) {
+    return this.appointmentService.checkIfAppointmentExist(patientId, doctorId);
+  }
 }

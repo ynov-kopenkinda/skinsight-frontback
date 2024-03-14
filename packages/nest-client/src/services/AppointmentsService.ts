@@ -137,4 +137,25 @@ appointmentId: number,
     });
   }
 
+  /**
+   * @returns Appointment 
+   * @throws ApiError
+   */
+  public appointmentControllerCheckIfAppointmentExists({
+doctorId,
+patientId,
+}: {
+doctorId: number,
+patientId: number,
+}): CancelablePromise<Appointment> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/appointment/checkIfAppointmentExists/{doctorId}/{patientId}',
+      path: {
+        'doctorId': doctorId,
+        'patientId': patientId,
+      },
+    });
+  }
+
 }

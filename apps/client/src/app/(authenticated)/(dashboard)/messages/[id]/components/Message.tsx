@@ -1,5 +1,6 @@
 import { S3Image } from "~/shared/ui/S3Image";
 import type { ChatEvent } from "../page";
+import MessageAppointment from "./MessageAppointment";
 
 interface MessageProps {
   message: ChatEvent;
@@ -28,6 +29,26 @@ const Message = ({
 
   const isOther = message.userId !== userID;
 
+  const getMessageToShow = () => {
+    switch (message.chatEventType) {
+      case "MESSAGE_SENT": {
+        return message.data;
+      }
+      case "IMAGE_SENT": {
+        return <S3Image s3key={message.data} />;
+      }
+      case "APPOINTMENT_INVITE_SENT": {
+        const data = JSON.parse(message.data) as {
+          text: string;
+          doctorID: number;
+          location: string;
+        };
+
+        return <MessageAppointment data={data} patientID={userID} />;
+      }
+    }
+  };
+
   return (
     <div className={`flex flex-col gap-y-1 ${showDate ? "mb-4" : "mb-1"}`}>
       {firstOfSeries && (
@@ -39,17 +60,13 @@ const Message = ({
           {isOther ? otherUserFirstName : "You"}
         </p>
       )}
-      <p
+      <div
         className={`${
           isOther ? "bg-white" : "bg-primary ml-auto text-white"
         } border-gray relative w-fit rounded-lg border p-3 last-of-type:mb-0`}
       >
-        {message.chatEventType === "IMAGE_SENT" ? (
-          <S3Image s3key={message.data} />
-        ) : (
-          message.data
-        )}
-      </p>
+        {getMessageToShow()}
+      </div>
       {showDate && (
         <p
           className={`text-gray-strong text-sm ${
