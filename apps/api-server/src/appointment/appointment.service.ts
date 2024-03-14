@@ -13,7 +13,7 @@ export class AppointmentService {
   constructor(private readonly prisma: PrismaService) {}
   async create(createAppointmentDto: CreateAppointmentDto) {
     return this.prisma.appointment.create({
-      data: { ...createAppointmentDto, isAcceptedByPatient: true },
+      data: { ...createAppointmentDto },
     });
   }
 

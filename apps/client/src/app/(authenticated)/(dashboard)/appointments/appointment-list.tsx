@@ -19,9 +19,7 @@ export const AppointmentList = ({
 }) => {
   const pendingAppointments = appointments.filter(
     (appointment) =>
-      (role === "DOCTOR"
-        ? !appointment.isAcceptedByDoctor
-        : !appointment.isAcceptedByPatient) &&
+      !appointment.isAcceptedByDoctor &&
       new Date(appointment.date) > new Date(),
   );
   const acceptedAppointments = appointments.filter(
