@@ -229,6 +229,8 @@ jobs:
         run: echo "IMG_NAME=ghcr.io/kopenkinda/api:${{ github.sha }}" >> "$GITHUB_ENV"
       - name: Checkout repo
         uses: actions/checkout@v4
+      - name: add env
+        run: echo "${{ secrets.PROD_ENV }}" > .env
       - name: Build Docker Image
         run: docker compose build api
       - name: Set up Docker Buildx (multi-platform builds)
