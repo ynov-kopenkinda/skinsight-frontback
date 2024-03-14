@@ -3,9 +3,9 @@
 FROM --platform=linux/amd64 node:18-alpine AS builder
 RUN apk update
 WORKDIR /app
-RUN yarn global add turbo
+RUN yarn global add pnpm
 COPY . .
-RUN turbo prune --scope=@skinsight/api-server --docker
+RUN pnpx turbo prune --scope=@skinsight/api-server --docker
 RUN ls -lah
 
 ##### INSTALLER
@@ -15,15 +15,12 @@ RUN apk update
 WORKDIR /app
 
 COPY .gitignore .gitignore
-COPY  --from=builder /app/tsconfig.json ./tsconfig.json
-COPY --from=builder /app/out/json .
+COPY --from=builder /app/out/pnpm-lock.yaml\* ./
+COPY --from=builder /app/out/full .
 
 RUN yarn global add pnpm && pnpm fetch && pnpm install -r --offline --frozen-lockfile
 
-COPY --from=builder /app/out/full .
-
 RUN pnpm turbo build --filter=api-server
-
 
 ##### RUNTIME
 
@@ -41,7 +38,6 @@ ENV PORT 3000
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
-COPY --from=installer /app/apps/api-server/next.config.mjs ./
 COPY --from=installer /app/apps/api-server/package.json ./
 
 COPY --from=installer --chown=api-server:nodejs /app/apps/api-server/dist ./

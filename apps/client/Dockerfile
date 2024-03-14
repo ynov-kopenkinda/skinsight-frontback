@@ -15,17 +15,12 @@ FROM --platform=linux/amd64 node:18-alpine AS installer
 RUN apk update
 WORKDIR /app
 
-ENV CI true
-ENV SKIP_ENV_VALIDATION true
-
 COPY .gitignore .gitignore
-COPY  --from=builder /app/tsconfig.json ./tsconfig.json
-COPY --from=builder /app/out/json .
+COPY --from=builder /app/apps/api-server/swagger.json ./apps/api-server/swagger.json
+COPY --from=builder /app/out/full .
 COPY --from=builder /app/out/pnpm-lock.yaml\* ./
 
-RUN yarn global add pnpm && pnpm fetch && pnpm install -r --offline --frozen-lockfile
-
-COPY --from=builder /app/out/full .
+RUN yarn global add pnpm && pnpm fetch && pnpm install --frozen-lockfile
 
 RUN pnpm turbo build --filter=client
 
