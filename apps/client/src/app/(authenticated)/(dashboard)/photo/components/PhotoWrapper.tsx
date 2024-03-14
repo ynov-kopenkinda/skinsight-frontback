@@ -107,7 +107,6 @@ function PhotoWrapper() {
         return;
       }
       setValue("image", imageKey);
-      // Envoie de l'image psartek
     } catch (error) {
       console.error(error);
     }

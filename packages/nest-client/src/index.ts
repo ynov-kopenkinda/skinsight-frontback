@@ -13,7 +13,6 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 export type { Appointment } from './models/Appointment';
 export type { ChatDto } from './models/ChatDto';
 export type { ChatEventDto } from './models/ChatEventDto';
-export type { CreateAiDto } from './models/CreateAiDto';
 export type { CreateAppointmentDto } from './models/CreateAppointmentDto';
 export type { CreateChatDto } from './models/CreateChatDto';
 export type { CreateChatEventDto } from './models/CreateChatEventDto';
@@ -26,7 +25,6 @@ export type { PreAppointment } from './models/PreAppointment';
 export type { SignedPostUrlResponse } from './models/SignedPostUrlResponse';
 export type { User } from './models/User';
 
-export { AiService } from './services/AiService';
 export { AppointmentsService } from './services/AppointmentsService';
 export { AuthService } from './services/AuthService';
 export { ChatService } from './services/ChatService';
