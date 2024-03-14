@@ -142,18 +142,18 @@ appointmentId: number,
    * @throws ApiError
    */
   public appointmentControllerCheckIfAppointmentExists({
-doctorId,
 patientId,
+doctorId,
 }: {
-doctorId: number,
 patientId: number,
+doctorId: number,
 }): CancelablePromise<Appointment> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/appointment/checkIfAppointmentExists/{doctorId}/{patientId}',
       path: {
-        'doctorId': doctorId,
         'patientId': patientId,
+        'doctorId': doctorId,
       },
     });
   }
