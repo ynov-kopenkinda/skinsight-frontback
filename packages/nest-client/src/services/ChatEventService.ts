@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ChatEventDto } from '../models/ChatEventDto';
 import type { CreateChatEventDto } from '../models/CreateChatEventDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -44,6 +45,24 @@ requestBody: CreateChatEventDto,
       url: '/chat-event/{chatId}',
       body: requestBody,
       mediaType: 'application/json',
+    });
+  }
+
+  /**
+   * @returns ChatEventDto 
+   * @throws ApiError
+   */
+  public chatEventControllerGetImagesFromUserId({
+userId,
+}: {
+userId: number,
+}): CancelablePromise<Array<ChatEventDto>> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/chat-event/drive/{userId}',
+      path: {
+        'userId': userId,
+      },
     });
   }
 

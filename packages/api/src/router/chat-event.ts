@@ -21,4 +21,14 @@ export const chatEventRouter = createTRPCRouter({
         },
       });
     }),
+
+  getImageSendByUserId: publicProcedure
+    .input(
+      z.object({
+        userId: z.number(),
+      }),
+    )
+    .query(({ input, ctx }) => {
+      return ctx.nest.chatEvent.chatEventControllerGetImagesFromUserId(input);
+    }),
 });

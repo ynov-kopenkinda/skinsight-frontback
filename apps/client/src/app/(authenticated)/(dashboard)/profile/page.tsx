@@ -3,10 +3,10 @@
 import React from "react";
 import Image from "next/image";
 import {
+  IconFile,
   IconLock,
   IconLogout,
   IconQuestionMark,
-  IconShield,
   IconTrash,
   IconUser,
 } from "@tabler/icons-react";
@@ -62,10 +62,10 @@ const Profile = () => {
             link="/profile/change-password"
           />
           <BoxOptions
-            icon={<IconShield width={24} />}
-            title="Terms of use"
-            subtitle="All informations about your datas."
-            link="/profile/terms-of-use"
+            icon={<IconFile width={24} />}
+            title="Drive"
+            subtitle="Check your files and images"
+            link="/drive"
           />
         </div>
 

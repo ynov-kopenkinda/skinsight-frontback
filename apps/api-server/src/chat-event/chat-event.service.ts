@@ -20,4 +20,10 @@ export class ChatEventService {
   async findOne(id: number) {
     return this.prisma.chatEvent.findUnique({ where: { id } });
   }
+
+  async findImageFromUserId(userId: number) {
+    return this.prisma.chatEvent.findMany({
+      where: { userId: userId, chatEventType: "IMAGE_SENT" },
+    });
+  }
 }

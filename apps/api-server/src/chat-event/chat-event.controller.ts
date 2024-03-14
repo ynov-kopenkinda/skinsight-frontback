@@ -6,7 +6,8 @@ import {
   ParseIntPipe,
   Post,
 } from "@nestjs/common";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ChatEventDto } from "src/chat/entity/chat.entity";
 
 import { ChatEventService } from "./chat-event.service";
 import { CreateChatEventDto } from "./dto/create-chat-event.dto";
@@ -19,6 +20,12 @@ export class ChatEventController {
   @Get(":chatId")
   async getChatEventsFromChatId(@Param("chatId", ParseIntPipe) chatId: number) {
     return this.chatEventService.findManyFromIdChat(chatId);
+  }
+
+  @ApiOkResponse({ type: [ChatEventDto] })
+  @Get("/drive/:userId")
+  async getImagesFromUserId(@Param("userId", ParseIntPipe) userId: number) {
+    return this.chatEventService.findImageFromUserId(userId);
   }
 
   @ApiOperation({ summary: "Get a chat-event depending on passed chat id" })
