@@ -123,7 +123,8 @@ jobs:
       - name: Run ESLint
         run: pnpm turbo lint
   sonar:
-    name: Run SonarQube
+    name: Run SonarCloud
+    needs: ["linting"]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
