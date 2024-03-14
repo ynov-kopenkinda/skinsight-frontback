@@ -14,7 +14,7 @@ export const chatEventRouter = createTRPCRouter({
     .mutation(({ input, ctx }) => {
       return ctx.nest.chatEvent.chatEventControllerCreateChatEvent({
         requestBody: {
-          chatEventType: 1,
+          chatEventType: "MESSAGE_SENT",
           chatId: input.chatId,
           data: input.data,
           userId: input.userId,
