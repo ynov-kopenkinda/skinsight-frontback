@@ -14,12 +14,13 @@ const AppointmentsForPatient = ({
   userId: number;
   children: (
     app: RouterOutputs["appointment"]["getAppointmentForPatient"],
+    refetch: () => Promise<unknown>,
   ) => React.ReactNode;
 }) => {
   const appointments = api.appointment.getAppointmentForPatient.useQuery({
     id: userId,
   });
-  return <>{children(appointments.data ?? [])}</>;
+  return <>{children(appointments.data ?? [], appointments.refetch)}</>;
 };
 
 const AppointmentsForDoctor = ({
@@ -29,12 +30,13 @@ const AppointmentsForDoctor = ({
   userId: number;
   children: (
     app: RouterOutputs["appointment"]["getAppointmentForDoctor"],
+    refetch: () => Promise<unknown>,
   ) => React.ReactNode;
 }) => {
   const appointments = api.appointment.getAppointmentForDoctor.useQuery({
     id: userId,
   });
-  return <>{children(appointments.data ?? [])}</>;
+  return <>{children(appointments.data ?? [], appointments.refetch)}</>;
 };
 
 function Appointments() {
@@ -55,10 +57,12 @@ function Appointments() {
 
   return (
     <PreloadUser userId={user.data.id}>
-      {(appointments) => (
+      {(appointments, refetch) => (
         <AppointmentList
           appointments={appointments}
           role={data.data?.userRole === "PATIENT" ? "PATIENT" : "DOCTOR"}
+          userId={user.data!.id}
+          refetch={refetch}
         />
       )}
     </PreloadUser>

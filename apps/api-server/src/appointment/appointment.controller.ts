@@ -57,25 +57,21 @@ export class AppointmentController {
     return this.appointmentService.findAllForOneUser(request);
   }
 
-  @Patch("/accept/:appointmentId")
-  @UseGuards(AccessTokenGuard)
-  @ApiBearerAuth("access-token")
+  @Patch("/:userId/accept/:appointmentId")
   @ApiResponse({ status: 200, type: String })
   acceptAppointment(
-    @Request() request,
+    @Param("userId", ParseIntPipe) userId: number,
     @Param("appointmentId", ParseIntPipe) appointmentId: number,
   ) {
-    return this.appointmentService.acceptAppointment(request, appointmentId);
+    return this.appointmentService.acceptAppointment(userId, appointmentId);
   }
 
-  @Patch("/decline/:appointmentId")
-  @UseGuards(AccessTokenGuard)
-  @ApiBearerAuth("access-token")
+  @Patch("/:userId/decline/:appointmentId")
   @ApiResponse({ status: 200, type: String })
   declineAppointment(
-    @Request() request,
+    @Param("userId", ParseIntPipe) userId: number,
     @Param("appointmentId", ParseIntPipe) appointmentId: number,
   ) {
-    return this.appointmentService.declineAppointment(request, appointmentId);
+    return this.appointmentService.declineAppointment(userId, appointmentId);
   }
 }

@@ -1,6 +1,7 @@
 import { Box, Button, Dialog, Heading, Tabs } from "@radix-ui/themes";
 import { IconX } from "@tabler/icons-react";
 
+import { api } from "~/utils/api/react";
 import type { RouterOutputs } from "~/utils/api/shared";
 import TapBar from "../components/TapBar";
 import { getFormatter } from "../messages/[id]/components/Message";
@@ -8,9 +9,13 @@ import { getFormatter } from "../messages/[id]/components/Message";
 export const AppointmentList = ({
   appointments,
   role,
+  userId,
+  refetch,
 }: {
   appointments: RouterOutputs["appointment"]["getAppointmentForPatient"];
   role: "PATIENT" | "DOCTOR";
+  userId: number;
+  refetch: () => Promise<unknown>;
 }) => {
   const pendingAppointments = appointments.filter(
     (appointment) =>
@@ -28,6 +33,12 @@ export const AppointmentList = ({
   const previousAppointments = appointments.filter(
     (appointment) => new Date(appointment.date) < new Date(),
   );
+
+  const { mutate: acceptAppointment } =
+    api.appointment.acceptAppointment.useMutation();
+
+  const { mutate: declineAppointment } =
+    api.appointment.declineAppointment.useMutation();
 
   return (
     <div>
@@ -114,18 +125,26 @@ export const AppointmentList = ({
                             <Button
                               variant="solid"
                               color="red"
-                              onClick={() =>
-                                console.log(appointment.location + "declined")
-                              }
+                              onClick={() => {
+                                declineAppointment({
+                                  userId: userId,
+                                  appointmentId: appointment.id,
+                                });
+                                refetch().catch(console.error);
+                              }}
                             >
                               Decline
                             </Button>
                             <Button
                               variant="solid"
                               color="green"
-                              onClick={() =>
-                                console.log(appointment.location + "accepted")
-                              }
+                              onClick={() => {
+                                acceptAppointment({
+                                  userId: userId,
+                                  appointmentId: appointment.id,
+                                });
+                                refetch().catch(console.error);
+                              }}
                             >
                               Accept
                             </Button>

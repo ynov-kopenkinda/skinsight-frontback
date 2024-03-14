@@ -1,21 +1,11 @@
 import React from "react";
-import {
-  IconFile,
-  IconMessageCircle,
-  IconReload,
-  IconSearch,
-} from "@tabler/icons-react";
+import { IconFile, IconMessageCircle, IconReload } from "@tabler/icons-react";
 
 import IconButton from "~/shared/ui/IconButton";
 
 const Nav = () => {
   return (
-    <div className="mt-12 flex justify-center gap-x-6 sm:gap-x-12">
-      <IconButton
-        icon={<IconSearch size={20} />}
-        link="/appointments"
-        label="Find doctor"
-      />
+    <div className="mt-12 hidden justify-center gap-x-6 sm:gap-x-12">
       <IconButton
         icon={<IconReload size={20} />}
         link="/history"

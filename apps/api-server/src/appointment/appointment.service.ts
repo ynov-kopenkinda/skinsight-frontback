@@ -72,29 +72,35 @@ export class AppointmentService {
     return appointmentsWithDoctor;
   }
 
-  async acceptAppointment(req, appointmentId: number) {
-    const id = appointmentId;
+  async acceptAppointment(userId: number, appointmentId: number) {
     const alreadyExistingData = await this.findOne(appointmentId);
-    const user = req.user;
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
 
-    if (user.role === "DOCTOR" && user.id === alreadyExistingData.doctorId) {
+    if (
+      user.userRole === "DOCTOR" &&
+      user.id === alreadyExistingData.doctorId
+    ) {
       console.log("passing 1st condition");
       await this.prisma.appointment.update({
         data: {
           isAcceptedByDoctor: { set: true },
         },
-        where: { id },
+        where: { id: appointmentId },
       });
       return "Doctor acceptance updated";
     } else if (
-      user.role === "PATIENT" &&
+      user.userRole === "PATIENT" &&
       user.id === alreadyExistingData.patientId
     ) {
       await this.prisma.appointment.update({
         data: {
           isAcceptedByPatient: { set: true },
         },
-        where: { id },
+        where: { id: appointmentId },
       });
       return "Patient acceptance updated";
     } else {

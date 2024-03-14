@@ -152,7 +152,7 @@ function PhotoWrapper() {
       image: data.image,
     });
 
-    router.push("/messages/1");
+    router.push("/messages");
   };
 
   if (isDoctorsLoading) return <p>Loading...</p>;

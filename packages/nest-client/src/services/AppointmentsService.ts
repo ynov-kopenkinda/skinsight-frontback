@@ -100,14 +100,17 @@ id: number,
    * @throws ApiError
    */
   public appointmentControllerAcceptAppointment({
+userId,
 appointmentId,
 }: {
+userId: number,
 appointmentId: number,
 }): CancelablePromise<string> {
     return this.httpRequest.request({
       method: 'PATCH',
-      url: '/appointment/accept/{appointmentId}',
+      url: '/appointment/{userId}/accept/{appointmentId}',
       path: {
+        'userId': userId,
         'appointmentId': appointmentId,
       },
     });
@@ -118,14 +121,17 @@ appointmentId: number,
    * @throws ApiError
    */
   public appointmentControllerDeclineAppointment({
+userId,
 appointmentId,
 }: {
+userId: number,
 appointmentId: number,
 }): CancelablePromise<string> {
     return this.httpRequest.request({
       method: 'PATCH',
-      url: '/appointment/decline/{appointmentId}',
+      url: '/appointment/{userId}/decline/{appointmentId}',
       path: {
+        'userId': userId,
         'appointmentId': appointmentId,
       },
     });

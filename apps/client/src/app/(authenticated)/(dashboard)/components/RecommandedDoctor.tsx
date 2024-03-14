@@ -33,7 +33,7 @@ const RecommandedDoctor = () => {
   ];
 
   return (
-    <div className="mt-8">
+    <div className="mt-16">
       <h2 className="mb-6 text-xl font-bold">Recommanded Doctor</h2>
       {doctors.length > 0 && (
         <div className="grid md:grid-cols-2 md:space-x-6 xl:grid-cols-3">
