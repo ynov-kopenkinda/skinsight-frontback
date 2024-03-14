@@ -1,26 +1,30 @@
 import { Injectable } from "@nestjs/common";
+import { EventEmitter2 } from "@nestjs/event-emitter";
+import { PreAppointmentCreatedEvent } from "src/ai/new-preappointment.event";
+import { AI_USER_ID } from "src/constants";
 import { PrismaService } from "src/prisma/prisma.service";
 
 import { CreatePreAppointmentDto } from "./dto/create-pre-appointment.dto";
 
 @Injectable()
 export class PreAppointmentService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private eventEmitter: EventEmitter2,
+  ) {}
   async create(createPreAppointmentDto: CreatePreAppointmentDto) {
-    console.log(createPreAppointmentDto);
-
     let chat = await this.prisma.chat.findFirst({
       where: {
         OR: [
           {
             AND: [
               { invitorId: createPreAppointmentDto.patientId },
-              { inviteeId: 1 },
+              { inviteeId: AI_USER_ID },
             ],
           },
           {
             AND: [
-              { invitorId: 1 },
+              { invitorId: AI_USER_ID },
               { inviteeId: createPreAppointmentDto.patientId },
             ],
           },
@@ -32,7 +36,7 @@ export class PreAppointmentService {
       chat = await this.prisma.chat.create({
         data: {
           inviteeId: createPreAppointmentDto.patientId,
-          invitorId: 1,
+          invitorId: AI_USER_ID,
         },
       });
     }
@@ -60,15 +64,26 @@ export class PreAppointmentService {
         chatId: chat.id,
         chatEventType: "MESSAGE_SENT",
         userId: 1,
-        data: "You're picture is gonna be analyzed, please be patient.",
+        data: "Your picture is gonna be analyzed, please be patient.",
       },
     });
 
-    return this.prisma.preAppointment.create({
+    const preappointment = await this.prisma.preAppointment.create({
       data: {
         ...createPreAppointmentDto,
       },
     });
+
+    this.eventEmitter.emit(
+      "preappointment.new",
+      new PreAppointmentCreatedEvent(
+        preappointment,
+        chat.id,
+        createPreAppointmentDto.patientId,
+      ),
+    );
+
+    return preappointment;
   }
 
   async findByPatientId(id: number) {

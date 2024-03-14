@@ -6,7 +6,6 @@ import type { BaseHttpRequest } from './core/BaseHttpRequest';
 import type { OpenAPIConfig } from './core/OpenAPI';
 import { FetchHttpRequest } from './core/FetchHttpRequest';
 
-import { AiService } from './services/AiService';
 import { AppointmentsService } from './services/AppointmentsService';
 import { AuthService } from './services/AuthService';
 import { ChatService } from './services/ChatService';
@@ -19,7 +18,6 @@ type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 
 export class NestApi {
 
-  public readonly ai: AiService;
   public readonly appointments: AppointmentsService;
   public readonly auth: AuthService;
   public readonly chat: ChatService;
@@ -43,7 +41,6 @@ export class NestApi {
       ENCODE_PATH: config?.ENCODE_PATH,
     });
 
-    this.ai = new AiService(this.request);
     this.appointments = new AppointmentsService(this.request);
     this.auth = new AuthService(this.request);
     this.chat = new ChatService(this.request);

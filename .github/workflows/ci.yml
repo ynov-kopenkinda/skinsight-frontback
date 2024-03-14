@@ -182,6 +182,9 @@ jobs:
     needs: ["setup-project"]
     name: Run Security Checks
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4

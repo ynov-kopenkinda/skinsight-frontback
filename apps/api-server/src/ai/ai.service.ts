@@ -23,23 +23,21 @@ export class AiService {
   }
 
   async askIfAppointmentNeeded(image_url: string) {
-    let warningCounter = 0;
-    (await this.askAI(image_url, "Is this a mole?")) === "yes" &&
-      warningCounter++;
-    (await this.askAI(
-      image_url,
-      "Does the mole have irregular or poorly defined borders?",
-    )) === "yes" && warningCounter++;
-    (await this.askAI(image_url, "Is the mole asymmetrical?")) === "yes" &&
-      warningCounter++;
-    (await this.askAI(
-      image_url,
-      "Does the mole have an uneven or irregular color?",
-    )) === "yes" && warningCounter++;
-    (await this.askAI(
-      image_url,
-      "Is the mole accompanied by symptoms such as itching, tenderness, or bleeding?",
-    )) && warningCounter++;
+    const checks = [
+      "Is this a skin mole?",
+      "Does the skin mole have irregular or poorly defined borders?",
+      "Is the skin mole asymmetrical?",
+      "Does the skin mole have an uneven or irregular color?",
+      "Is the skin mole accompanied by symptoms such as itching, tenderness, or bleeding?",
+    ];
+
+    const responses = await Promise.all(
+      checks.map((question) => this.askAI(image_url, question)),
+    );
+
+    const warningCounter = responses.filter(
+      (response) => response === "yes",
+    ).length;
 
     if (warningCounter > 0 && warningCounter < 3) {
       return "It seems that you don't have risks, but to be sure, you can still see a doctor";

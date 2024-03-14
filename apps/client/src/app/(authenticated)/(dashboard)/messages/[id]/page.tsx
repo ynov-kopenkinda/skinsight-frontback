@@ -35,9 +35,15 @@ function Chat({ params: _params }: { params: { id: number } }) {
     data: chat,
     refetch,
     isFetched,
-  } = api.chat.getChatEventByChatId.useQuery({
-    id: Number(_params.id),
-  });
+  } = api.chat.getChatEventByChatId.useQuery(
+    {
+      id: Number(_params.id),
+    },
+    {
+      refetchInterval: 5000,
+      refetchIntervalInBackground: true,
+    },
+  );
   const otherUserId =
     chat?.invitorId === user.data?.id ? chat?.inviteeId : chat?.invitorId;
   const otherUser = api.user.getUserById.useQuery(
