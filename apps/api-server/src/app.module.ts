@@ -1,4 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
+import { EventEmitterModule } from "@nestjs/event-emitter";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 
 import { AiModule } from "./ai/ai.module";
@@ -25,6 +26,7 @@ import { UserService } from "./users/users.service";
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     UsersModule,
     ChatModule,
     ChatEventModule,

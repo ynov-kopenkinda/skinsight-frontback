@@ -153,7 +153,7 @@ function PhotoWrapper() {
       image: data.image,
     });
 
-    router.push("/messages");
+    router.push("/messages/1");
   };
 
   if (isDoctorsLoading) return <p>Loading...</p>;
@@ -274,9 +274,9 @@ function PhotoWrapper() {
                 <IconFile />
               </Button>
             )}
-            {!isError && !isLoading && (
+            {!isError && !isLoading && !imgUrl && (
               <Button type="button" size={"3"} onClick={capture}>
-                {imgUrl ? <IconUpload /> : <IconCamera />}
+                <IconCamera />
               </Button>
             )}
             {(isError || isLoading) && imgUrl && (

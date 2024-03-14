@@ -29,15 +29,18 @@ export interface Chat {
 
 function Chat({ params: _params }: { params: { id: number } }) {
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
-
   const user = useUser();
   const {
     data: chat,
     refetch,
     isFetched,
-  } = api.chat.getChatEventByChatId.useQuery({
-    id: Number(_params.id),
-  });
+  } = api.chat.getChatEventByChatId.useQuery(
+    {
+      id: Number(_params.id),
+    },
+    { refetchInterval: 5000, refetchIntervalInBackground: true },
+  );
+
   const otherUserId =
     chat?.invitorId === user.data?.id ? chat?.inviteeId : chat?.invitorId;
   const otherUser = api.user.getUserById.useQuery(
@@ -57,7 +60,11 @@ function Chat({ params: _params }: { params: { id: number } }) {
   }, [scrollToEnd]);
 
   if (!chat) {
-    return <div>No chat founded</div>;
+    return (
+      <div className="mt-6">
+        <ChatHeader receptor="No chat found" />
+      </div>
+    );
   }
 
   if (!otherUser.data || !user.data) {
