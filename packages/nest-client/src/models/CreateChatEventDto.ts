@@ -9,3 +9,4 @@ export type CreateChatEventDto = {
   data: string;
   chatEventType: number;
 };
+

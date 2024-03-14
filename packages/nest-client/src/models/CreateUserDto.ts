@@ -14,3 +14,4 @@ export type CreateUserDto = {
   ssn: string;
   proDoctorNumber: string;
 };
+

@@ -7,3 +7,4 @@ export type SignedPostUrlResponse = {
   url: string;
   key: string;
 };
+

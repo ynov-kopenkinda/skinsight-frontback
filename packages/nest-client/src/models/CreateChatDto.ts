@@ -7,3 +7,4 @@ export type CreateChatDto = {
   invitorId: number;
   inviteeId: number;
 };
+

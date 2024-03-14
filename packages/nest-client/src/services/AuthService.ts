@@ -14,14 +14,14 @@ export class AuthService {
 
   /**
    * Create account and login
-   * @returns any 
+   * @returns any
    * @throws ApiError
    */
   public authControllerSignup({
-requestBody,
-}: {
-requestBody: CreateUserDto,
-}): CancelablePromise<any> {
+    requestBody,
+  }: {
+    requestBody: CreateUserDto,
+  }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/auth/signup',
@@ -32,14 +32,14 @@ requestBody: CreateUserDto,
 
   /**
    * Login
-   * @returns any 
+   * @returns any
    * @throws ApiError
    */
   public authControllerSignin({
-requestBody,
-}: {
-requestBody: loginUserDTO,
-}): CancelablePromise<any> {
+    requestBody,
+  }: {
+    requestBody: loginUserDTO,
+  }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/auth/signin',
@@ -50,7 +50,7 @@ requestBody: loginUserDTO,
 
   /**
    * Refresh token
-   * @returns any 
+   * @returns any
    * @throws ApiError
    */
   public authControllerRefreshTokens(): CancelablePromise<any> {
