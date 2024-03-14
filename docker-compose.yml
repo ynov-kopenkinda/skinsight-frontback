@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   api:
-    image: api
+    image: ${IMG_NAME}
     platform: "linux/amd64"
     working_dir: /app
     build:

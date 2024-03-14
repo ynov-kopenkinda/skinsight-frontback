@@ -218,31 +218,23 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk.sarif
-  create-docker-image:
-    needs: ["setup-project"]
-    name: Create Docker Image
+  create-docker-image-api:
+    needs: ["setup-project", "build"]
+    name: Create Docker Image for API
     runs-on: ubuntu-latest
     steps:
+      - name: Declare some variables
+        shell: bash
+        run: |
+          echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+          export IMG_NAME=ghcr.io/kopenkinda/api:${{ env.sha_short }}
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
-      - name: Setup Node 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.18.2
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Install deps (with cache)
-        run: pnpm install
       - name: Build Docker Image
-        run: echo "Docker build impl here"
+        run: docker compose build api
+      - name: Set up Docker Buildx (multi-platform builds)
+        uses: docker/setup-buildx-action@v1
+      - name: Authenticate to GitHub Container Registry
+        run: echo "${{ secrets.GH_REGISTRY_ACCESS_TOKEN }}" | docker login ghcr.io -u kopenkinda --password-stdin
+      - name: Push Docker Image to GitHub Container Registry
+        run: docker push ghcr.io/kopenkinda/api:${{ env.sha_short }}
