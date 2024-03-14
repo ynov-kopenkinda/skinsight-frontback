@@ -15,14 +15,14 @@ export class ChatService {
 
   /**
    * Get a chat depending on passed id
-   * @returns ChatDto
+   * @returns ChatDto 
    * @throws ApiError
    */
   public chatControllerGetChat({
-    id,
-  }: {
-    id: number,
-  }): CancelablePromise<ChatDto> {
+id,
+}: {
+id: number,
+}): CancelablePromise<ChatDto> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/chat/{id}',
@@ -34,14 +34,14 @@ export class ChatService {
 
   /**
    * Delete a chat depending on passed id
-   * @returns ChatDto
+   * @returns ChatDto 
    * @throws ApiError
    */
   public chatControllerDeleteChat({
-    id,
-  }: {
-    id: number,
-  }): CancelablePromise<ChatDto> {
+id,
+}: {
+id: number,
+}): CancelablePromise<ChatDto> {
     return this.httpRequest.request({
       method: 'DELETE',
       url: '/chat/{id}',
@@ -53,14 +53,14 @@ export class ChatService {
 
   /**
    * Create a chat depending on passed id
-   * @returns ChatDto
+   * @returns ChatDto 
    * @throws ApiError
    */
   public chatControllerCreateChat({
-    requestBody,
-  }: {
-    requestBody: CreateChatDto,
-  }): CancelablePromise<ChatDto> {
+requestBody,
+}: {
+requestBody: CreateChatDto,
+}): CancelablePromise<ChatDto> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/chat',
@@ -71,14 +71,14 @@ export class ChatService {
 
   /**
    * Get chat(s) where an user appear
-   * @returns GetChatByUserId
+   * @returns GetChatByUserId 
    * @throws ApiError
    */
   public chatControllerGetChatByUserId({
-    id,
-  }: {
-    id: number,
-  }): CancelablePromise<Array<GetChatByUserId>> {
+id,
+}: {
+id: number,
+}): CancelablePromise<Array<GetChatByUserId>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/chat/user/{id}',

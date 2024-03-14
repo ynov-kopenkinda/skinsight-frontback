@@ -50,4 +50,3 @@ export class NestApi {
     this.users = new UsersService(this.request);
   }
 }
-

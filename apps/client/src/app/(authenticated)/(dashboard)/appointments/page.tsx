@@ -39,8 +39,13 @@ const AppointmentsForDoctor = ({
 
 function Appointments() {
   const user = useUser();
+  const data = api.user.getUserById.useQuery(
+    { id: user.data!.id },
+    { enabled: !!user.data?.id },
+  );
+
   const PreloadUser =
-    user.data?.role === "PATIENT"
+    data.data?.userRole === "PATIENT"
       ? AppointmentsForPatient
       : AppointmentsForDoctor;
 
@@ -53,7 +58,7 @@ function Appointments() {
       {(appointments) => (
         <AppointmentList
           appointments={appointments}
-          role={user.data?.role === "PATIENT" ? "PATIENT" : "DOCTOR"}
+          role={data.data?.userRole === "PATIENT" ? "PATIENT" : "DOCTOR"}
         />
       )}
     </PreloadUser>

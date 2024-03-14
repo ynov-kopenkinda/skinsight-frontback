@@ -11,4 +11,3 @@ export type ChatDto = {
   createdAt: string;
   ChatEvent: Array<ChatEventDto>;
 };
-

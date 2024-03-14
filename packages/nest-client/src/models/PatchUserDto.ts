@@ -13,4 +13,3 @@ export type PatchUserDto = {
   ssn?: string;
   proDoctorNumber?: string;
 };
-

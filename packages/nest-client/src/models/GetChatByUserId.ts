@@ -11,4 +11,3 @@ export type GetChatByUserId = {
   lastMessageDate: string;
   firstname: string;
 };
-

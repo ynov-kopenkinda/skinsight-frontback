@@ -13,14 +13,14 @@ export class PreAppointmentsService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
-   * @returns any
+   * @returns any 
    * @throws ApiError
    */
   public preAppointmentControllerCreate({
-    requestBody,
-  }: {
-    requestBody: CreatePreAppointmentDto,
-  }): CancelablePromise<any> {
+requestBody,
+}: {
+requestBody: CreatePreAppointmentDto,
+}): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/pre-appointment',
@@ -30,14 +30,14 @@ export class PreAppointmentsService {
   }
 
   /**
-   * @returns PreAppointment
+   * @returns PreAppointment 
    * @throws ApiError
    */
   public preAppointmentControllerFindAllForPatient({
-    id,
-  }: {
-    id: number,
-  }): CancelablePromise<Array<PreAppointment>> {
+id,
+}: {
+id: number,
+}): CancelablePromise<Array<PreAppointment>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/pre-appointment/patient/{id}',

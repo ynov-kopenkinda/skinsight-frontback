@@ -14,5 +14,5 @@ export type User = {
   weightInKg: number;
   ssn: string;
   proDoctorNumber: string;
+  userRole: string;
 };
-

@@ -12,14 +12,14 @@ export class ChatEventService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
-   * @returns any
+   * @returns any 
    * @throws ApiError
    */
   public chatEventControllerGetChatEventsFromChatId({
-    chatId,
-  }: {
-    chatId: number,
-  }): CancelablePromise<any> {
+chatId,
+}: {
+chatId: number,
+}): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/chat-event/{chatId}',
@@ -31,14 +31,14 @@ export class ChatEventService {
 
   /**
    * Get a chat-event depending on passed chat id
-   * @returns any
+   * @returns any 
    * @throws ApiError
    */
   public chatEventControllerCreateChatEvent({
-    requestBody,
-  }: {
-    requestBody: CreateChatEventDto,
-  }): CancelablePromise<any> {
+requestBody,
+}: {
+requestBody: CreateChatEventDto,
+}): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/chat-event/{chatId}',

@@ -15,15 +15,14 @@ export const AppointmentList = ({
   const pendingAppointments = appointments.filter(
     (appointment) =>
       (role === "DOCTOR"
-        ? !appointment.isAcceptedByPatient
-        : !appointment.isAcceptedByDoctor) &&
+        ? !appointment.isAcceptedByDoctor
+        : !appointment.isAcceptedByPatient) &&
       new Date(appointment.date) > new Date(),
   );
   const acceptedAppointments = appointments.filter(
     (appointment) =>
-      (role === "DOCTOR"
-        ? appointment.isAcceptedByPatient
-        : appointment.isAcceptedByDoctor) &&
+      appointment.isAcceptedByDoctor &&
+      appointment.isAcceptedByPatient &&
       new Date(appointment.date) > new Date(),
   );
   const previousAppointments = appointments.filter(

@@ -47,4 +47,7 @@ export class User {
 
   @ApiProperty()
   proDoctorNumber: string;
+
+  @ApiProperty()
+  userRole: string;
 }

@@ -9,4 +9,3 @@ export type CreateAppointmentDto = {
   location: string;
   date: string;
 };
-
