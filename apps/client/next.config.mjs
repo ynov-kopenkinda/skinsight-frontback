@@ -1,9 +1,7 @@
-// Importing env files here to validate on build
-import "@skinsight/env";
-
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  output: "standalone",
   images: {
     remotePatterns: [
       {
@@ -24,7 +22,6 @@ const config = {
     "@skinsight/api",
     "@skinsight/auth",
     "@skinsight/database",
-    "@skinsight/env",
   ],
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },

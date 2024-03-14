@@ -1,4 +1,4 @@
-name: CI
+name: CI + CD
 
 on:
   pull_request:
@@ -123,33 +123,34 @@ jobs:
       - name: Run ESLint
         run: pnpm turbo lint
   sonar:
+    name: Run SonarCloud
     needs: ["linting"]
-    name: Run SonarQube
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
-      - name: Setup Node 18
-        uses: actions/setup-node@v4
         with:
-          node-version: 18.18.2
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Install deps (with cache)
-        run: pnpm install
-      - name: Run sonarqube
-        run: echo "Sonar impl here"
+          # Additional arguments for the sonarcloud scanner
+          args:
+            # Unique keys of your project and organization. You can find them in SonarCloud > Information (bottom-left menu)
+            # mandatory
+            -Dsonar.projectKey=ynov-kopenkinda_skinsight-frontback
+            -Dsonar.organization=ynov-kopenkinda
+            # Comma-separated paths to directories containing main source files.
+            #-Dsonar.sources= # optional, default is project base directory
+            # When you need the analysis to take place in a directory other than the one from which it was launched
+            #-Dsonar.projectBaseDir= # optional, default is .
+            # Comma-separated paths to directories containing test source files.
+            #-Dsonar.tests= # optional. For more info about Code Coverage, please refer to https://docs.sonarcloud.io/enriching/test-coverage/overview/
+            # Adds more detail to both client and server-side analysis logs, activating DEBUG mode for the scanner, and adding client-side environment variables and system properties to the server-side log of analysis report processing.
+            #-Dsonar.verbose= # optional, default is false
   build:
     needs: ["linting", "security", "typechecking"]
     name: Run Build
@@ -218,3 +219,23 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk.sarif
+  create-docker-image-api:
+    needs: ["setup-project", "build"]
+    name: Create Docker Image for API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Declare some variables
+        shell: bash
+        run: |
+          echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+          echo "IMG_NAME=ghcr.io/kopenkinda/api:${{ env.sha_short }}" >> "$GITHUB_ENV"
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Build Docker Image
+        run: docker compose build api
+      - name: Set up Docker Buildx (multi-platform builds)
+        uses: docker/setup-buildx-action@v1
+      - name: Authenticate to GitHub Container Registry
+        run: echo "${{ secrets.GH_REGISTRY_ACCESS_TOKEN }}" | docker login ghcr.io -u kopenkinda --password-stdin
+      - name: Push Docker Image to GitHub Container Registry
+        run: docker push ghcr.io/kopenkinda/api:${{ env.sha_short }}
