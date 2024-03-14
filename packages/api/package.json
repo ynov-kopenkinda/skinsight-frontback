@@ -22,7 +22,6 @@
   "dependencies": {
     "@skinsight/auth": "workspace:*",
     "@skinsight/database": "workspace:*",
-    "@skinsight/env": "workspace:*",
     "@skinsight/nest-client": "workspace:*",
     "@trpc/client": "next",
     "@trpc/server": "next",

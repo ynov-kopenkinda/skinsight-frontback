@@ -1,5 +1,5 @@
 {
-  "name": "api-server",
+  "name": "@skinsight/api-server",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -34,7 +34,6 @@
     "@nestjs/websockets": "^10.3.3",
     "@skinsight/auth": "workspace:*",
     "@skinsight/database": "workspace:*",
-    "@skinsight/env": "workspace:*",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",

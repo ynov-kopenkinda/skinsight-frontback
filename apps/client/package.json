@@ -18,7 +18,6 @@
     "@skinsight/api": "workspace:*",
     "@skinsight/auth": "workspace:*",
     "@skinsight/database": "workspace:*",
-    "@skinsight/env": "workspace:*",
     "@skinsight/nest-client": "workspace:*",
     "@tabler/icons-react": "^2.40.0",
     "@tanstack/react-query": "^5.0.5",

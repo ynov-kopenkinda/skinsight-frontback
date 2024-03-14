@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  api:
+    image: ${IMG_NAME}
+    platform: "linux/amd64"
+    working_dir: /app
+    build:
+      context: .
+      dockerfile: ./apps/api-server/Dockerfile
+    env_file: .env
+    networks:
+      - app
+    restart: always
+  app:
+    image: t3-app
+    platform: "linux/amd64"
+    working_dir: /app
+    build:
+      context: .
+      dockerfile: ./apps/client/Dockerfile
+    env_file: .env
+    networks:
+      - app
+    restart: always
+
+volumes:
+  db_data:
+  nginx-data:
+
+networks:
+  app:
+    driver: "bridge"

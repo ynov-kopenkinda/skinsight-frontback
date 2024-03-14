@@ -84,9 +84,6 @@ importers:
       '@skinsight/database':
         specifier: workspace:*
         version: link:../../packages/database
-      '@skinsight/env':
-        specifier: workspace:*
-        version: link:../../packages/env
       axios:
         specifier: ^1.6.7
         version: 1.6.7
@@ -205,9 +202,6 @@ importers:
       '@skinsight/database':
         specifier: workspace:*
         version: link:../../packages/database
-      '@skinsight/env':
-        specifier: workspace:*
-        version: link:../../packages/env
       '@skinsight/nest-client':
         specifier: workspace:*
         version: link:../../packages/nest-client
@@ -341,9 +335,6 @@ importers:
       '@skinsight/database':
         specifier: workspace:*
         version: link:../database
-      '@skinsight/env':
-        specifier: workspace:*
-        version: link:../env
       '@skinsight/nest-client':
         specifier: workspace:*
         version: link:../nest-client
@@ -387,9 +378,6 @@ importers:
       '@auth/drizzle-adapter':
         specifier: ^0.3.5
         version: 0.3.5
-      '@skinsight/env':
-        specifier: workspace:*
-        version: link:../env
       jwt-decode:
         specifier: ^4.0.0
         version: 4.0.0
@@ -437,37 +425,6 @@ importers:
       prisma:
         specifier: ^5.9.1
         version: 5.9.1
-
-  packages/env:
-    dependencies:
-      '@t3-oss/env-nextjs':
-        specifier: ^0.7.1
-        version: 0.7.1(typescript@5.2.2)(zod@3.22.4)
-      dotenv:
-        specifier: ^16.3.1
-        version: 16.3.1
-      zod:
-        specifier: ^3.22.4
-        version: 3.22.4
-    devDependencies:
-      '@skinsight/eslint-config':
-        specifier: workspace:*
-        version: link:../../tooling/eslint
-      '@skinsight/prettier-config':
-        specifier: workspace:*
-        version: link:../../tooling/prettier
-      '@skinsight/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.47.0
-        version: 8.52.0
-      tsup:
-        specifier: ^6.6.0
-        version: 6.7.0(typescript@5.2.2)
-      typescript:
-        specifier: ^5.1.6
-        version: 5.2.2
 
   packages/nest-client:
     devDependencies:
@@ -4006,33 +3963,6 @@ packages:
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
     dependencies:
       tslib: 2.6.2
-    dev: false
-
-  /@t3-oss/env-core@0.7.1(typescript@5.2.2)(zod@3.22.4):
-    resolution: {integrity: sha512-3+SQt39OlmSaRLqYVFv8uRm1BpFepM5TIiMytRqO9cjH+wB77o6BIJdeyM5h5U4qLBMEzOJWCY4MBaU/rLwbYw==}
-    peerDependencies:
-      typescript: '>=4.7.2'
-      zod: ^3.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      typescript: 5.2.2
-      zod: 3.22.4
-    dev: false
-
-  /@t3-oss/env-nextjs@0.7.1(typescript@5.2.2)(zod@3.22.4):
-    resolution: {integrity: sha512-tQDbNLGCOvKGi+JoGuJ/CJInJI7/kLWJqtgGppAKS7ZFLdVOqZYR/uRjxlXOWPnxmUKF8VswOAsq7fXUpNZDhA==}
-    peerDependencies:
-      typescript: '>=4.7.2'
-      zod: ^3.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@t3-oss/env-core': 0.7.1(typescript@5.2.2)(zod@3.22.4)
-      typescript: 5.2.2
-      zod: 3.22.4
     dev: false
 
   /@tabler/icons-react@2.40.0(react@18.2.0):
