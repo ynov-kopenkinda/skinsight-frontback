@@ -11,3 +11,4 @@ export type PreAppointment = {
   image: string;
   createdAt: string;
 };
+

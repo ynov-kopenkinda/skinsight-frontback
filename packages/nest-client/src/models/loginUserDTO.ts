@@ -7,3 +7,4 @@ export type loginUserDTO = {
   email: string;
   password: string;
 };
+

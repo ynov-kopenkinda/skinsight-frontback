@@ -13,14 +13,14 @@ export class AppointmentsService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
-   * @returns any 
+   * @returns any
    * @throws ApiError
    */
   public appointmentControllerCreate({
-requestBody,
-}: {
-requestBody: CreateAppointmentDto,
-}): CancelablePromise<any> {
+    requestBody,
+  }: {
+    requestBody: CreateAppointmentDto,
+  }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/appointment',
@@ -30,14 +30,14 @@ requestBody: CreateAppointmentDto,
   }
 
   /**
-   * @returns Appointment 
+   * @returns Appointment
    * @throws ApiError
    */
   public appointmentControllerFindOneAppointment({
-id,
-}: {
-id: number,
-}): CancelablePromise<Appointment> {
+    id,
+  }: {
+    id: number,
+  }): CancelablePromise<Appointment> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/appointment/{id}',
@@ -48,14 +48,14 @@ id: number,
   }
 
   /**
-   * @returns Appointment 
+   * @returns Appointment
    * @throws ApiError
    */
   public appointmentControllerFindAllForDoctor({
-id,
-}: {
-id: number,
-}): CancelablePromise<Array<Appointment>> {
+    id,
+  }: {
+    id: number,
+  }): CancelablePromise<Array<Appointment>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/appointment/doctor/{id}',
@@ -66,14 +66,14 @@ id: number,
   }
 
   /**
-   * @returns Appointment 
+   * @returns Appointment
    * @throws ApiError
    */
   public appointmentControllerFindAllForPatient({
-id,
-}: {
-id: number,
-}): CancelablePromise<Array<Appointment>> {
+    id,
+  }: {
+    id: number,
+  }): CancelablePromise<Array<Appointment>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/appointment/patient/{id}',
@@ -85,7 +85,7 @@ id: number,
 
   /**
    * Get all appointment for the user logged
-   * @returns Appointment 
+   * @returns Appointment
    * @throws ApiError
    */
   public appointmentControllerFindAllForOneUser(): CancelablePromise<Array<Appointment>> {
@@ -96,16 +96,16 @@ id: number,
   }
 
   /**
-   * @returns string 
+   * @returns string
    * @throws ApiError
    */
   public appointmentControllerAcceptAppointment({
-userId,
-appointmentId,
-}: {
-userId: number,
-appointmentId: number,
-}): CancelablePromise<string> {
+    userId,
+    appointmentId,
+  }: {
+    userId: number,
+    appointmentId: number,
+  }): CancelablePromise<string> {
     return this.httpRequest.request({
       method: 'PATCH',
       url: '/appointment/{userId}/accept/{appointmentId}',
@@ -117,16 +117,16 @@ appointmentId: number,
   }
 
   /**
-   * @returns string 
+   * @returns string
    * @throws ApiError
    */
   public appointmentControllerDeclineAppointment({
-userId,
-appointmentId,
-}: {
-userId: number,
-appointmentId: number,
-}): CancelablePromise<string> {
+    userId,
+    appointmentId,
+  }: {
+    userId: number,
+    appointmentId: number,
+  }): CancelablePromise<string> {
     return this.httpRequest.request({
       method: 'PATCH',
       url: '/appointment/{userId}/decline/{appointmentId}',
@@ -138,16 +138,16 @@ appointmentId: number,
   }
 
   /**
-   * @returns Appointment 
+   * @returns Appointment
    * @throws ApiError
    */
   public appointmentControllerCheckIfAppointmentExists({
-patientId,
-doctorId,
-}: {
-patientId: number,
-doctorId: number,
-}): CancelablePromise<Appointment> {
+    patientId,
+    doctorId,
+  }: {
+    patientId: number,
+    doctorId: number,
+  }): CancelablePromise<Appointment> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/appointment/checkIfAppointmentExists/{doctorId}/{patientId}',

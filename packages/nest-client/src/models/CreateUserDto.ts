@@ -13,3 +13,4 @@ export type CreateUserDto = {
   weightInKg: number;
   ssn: string;
 };
+

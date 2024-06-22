@@ -12,3 +12,4 @@ export type ChatEventDto = {
   createdAt: string;
   updatedAt: string;
 };
+

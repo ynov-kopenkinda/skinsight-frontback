@@ -16,3 +16,4 @@ export type Appointment = {
   doctor_name?: string;
   patient_name?: string;
 };
+

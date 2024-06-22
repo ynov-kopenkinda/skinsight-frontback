@@ -13,14 +13,14 @@ export class ChatEventService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
-   * @returns any 
+   * @returns any
    * @throws ApiError
    */
   public chatEventControllerGetChatEventsFromChatId({
-chatId,
-}: {
-chatId: number,
-}): CancelablePromise<any> {
+    chatId,
+  }: {
+    chatId: number,
+  }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/chat-event/{chatId}',
@@ -32,14 +32,14 @@ chatId: number,
 
   /**
    * Get a chat-event depending on passed chat id
-   * @returns any 
+   * @returns any
    * @throws ApiError
    */
   public chatEventControllerCreateChatEvent({
-requestBody,
-}: {
-requestBody: CreateChatEventDto,
-}): CancelablePromise<any> {
+    requestBody,
+  }: {
+    requestBody: CreateChatEventDto,
+  }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/chat-event/{chatId}',
@@ -49,14 +49,14 @@ requestBody: CreateChatEventDto,
   }
 
   /**
-   * @returns ChatEventDto 
+   * @returns ChatEventDto
    * @throws ApiError
    */
   public chatEventControllerGetImagesFromUserId({
-userId,
-}: {
-userId: number,
-}): CancelablePromise<Array<ChatEventDto>> {
+    userId,
+  }: {
+    userId: number,
+  }): CancelablePromise<Array<ChatEventDto>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/chat-event/drive/{userId}',
